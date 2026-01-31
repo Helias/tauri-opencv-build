@@ -52,6 +52,6 @@ src-tauri/WixTools
 src-tauri/gen
 
 # Custom
-models/
+/models/
 **/*.mp4
 
