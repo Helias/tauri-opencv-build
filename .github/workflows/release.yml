@@ -144,14 +144,25 @@ jobs:
         run: |
           brew install opencv llvm pkg-config ninja
 
-      - name: Download ONNX Runtime for macOS Intel
+      - name: Cache ONNX Runtime (macOS Intel only)
         if: matrix.platform == 'macos-15-intel'
+        uses: actions/cache@v4
+        id: onnx-cache
+        with:
+          path: ~/onnxruntime
+          key: ${{ runner.os }}-onnxruntime-1.17.0-x86_64
+
+      - name: Download ONNX Runtime for macOS Intel
+        if: matrix.platform == 'macos-15-intel' && steps.onnx-cache.outputs.cache-hit != 'true'
         run: |
           # Download ONNX Runtime prebuilt binaries for x86_64 macOS
           curl -L https://github.com/microsoft/onnxruntime/releases/download/v1.17.0/onnxruntime-osx-x86_64-1.17.0.tgz -o onnxruntime.tgz
           tar -xzf onnxruntime.tgz
           mv onnxruntime-osx-x86_64-1.17.0 $HOME/onnxruntime
 
+      - name: Set ONNX Runtime environment (macOS Intel)
+        if: matrix.platform == 'macos-15-intel'
+        run: |
           # Verify the library exists
           ls -la $HOME/onnxruntime/lib/
 
@@ -177,6 +188,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+          cache: "npm"
 
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
@@ -191,7 +203,7 @@ jobs:
           key: ${{ matrix.platform }}-${{ matrix.target }}-${{ hashFiles('**/Cargo.lock', '**/Cargo.toml') }}
 
       - name: Install frontend dependencies
-        run: npm install
+        run: npm ci
 
       - name: Cache vcpkg (Windows only)
         if: matrix.platform == 'windows-latest'
