@@ -11,7 +11,7 @@ use std::env;
 use std::path::Path;
 use std::time::Instant;
 use std::sync::{Arc, Mutex};
-use tauri::{Emitter, Manager};
+use tauri::{Manager};
 
 // Global processing state
 lazy_static::lazy_static! {
@@ -91,7 +91,7 @@ impl Config {
 
 // ==================== GAME STATS ====================
 struct GameStats {
-    fps: f64,
+    // fps: f64,
     shots_attempted: i32,
     baskets_made: i32,
     shot_cooldown_frames: i32,
@@ -111,7 +111,7 @@ impl GameStats {
         let anim_duration_frames = (fps * Config::ANIMATION_DURATION) as i32;
 
         Self {
-            fps,
+            // fps,
             shots_attempted: 0,
             baskets_made: 0,
             shot_cooldown_frames,

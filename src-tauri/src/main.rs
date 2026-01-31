@@ -5,7 +5,6 @@
 
 mod annotate_file;
 use annotate_file::{annotate_video, ProcessingState, PROCESSING_STATE};
-use std::sync::Arc;
 
 #[tauri::command]
 async fn hello_world_command(_app: tauri::AppHandle) -> Result<String, String> {
