@@ -189,7 +189,7 @@ jobs:
           key: ${{ matrix.platform }}-${{ matrix.target }}-${{ hashFiles('**/Cargo.lock', '**/Cargo.toml') }}
 
       - name: Install frontend dependencies
-        run: npm ci
+        run: npm install
 
       - name: Cache vcpkg (Windows only)
         if: matrix.platform == 'windows-latest'
