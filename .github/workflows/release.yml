@@ -199,8 +199,12 @@ jobs:
         if: matrix.platform == 'windows-latest'
         uses: actions/cache@v4
         with:
-          path: C:\vcpkg-opencv
-          key: ${{ runner.os }}-vcpkg-opencv4-${{ hashFiles('**/Cargo.lock') }}
+          path: |
+            C:\vcpkg-opencv\installed
+            C:\vcpkg-opencv\packages
+            C:\vcpkg-opencv\downloads
+            C:\vcpkg-opencv\buildtrees
+          key: ${{ runner.os }}-vcpkg-opencv4-v2
           restore-keys: |
             ${{ runner.os }}-vcpkg-opencv4-
 
