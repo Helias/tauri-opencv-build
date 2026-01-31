@@ -244,6 +244,12 @@ export class SwishAiComponent implements OnInit, OnDestroy {
         next: (uploadData: UploadResponse) => {
           this.fileId = uploadData.file_id;
 
+          if (!this.fileId) {
+            this.status = 'error';
+            this.errorMsg = 'Invalid file ID received';
+            return;
+          }
+
           this.swishAiService
             .startProcessing(
               this.fileId,
