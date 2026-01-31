@@ -163,10 +163,9 @@ jobs:
       - name: Set ONNX Runtime environment (macOS Intel)
         if: matrix.platform == 'macos-15-intel'
         run: |
-          # Use download strategy for ort-sys to handle ONNX Runtime automatically
-          # This avoids xcframework linking issues with manual downloads
-          echo "ORT_STRATEGY=download" >> $GITHUB_ENV
-          echo "ORT_DYLIB_PATH=/Users/runner/.cargo/.ort/dylibs-1.17.0" >> $GITHUB_ENV
+          brew install onnxruntime
+          export ORT_STRATEGY=system
+          export ORT_LIB_LOCATION=$(brew --prefix onnxruntime)
         shell: bash
 
       - name: Install dependencies (Windows only)
