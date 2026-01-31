@@ -1,0 +1,2520 @@
+2026-01-31T09:31:40.2213133Z Current runner version: '2.331.0'
+2026-01-31T09:31:40.2257129Z ##[group]Runner Image Provisioner
+2026-01-31T09:31:40.2258181Z Hosted Compute Agent
+2026-01-31T09:31:40.2258921Z Version: 20260123.484
+2026-01-31T09:31:40.2259770Z Commit: 6bd6555ca37d84114959e1c76d2c01448ff61c5d
+2026-01-31T09:31:40.2260691Z Build Date: 2026-01-23T19:41:17Z
+2026-01-31T09:31:40.2261556Z Worker ID: {5d91946c-7a3b-4a91-b7ad-f2789e5ad13a}
+2026-01-31T09:31:40.2262505Z Azure Region: eastus
+2026-01-31T09:31:40.2263239Z ##[endgroup]
+2026-01-31T09:31:40.2265079Z ##[group]Operating System
+2026-01-31T09:31:40.2265962Z Microsoft Windows Server 2025
+2026-01-31T09:31:40.2266706Z 10.0.26100
+2026-01-31T09:31:40.2301876Z Datacenter
+2026-01-31T09:31:40.2302700Z ##[endgroup]
+2026-01-31T09:31:40.2303362Z ##[group]Runner Image
+2026-01-31T09:31:40.2304114Z Image: windows-2025
+2026-01-31T09:31:40.2304807Z Version: 20260127.11.2
+2026-01-31T09:31:40.2306797Z Included Software: https://github.com/actions/runner-images/blob/win25/20260127.11/images/windows/Windows2025-Readme.md
+2026-01-31T09:31:40.2309444Z Image Release: https://github.com/actions/runner-images/releases/tag/win25%2F20260127.11
+2026-01-31T09:31:40.2310795Z ##[endgroup]
+2026-01-31T09:31:40.2312186Z ##[group]GITHUB_TOKEN Permissions
+2026-01-31T09:31:40.2314604Z Contents: write
+2026-01-31T09:31:40.2315341Z Metadata: read
+2026-01-31T09:31:40.2315982Z ##[endgroup]
+2026-01-31T09:31:40.2318805Z Secret source: Actions
+2026-01-31T09:31:40.2319756Z Prepare workflow directory
+2026-01-31T09:31:40.2816144Z Prepare all required actions
+2026-01-31T09:31:40.2869942Z Getting action download info
+2026-01-31T09:31:40.6687204Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-01-31T09:31:40.9814534Z Download action repository 'Dovyski/setup-opencv-action@v1.1' (SHA:51a569c1ba33b603f6d271fc6fa3a01023b6240f)
+2026-01-31T09:31:41.9743629Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-01-31T09:31:42.2477881Z Download action repository 'dtolnay/rust-toolchain@stable' (SHA:4be9e76fd7c4901c61fb841f559994984270fce7)
+2026-01-31T09:31:42.3715881Z Download action repository 'swatinem/rust-cache@v2' (SHA:779680da715d629ac1d338a641029a2f4372abb5)
+2026-01-31T09:31:42.7450888Z Download action repository 'tauri-apps/tauri-action@v0' (SHA:73fb865345c54760d875b94642314f8c0c894afa)
+2026-01-31T09:31:43.5247626Z Complete job name: build-tauri (windows-latest, x86_64-pc-windows-msvc, x64-windows)
+2026-01-31T09:31:43.7493265Z ##[group]Run actions/checkout@v4
+2026-01-31T09:31:43.7494975Z with:
+2026-01-31T09:31:43.7495968Z   repository: Helias/SwishAI-desktop
+2026-01-31T09:31:43.7497564Z   token: ***
+2026-01-31T09:31:43.7498507Z   ssh-strict: true
+2026-01-31T09:31:43.7499484Z   ssh-user: git
+2026-01-31T09:31:43.7500492Z   persist-credentials: true
+2026-01-31T09:31:43.7501613Z   clean: true
+2026-01-31T09:31:43.7502628Z   sparse-checkout-cone-mode: true
+2026-01-31T09:31:43.7503891Z   fetch-depth: 1
+2026-01-31T09:31:43.7504909Z   fetch-tags: false
+2026-01-31T09:31:43.7505892Z   show-progress: true
+2026-01-31T09:31:43.7506901Z   lfs: false
+2026-01-31T09:31:43.7507795Z   submodules: false
+2026-01-31T09:31:43.7508797Z   set-safe-directory: true
+2026-01-31T09:31:43.7510597Z ##[endgroup]
+2026-01-31T09:31:44.6503546Z Syncing repository: Helias/SwishAI-desktop
+2026-01-31T09:31:44.6507350Z ##[group]Getting Git version info
+2026-01-31T09:31:44.6509141Z Working directory is 'D:\a\SwishAI-desktop\SwishAI-desktop'
+2026-01-31T09:31:44.8038150Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-01-31T09:31:45.1360818Z git version 2.52.0.windows.1
+2026-01-31T09:31:45.2215166Z ##[endgroup]
+2026-01-31T09:31:45.2256276Z Temporarily overriding HOME='D:\a\_temp\7976bb91-f8e4-48af-a235-bd13140209de' before making global git config changes
+2026-01-31T09:31:45.2261983Z Adding repository directory to the temporary git global config as a safe directory
+2026-01-31T09:31:45.2266869Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\SwishAI-desktop\SwishAI-desktop
+2026-01-31T09:31:45.2723148Z Deleting the contents of 'D:\a\SwishAI-desktop\SwishAI-desktop'
+2026-01-31T09:31:45.2728479Z ##[group]Initializing the repository
+2026-01-31T09:31:45.2731639Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\SwishAI-desktop\SwishAI-desktop
+2026-01-31T09:31:45.3048426Z Initialized empty Git repository in D:/a/SwishAI-desktop/SwishAI-desktop/.git/
+2026-01-31T09:31:45.3320648Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/Helias/SwishAI-desktop
+2026-01-31T09:31:45.4621689Z ##[endgroup]
+2026-01-31T09:31:45.4675934Z ##[group]Disabling automatic garbage collection
+2026-01-31T09:31:45.4696548Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-01-31T09:31:45.5244983Z ##[endgroup]
+2026-01-31T09:31:45.5514060Z ##[group]Setting up auth
+2026-01-31T09:31:45.5563817Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-01-31T09:31:45.6316179Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-01-31T09:31:47.6921732Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-01-31T09:31:47.7239680Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-01-31T09:31:48.5834663Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-01-31T09:31:48.6413076Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-01-31T09:31:49.5654187Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-01-31T09:31:49.6360735Z ##[endgroup]
+2026-01-31T09:31:49.6377913Z ##[group]Fetching the repository
+2026-01-31T09:31:49.6555792Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +a8e480ae62569b970ab0d7825ad30712fc1d7a45:refs/remotes/origin/main
+2026-01-31T09:31:54.2891445Z From https://github.com/Helias/SwishAI-desktop
+2026-01-31T09:31:54.2960035Z  * [new ref]         a8e480ae62569b970ab0d7825ad30712fc1d7a45 -> origin/main
+2026-01-31T09:31:54.2967213Z ##[endgroup]
+2026-01-31T09:31:54.2967715Z ##[group]Determining the checkout info
+2026-01-31T09:31:54.2968272Z ##[endgroup]
+2026-01-31T09:31:54.2968706Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-01-31T09:31:54.2970010Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-01-31T09:31:54.2971361Z ##[group]Checking out the ref
+2026-01-31T09:31:54.2972048Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force -B main refs/remotes/origin/main
+2026-01-31T09:31:54.2972817Z branch 'main' set up to track 'origin/main'.
+2026-01-31T09:31:54.2973223Z Switched to a new branch 'main'
+2026-01-31T09:31:54.2974160Z ##[endgroup]
+2026-01-31T09:31:54.2974959Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-01-31T09:31:54.2975483Z a8e480ae62569b970ab0d7825ad30712fc1d7a45
+2026-01-31T09:31:54.3537665Z ##[group]Run choco install opencv llvm ninja pkgconfiglite
+2026-01-31T09:31:54.3538445Z [36;1mchoco install opencv llvm ninja pkgconfiglite[0m
+2026-01-31T09:31:54.3727469Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-01-31T09:31:54.3728015Z ##[endgroup]
+2026-01-31T09:32:01.7707547Z Chocolatey v2.6.0
+2026-01-31T09:32:02.2257892Z Installing the following packages:
+2026-01-31T09:32:02.2260079Z opencv;llvm;ninja;pkgconfiglite
+2026-01-31T09:32:02.2260785Z By installing, you accept licenses for the packages.
+2026-01-31T09:32:05.7574962Z Downloading package from source 'https://community.chocolatey.org/api/v2/'
+2026-01-31T09:32:05.9191144Z
+2026-01-31T09:32:05.9243327Z Progress: Downloading OpenCV 4.13.0... 5%
+2026-01-31T09:32:05.9358538Z Progress: Downloading OpenCV 4.13.0... 14%
+2026-01-31T09:32:05.9449670Z Progress: Downloading OpenCV 4.13.0... 24%
+2026-01-31T09:32:05.9478622Z Progress: Downloading OpenCV 4.13.0... 33%
+2026-01-31T09:32:05.9479403Z Progress: Downloading OpenCV 4.13.0... 43%
+2026-01-31T09:32:05.9479956Z Progress: Downloading OpenCV 4.13.0... 53%
+2026-01-31T09:32:05.9480507Z Progress: Downloading OpenCV 4.13.0... 62%
+2026-01-31T09:32:05.9489349Z Progress: Downloading OpenCV 4.13.0... 72%
+2026-01-31T09:32:05.9490005Z Progress: Downloading OpenCV 4.13.0... 81%
+2026-01-31T09:32:05.9490563Z Progress: Downloading OpenCV 4.13.0... 91%
+2026-01-31T09:32:05.9491102Z Progress: Downloading OpenCV 4.13.0... 100%
+2026-01-31T09:32:06.1938912Z
+2026-01-31T09:32:06.1939498Z OpenCV v4.13.0 [Approved]
+2026-01-31T09:32:06.2260375Z OpenCV package files install completed. Performing other installation steps.
+2026-01-31T09:32:09.3812654Z No directory specified, installing to C:\tools.
+2026-01-31T09:32:09.3900810Z To install to a specific directory, pass '/InstallationPath:C:\path\to'. OpenCV will create its own folder within the directory you passed.
+2026-01-31T09:32:09.3947943Z You will need to manually create an OPENCV_DIR environment variable then add %OPENCV_DIR%\bin to your PATH.
+2026-01-31T09:32:09.3955578Z Alternately, you can rerun this and pass '/Environment:C:\path\to' Follow the OpenCV instructions on their website to figure out which directory you would want.
+2026-01-31T09:32:09.9170133Z Downloading OpenCV
+2026-01-31T09:32:09.9421939Z   from 'https://github.com/opencv/opencv/releases/download/4.13.0/opencv-4.13.0-windows.exe'
+2026-01-31T09:32:10.2038200Z
+2026-01-31T09:32:10.2608371Z Progress: 0% - Saving 13.46 KB of 185.49 MB
+2026-01-31T09:32:10.2642138Z Progress: 0% - Saving 26.77 KB of 185.49 MB
+2026-01-31T09:32:10.2649605Z Progress: 0% - Saving 40.22 KB of 185.49 MB
+2026-01-31T09:32:10.3010398Z Progress: 0% - Saving 109.21 KB of 185.49 MB
+2026-01-31T09:32:10.3258142Z Progress: 0% - Saving 269.21 KB of 185.49 MB
+2026-01-31T09:32:10.3265855Z Progress: 0% - Saving 429.21 KB of 185.49 MB
+2026-01-31T09:32:10.3267032Z Progress: 0% - Saving 589.21 KB of 185.49 MB
+2026-01-31T09:32:10.3268099Z Progress: 0% - Saving 743.02 KB of 185.49 MB
+2026-01-31T09:32:10.3276105Z Progress: 0% - Saving 903.02 KB of 185.49 MB
+2026-01-31T09:32:10.3276852Z Progress: 0% - Saving 1.04 MB of 185.49 MB
+2026-01-31T09:32:10.3277546Z Progress: 0% - Saving 1.19 MB of 185.49 MB
+2026-01-31T09:32:10.3278234Z Progress: 0% - Saving 1.35 MB of 185.49 MB
+2026-01-31T09:32:10.3278884Z Progress: 0% - Saving 1.5 MB of 185.49 MB
+2026-01-31T09:32:10.3279557Z Progress: 0% - Saving 1.66 MB of 185.49 MB
+2026-01-31T09:32:10.3280700Z Progress: 0% - Saving 1.81 MB of 185.49 MB
+2026-01-31T09:32:10.3359068Z Progress: 1% - Saving 1.97 MB of 185.49 MB
+2026-01-31T09:32:10.3739428Z Progress: 1% - Saving 2.12 MB of 185.49 MB
+2026-01-31T09:32:10.3973037Z Progress: 1% - Saving 2.28 MB of 185.49 MB
+2026-01-31T09:32:10.4031182Z Progress: 1% - Saving 2.43 MB of 185.49 MB
+2026-01-31T09:32:10.4036627Z Progress: 1% - Saving 2.59 MB of 185.49 MB
+2026-01-31T09:32:10.4037773Z Progress: 1% - Saving 2.74 MB of 185.49 MB
+2026-01-31T09:32:10.4165239Z Progress: 1% - Saving 2.89 MB of 185.49 MB
+2026-01-31T09:32:10.4166414Z Progress: 1% - Saving 3.05 MB of 185.49 MB
+2026-01-31T09:32:10.4467222Z Progress: 1% - Saving 3.2 MB of 185.49 MB
+2026-01-31T09:32:10.4472104Z Progress: 1% - Saving 3.36 MB of 185.49 MB
+2026-01-31T09:32:10.4473059Z Progress: 1% - Saving 3.51 MB of 185.49 MB
+2026-01-31T09:32:10.4473675Z Progress: 1% - Saving 3.67 MB of 185.49 MB
+2026-01-31T09:32:10.4474223Z Progress: 2% - Saving 3.82 MB of 185.49 MB
+2026-01-31T09:32:10.4475676Z Progress: 2% - Saving 3.98 MB of 185.49 MB
+2026-01-31T09:32:10.4476276Z Progress: 2% - Saving 4.13 MB of 185.49 MB
+2026-01-31T09:32:10.4476818Z Progress: 2% - Saving 4.29 MB of 185.49 MB
+2026-01-31T09:32:10.4477780Z Progress: 2% - Saving 4.45 MB of 185.49 MB
+2026-01-31T09:32:10.4478342Z Progress: 2% - Saving 4.6 MB of 185.49 MB
+2026-01-31T09:32:10.4479010Z Progress: 2% - Saving 4.75 MB of 185.49 MB
+2026-01-31T09:32:10.4481555Z Progress: 2% - Saving 4.91 MB of 185.49 MB
+2026-01-31T09:32:10.4482250Z Progress: 2% - Saving 5.06 MB of 185.49 MB
+2026-01-31T09:32:10.4482817Z Progress: 2% - Saving 5.22 MB of 185.49 MB
+2026-01-31T09:32:10.4483447Z Progress: 2% - Saving 5.37 MB of 185.49 MB
+2026-01-31T09:32:10.4483992Z Progress: 2% - Saving 5.53 MB of 185.49 MB
+2026-01-31T09:32:10.4484512Z Progress: 3% - Saving 5.68 MB of 185.49 MB
+2026-01-31T09:32:10.4485015Z Progress: 3% - Saving 5.84 MB of 185.49 MB
+2026-01-31T09:32:10.4485533Z Progress: 3% - Saving 5.99 MB of 185.49 MB
+2026-01-31T09:32:10.4486064Z Progress: 3% - Saving 6.15 MB of 185.49 MB
+2026-01-31T09:32:10.4486586Z Progress: 3% - Saving 6.31 MB of 185.49 MB
+2026-01-31T09:32:10.4487093Z Progress: 3% - Saving 6.46 MB of 185.49 MB
+2026-01-31T09:32:10.4487598Z Progress: 3% - Saving 6.61 MB of 185.49 MB
+2026-01-31T09:32:10.4488103Z Progress: 3% - Saving 6.77 MB of 185.49 MB
+2026-01-31T09:32:10.4488603Z Progress: 3% - Saving 6.92 MB of 185.49 MB
+2026-01-31T09:32:10.4489149Z Progress: 3% - Saving 7.08 MB of 185.49 MB
+2026-01-31T09:32:10.4489683Z Progress: 3% - Saving 7.23 MB of 185.49 MB
+2026-01-31T09:32:10.4490223Z Progress: 3% - Saving 7.39 MB of 185.49 MB
+2026-01-31T09:32:10.4499929Z Progress: 4% - Saving 7.54 MB of 185.49 MB
+2026-01-31T09:32:10.4500555Z Progress: 4% - Saving 7.7 MB of 185.49 MB
+2026-01-31T09:32:10.4501086Z Progress: 4% - Saving 7.85 MB of 185.49 MB
+2026-01-31T09:32:10.4501605Z Progress: 4% - Saving 8.01 MB of 185.49 MB
+2026-01-31T09:32:10.4502106Z Progress: 4% - Saving 8.17 MB of 185.49 MB
+2026-01-31T09:32:10.4502626Z Progress: 4% - Saving 8.32 MB of 185.49 MB
+2026-01-31T09:32:10.4503107Z Progress: 4% - Saving 8.47 MB of 185.49 MB
+2026-01-31T09:32:10.4503605Z Progress: 4% - Saving 8.63 MB of 185.49 MB
+2026-01-31T09:32:10.4504088Z Progress: 4% - Saving 8.78 MB of 185.49 MB
+2026-01-31T09:32:10.4504570Z Progress: 4% - Saving 8.94 MB of 185.49 MB
+2026-01-31T09:32:10.4505067Z Progress: 4% - Saving 9.09 MB of 185.49 MB
+2026-01-31T09:32:10.4505554Z Progress: 4% - Saving 9.25 MB of 185.49 MB
+2026-01-31T09:32:10.4506073Z Progress: 5% - Saving 9.4 MB of 185.49 MB
+2026-01-31T09:32:10.4506573Z Progress: 5% - Saving 9.56 MB of 185.49 MB
+2026-01-31T09:32:10.4507076Z Progress: 5% - Saving 9.71 MB of 185.49 MB
+2026-01-31T09:32:10.4507583Z Progress: 5% - Saving 9.87 MB of 185.49 MB
+2026-01-31T09:32:10.4508083Z Progress: 5% - Saving 10.02 MB of 185.49 MB
+2026-01-31T09:32:10.4508587Z Progress: 5% - Saving 10.17 MB of 185.49 MB
+2026-01-31T09:32:10.4509501Z Progress: 5% - Saving 10.32 MB of 185.49 MB
+2026-01-31T09:32:10.4510435Z Progress: 5% - Saving 10.48 MB of 185.49 MB
+2026-01-31T09:32:10.4511173Z Progress: 5% - Saving 10.64 MB of 185.49 MB
+2026-01-31T09:32:10.4511903Z Progress: 5% - Saving 10.79 MB of 185.49 MB
+2026-01-31T09:32:10.4512432Z Progress: 5% - Saving 10.95 MB of 185.49 MB
+2026-01-31T09:32:10.4514334Z Progress: 5% - Saving 11.11 MB of 185.49 MB
+2026-01-31T09:32:10.4515801Z Progress: 6% - Saving 11.26 MB of 185.49 MB
+2026-01-31T09:32:10.4516393Z Progress: 6% - Saving 11.42 MB of 185.49 MB
+2026-01-31T09:32:10.4808718Z Progress: 6% - Saving 11.57 MB of 185.49 MB
+2026-01-31T09:32:10.4810127Z Progress: 6% - Saving 11.73 MB of 185.49 MB
+2026-01-31T09:32:10.4874783Z Progress: 6% - Saving 11.89 MB of 185.49 MB
+2026-01-31T09:32:10.5074836Z Progress: 6% - Saving 12.04 MB of 185.49 MB
+2026-01-31T09:32:10.5120059Z Progress: 6% - Saving 12.2 MB of 185.49 MB
+2026-01-31T09:32:10.5239469Z Progress: 6% - Saving 12.36 MB of 185.49 MB
+2026-01-31T09:32:10.5368409Z Progress: 6% - Saving 12.51 MB of 185.49 MB
+2026-01-31T09:32:10.5369718Z Progress: 6% - Saving 12.67 MB of 185.49 MB
+2026-01-31T09:32:10.5370402Z Progress: 6% - Saving 12.82 MB of 185.49 MB
+2026-01-31T09:32:10.5371153Z Progress: 6% - Saving 12.98 MB of 185.49 MB
+2026-01-31T09:32:10.5375875Z Progress: 7% - Saving 13.14 MB of 185.49 MB
+2026-01-31T09:32:10.5376574Z Progress: 7% - Saving 13.29 MB of 185.49 MB
+2026-01-31T09:32:10.5377229Z Progress: 7% - Saving 13.45 MB of 185.49 MB
+2026-01-31T09:32:10.5377886Z Progress: 7% - Saving 13.61 MB of 185.49 MB
+2026-01-31T09:32:10.5382930Z Progress: 7% - Saving 13.76 MB of 185.49 MB
+2026-01-31T09:32:10.5383644Z Progress: 7% - Saving 13.92 MB of 185.49 MB
+2026-01-31T09:32:10.5384289Z Progress: 7% - Saving 14.07 MB of 185.49 MB
+2026-01-31T09:32:10.5384950Z Progress: 7% - Saving 14.23 MB of 185.49 MB
+2026-01-31T09:32:10.5385581Z Progress: 7% - Saving 14.39 MB of 185.49 MB
+2026-01-31T09:32:10.5386212Z Progress: 7% - Saving 14.54 MB of 185.49 MB
+2026-01-31T09:32:10.5386839Z Progress: 7% - Saving 14.7 MB of 185.49 MB
+2026-01-31T09:32:10.5387496Z Progress: 8% - Saving 14.86 MB of 185.49 MB
+2026-01-31T09:32:10.5388123Z Progress: 8% - Saving 15.01 MB of 185.49 MB
+2026-01-31T09:32:10.5393250Z Progress: 8% - Saving 15.17 MB of 185.49 MB
+2026-01-31T09:32:10.5394065Z Progress: 8% - Saving 15.32 MB of 185.49 MB
+2026-01-31T09:32:10.5394696Z Progress: 8% - Saving 15.48 MB of 185.49 MB
+2026-01-31T09:32:10.5395358Z Progress: 8% - Saving 15.64 MB of 185.49 MB
+2026-01-31T09:32:10.5396011Z Progress: 8% - Saving 15.79 MB of 185.49 MB
+2026-01-31T09:32:10.5400808Z Progress: 8% - Saving 15.95 MB of 185.49 MB
+2026-01-31T09:32:10.5401491Z Progress: 8% - Saving 16.11 MB of 185.49 MB
+2026-01-31T09:32:10.5402130Z Progress: 8% - Saving 16.26 MB of 185.49 MB
+2026-01-31T09:32:10.5402787Z Progress: 8% - Saving 16.42 MB of 185.49 MB
+2026-01-31T09:32:10.5403418Z Progress: 8% - Saving 16.57 MB of 185.49 MB
+2026-01-31T09:32:10.5407955Z Progress: 9% - Saving 16.73 MB of 185.49 MB
+2026-01-31T09:32:10.5436201Z Progress: 9% - Saving 16.89 MB of 185.49 MB
+2026-01-31T09:32:10.5437029Z Progress: 9% - Saving 17.04 MB of 185.49 MB
+2026-01-31T09:32:10.5437776Z Progress: 9% - Saving 17.2 MB of 185.49 MB
+2026-01-31T09:32:10.5454215Z Progress: 9% - Saving 17.36 MB of 185.49 MB
+2026-01-31T09:32:10.5455034Z Progress: 9% - Saving 17.51 MB of 185.49 MB
+2026-01-31T09:32:10.5456966Z Progress: 9% - Saving 17.67 MB of 185.49 MB
+2026-01-31T09:32:10.5457749Z Progress: 9% - Saving 17.82 MB of 185.49 MB
+2026-01-31T09:32:10.5458787Z Progress: 9% - Saving 17.98 MB of 185.49 MB
+2026-01-31T09:32:10.5459599Z Progress: 9% - Saving 18.14 MB of 185.49 MB
+2026-01-31T09:32:10.5460346Z Progress: 9% - Saving 18.29 MB of 185.49 MB
+2026-01-31T09:32:10.5461107Z Progress: 9% - Saving 18.45 MB of 185.49 MB
+2026-01-31T09:32:10.5461901Z Progress: 10% - Saving 18.61 MB of 185.49 MB
+2026-01-31T09:32:10.5462666Z Progress: 10% - Saving 18.76 MB of 185.49 MB
+2026-01-31T09:32:10.5463452Z Progress: 10% - Saving 18.92 MB of 185.49 MB
+2026-01-31T09:32:10.5464239Z Progress: 10% - Saving 19.07 MB of 185.49 MB
+2026-01-31T09:32:10.5465044Z Progress: 10% - Saving 19.23 MB of 185.49 MB
+2026-01-31T09:32:10.5465688Z Progress: 10% - Saving 19.39 MB of 185.49 MB
+2026-01-31T09:32:10.5466320Z Progress: 10% - Saving 19.54 MB of 185.49 MB
+2026-01-31T09:32:10.5475717Z Progress: 10% - Saving 19.7 MB of 185.49 MB
+2026-01-31T09:32:10.5478140Z Progress: 10% - Saving 19.86 MB of 185.49 MB
+2026-01-31T09:32:10.5478981Z Progress: 10% - Saving 20 MB of 185.49 MB
+2026-01-31T09:32:10.5479777Z Progress: 10% - Saving 20.15 MB of 185.49 MB
+2026-01-31T09:32:10.5480926Z Progress: 10% - Saving 20.31 MB of 185.49 MB
+2026-01-31T09:32:10.5481788Z Progress: 11% - Saving 20.47 MB of 185.49 MB
+2026-01-31T09:32:10.5482571Z Progress: 11% - Saving 20.62 MB of 185.49 MB
+2026-01-31T09:32:10.5483375Z Progress: 11% - Saving 20.78 MB of 185.49 MB
+2026-01-31T09:32:10.5484174Z Progress: 11% - Saving 20.94 MB of 185.49 MB
+2026-01-31T09:32:10.5484982Z Progress: 11% - Saving 21.09 MB of 185.49 MB
+2026-01-31T09:32:10.5487007Z Progress: 11% - Saving 21.25 MB of 185.49 MB
+2026-01-31T09:32:10.5496851Z Progress: 11% - Saving 21.4 MB of 185.49 MB
+2026-01-31T09:32:10.5498730Z Progress: 11% - Saving 21.56 MB of 185.49 MB
+2026-01-31T09:32:10.5499525Z Progress: 11% - Saving 21.72 MB of 185.49 MB
+2026-01-31T09:32:10.5500327Z Progress: 11% - Saving 21.87 MB of 185.49 MB
+2026-01-31T09:32:10.5501234Z Progress: 11% - Saving 22.03 MB of 185.49 MB
+2026-01-31T09:32:10.5502027Z Progress: 11% - Saving 22.19 MB of 185.49 MB
+2026-01-31T09:32:10.5502898Z Progress: 12% - Saving 22.34 MB of 185.49 MB
+2026-01-31T09:32:10.5503806Z Progress: 12% - Saving 22.5 MB of 185.49 MB
+2026-01-31T09:32:10.5518249Z Progress: 12% - Saving 22.65 MB of 185.49 MB
+2026-01-31T09:32:10.5562824Z Progress: 12% - Saving 22.81 MB of 185.49 MB
+2026-01-31T09:32:10.5588849Z Progress: 12% - Saving 22.97 MB of 185.49 MB
+2026-01-31T09:32:10.5592431Z Progress: 12% - Saving 23.12 MB of 185.49 MB
+2026-01-31T09:32:10.5606263Z Progress: 12% - Saving 23.28 MB of 185.49 MB
+2026-01-31T09:32:10.5625326Z Progress: 12% - Saving 23.44 MB of 185.49 MB
+2026-01-31T09:32:10.5670961Z Progress: 12% - Saving 23.59 MB of 185.49 MB
+2026-01-31T09:32:10.6008441Z Progress: 12% - Saving 23.75 MB of 185.49 MB
+2026-01-31T09:32:10.6366261Z Progress: 12% - Saving 23.9 MB of 185.49 MB
+2026-01-31T09:32:10.6611116Z Progress: 12% - Saving 24.06 MB of 185.49 MB
+2026-01-31T09:32:10.6612410Z Progress: 13% - Saving 24.22 MB of 185.49 MB
+2026-01-31T09:32:10.6613285Z Progress: 13% - Saving 24.37 MB of 185.49 MB
+2026-01-31T09:32:10.6614154Z Progress: 13% - Saving 24.53 MB of 185.49 MB
+2026-01-31T09:32:10.6619290Z Progress: 13% - Saving 24.69 MB of 185.49 MB
+2026-01-31T09:32:10.6620136Z Progress: 13% - Saving 24.84 MB of 185.49 MB
+2026-01-31T09:32:10.6620940Z Progress: 13% - Saving 25 MB of 185.49 MB
+2026-01-31T09:32:10.6621723Z Progress: 13% - Saving 25.15 MB of 185.49 MB
+2026-01-31T09:32:10.6622545Z Progress: 13% - Saving 25.31 MB of 185.49 MB
+2026-01-31T09:32:10.6625424Z Progress: 13% - Saving 25.47 MB of 185.49 MB
+2026-01-31T09:32:10.6626268Z Progress: 13% - Saving 25.62 MB of 185.49 MB
+2026-01-31T09:32:10.6712459Z Progress: 13% - Saving 25.78 MB of 185.49 MB
+2026-01-31T09:32:10.6858069Z Progress: 13% - Saving 25.94 MB of 185.49 MB
+2026-01-31T09:32:10.7089466Z Progress: 14% - Saving 26.09 MB of 185.49 MB
+2026-01-31T09:32:10.7477310Z Progress: 14% - Saving 26.25 MB of 185.49 MB
+2026-01-31T09:32:10.7879223Z Progress: 14% - Saving 26.4 MB of 185.49 MB
+2026-01-31T09:32:10.8033317Z Progress: 14% - Saving 26.56 MB of 185.49 MB
+2026-01-31T09:32:10.8794605Z Progress: 14% - Saving 26.72 MB of 185.49 MB
+2026-01-31T09:32:10.9144601Z Progress: 14% - Saving 26.87 MB of 185.49 MB
+2026-01-31T09:32:10.9236741Z Progress: 14% - Saving 27.03 MB of 185.49 MB
+2026-01-31T09:32:10.9259971Z Progress: 14% - Saving 27.19 MB of 185.49 MB
+2026-01-31T09:32:10.9261187Z Progress: 14% - Saving 27.34 MB of 185.49 MB
+2026-01-31T09:32:10.9304282Z Progress: 14% - Saving 27.5 MB of 185.49 MB
+2026-01-31T09:32:10.9310823Z Progress: 14% - Saving 27.65 MB of 185.49 MB
+2026-01-31T09:32:10.9311828Z Progress: 14% - Saving 27.81 MB of 185.49 MB
+2026-01-31T09:32:10.9314316Z Progress: 15% - Saving 27.97 MB of 185.49 MB
+2026-01-31T09:32:10.9578760Z Progress: 15% - Saving 28.12 MB of 185.49 MB
+2026-01-31T09:32:10.9938910Z Progress: 15% - Saving 28.28 MB of 185.49 MB
+2026-01-31T09:32:11.0000929Z Progress: 15% - Saving 28.44 MB of 185.49 MB
+2026-01-31T09:32:11.0002059Z Progress: 15% - Saving 28.59 MB of 185.49 MB
+2026-01-31T09:32:11.0003234Z Progress: 15% - Saving 28.75 MB of 185.49 MB
+2026-01-31T09:32:11.0006844Z Progress: 15% - Saving 28.9 MB of 185.49 MB
+2026-01-31T09:32:11.0007564Z Progress: 15% - Saving 29.06 MB of 185.49 MB
+2026-01-31T09:32:11.0008179Z Progress: 15% - Saving 29.22 MB of 185.49 MB
+2026-01-31T09:32:11.0008768Z Progress: 15% - Saving 29.37 MB of 185.49 MB
+2026-01-31T09:32:11.0009346Z Progress: 15% - Saving 29.53 MB of 185.49 MB
+2026-01-31T09:32:11.0009931Z Progress: 16% - Saving 29.69 MB of 185.49 MB
+2026-01-31T09:32:11.0010887Z Progress: 16% - Saving 29.84 MB of 185.49 MB
+2026-01-31T09:32:11.0011479Z Progress: 16% - Saving 30 MB of 185.49 MB
+2026-01-31T09:32:11.0012064Z Progress: 16% - Saving 30.14 MB of 185.49 MB
+2026-01-31T09:32:11.0012638Z Progress: 16% - Saving 30.3 MB of 185.49 MB
+2026-01-31T09:32:11.0013240Z Progress: 16% - Saving 30.45 MB of 185.49 MB
+2026-01-31T09:32:11.0013820Z Progress: 16% - Saving 30.61 MB of 185.49 MB
+2026-01-31T09:32:11.0014398Z Progress: 16% - Saving 30.76 MB of 185.49 MB
+2026-01-31T09:32:11.0015047Z Progress: 16% - Saving 30.92 MB of 185.49 MB
+2026-01-31T09:32:11.0015654Z Progress: 16% - Saving 31.08 MB of 185.49 MB
+2026-01-31T09:32:11.0016207Z Progress: 16% - Saving 31.23 MB of 185.49 MB
+2026-01-31T09:32:11.0016792Z Progress: 16% - Saving 31.39 MB of 185.49 MB
+2026-01-31T09:32:11.0017368Z Progress: 17% - Saving 31.55 MB of 185.49 MB
+2026-01-31T09:32:11.0018292Z Progress: 17% - Saving 31.7 MB of 185.49 MB
+2026-01-31T09:32:11.0018881Z Progress: 17% - Saving 31.86 MB of 185.49 MB
+2026-01-31T09:32:11.0019484Z Progress: 17% - Saving 32.01 MB of 185.49 MB
+2026-01-31T09:32:11.0020076Z Progress: 17% - Saving 32.17 MB of 185.49 MB
+2026-01-31T09:32:11.0020670Z Progress: 17% - Saving 32.33 MB of 185.49 MB
+2026-01-31T09:32:11.0021274Z Progress: 17% - Saving 32.48 MB of 185.49 MB
+2026-01-31T09:32:11.0021874Z Progress: 17% - Saving 32.64 MB of 185.49 MB
+2026-01-31T09:32:11.0022456Z Progress: 17% - Saving 32.8 MB of 185.49 MB
+2026-01-31T09:32:11.0023060Z Progress: 17% - Saving 32.95 MB of 185.49 MB
+2026-01-31T09:32:11.0023679Z Progress: 17% - Saving 33.11 MB of 185.49 MB
+2026-01-31T09:32:11.0024216Z Progress: 17% - Saving 33.26 MB of 185.49 MB
+2026-01-31T09:32:11.0024730Z Progress: 18% - Saving 33.42 MB of 185.49 MB
+2026-01-31T09:32:11.0025248Z Progress: 18% - Saving 33.58 MB of 185.49 MB
+2026-01-31T09:32:11.0025771Z Progress: 18% - Saving 33.73 MB of 185.49 MB
+2026-01-31T09:32:11.0026297Z Progress: 18% - Saving 33.89 MB of 185.49 MB
+2026-01-31T09:32:11.0026834Z Progress: 18% - Saving 34.05 MB of 185.49 MB
+2026-01-31T09:32:11.0027368Z Progress: 18% - Saving 34.2 MB of 185.49 MB
+2026-01-31T09:32:11.0027892Z Progress: 18% - Saving 34.36 MB of 185.49 MB
+2026-01-31T09:32:11.0028416Z Progress: 18% - Saving 34.51 MB of 185.49 MB
+2026-01-31T09:32:11.0028946Z Progress: 18% - Saving 34.67 MB of 185.49 MB
+2026-01-31T09:32:11.0029468Z Progress: 18% - Saving 34.83 MB of 185.49 MB
+2026-01-31T09:32:11.0029982Z Progress: 18% - Saving 34.98 MB of 185.49 MB
+2026-01-31T09:32:11.0030506Z Progress: 18% - Saving 35.14 MB of 185.49 MB
+2026-01-31T09:32:11.0031020Z Progress: 19% - Saving 35.3 MB of 185.49 MB
+2026-01-31T09:32:11.0031541Z Progress: 19% - Saving 35.45 MB of 185.49 MB
+2026-01-31T09:32:11.0032065Z Progress: 19% - Saving 35.61 MB of 185.49 MB
+2026-01-31T09:32:11.0032588Z Progress: 19% - Saving 35.76 MB of 185.49 MB
+2026-01-31T09:32:11.0033109Z Progress: 19% - Saving 35.92 MB of 185.49 MB
+2026-01-31T09:32:11.0033638Z Progress: 19% - Saving 36.08 MB of 185.49 MB
+2026-01-31T09:32:11.0034171Z Progress: 19% - Saving 36.23 MB of 185.49 MB
+2026-01-31T09:32:11.0034702Z Progress: 19% - Saving 36.39 MB of 185.49 MB
+2026-01-31T09:32:11.0035260Z Progress: 19% - Saving 36.55 MB of 185.49 MB
+2026-01-31T09:32:11.0035810Z Progress: 19% - Saving 36.7 MB of 185.49 MB
+2026-01-31T09:32:11.0036339Z Progress: 19% - Saving 36.86 MB of 185.49 MB
+2026-01-31T09:32:11.0036866Z Progress: 19% - Saving 37.01 MB of 185.49 MB
+2026-01-31T09:32:11.0037387Z Progress: 20% - Saving 37.17 MB of 185.49 MB
+2026-01-31T09:32:11.0039090Z Progress: 20% - Saving 37.33 MB of 185.49 MB
+2026-01-31T09:32:11.0039722Z Progress: 20% - Saving 37.48 MB of 185.49 MB
+2026-01-31T09:32:11.0040257Z Progress: 20% - Saving 37.64 MB of 185.49 MB
+2026-01-31T09:32:11.0040778Z Progress: 20% - Saving 37.8 MB of 185.49 MB
+2026-01-31T09:32:11.0041342Z Progress: 20% - Saving 37.95 MB of 185.49 MB
+2026-01-31T09:32:11.0041867Z Progress: 20% - Saving 38.11 MB of 185.49 MB
+2026-01-31T09:32:11.0042391Z Progress: 20% - Saving 38.26 MB of 185.49 MB
+2026-01-31T09:32:11.0043542Z Progress: 20% - Saving 38.42 MB of 185.49 MB
+2026-01-31T09:32:11.0044067Z Progress: 20% - Saving 38.58 MB of 185.49 MB
+2026-01-31T09:32:11.0044598Z Progress: 20% - Saving 38.73 MB of 185.49 MB
+2026-01-31T09:32:11.0045135Z Progress: 20% - Saving 38.89 MB of 185.49 MB
+2026-01-31T09:32:11.0045655Z Progress: 21% - Saving 39.05 MB of 185.49 MB
+2026-01-31T09:32:11.0046170Z Progress: 21% - Saving 39.2 MB of 185.49 MB
+2026-01-31T09:32:11.0046681Z Progress: 21% - Saving 39.36 MB of 185.49 MB
+2026-01-31T09:32:11.0047221Z Progress: 21% - Saving 39.51 MB of 185.49 MB
+2026-01-31T09:32:11.0047746Z Progress: 21% - Saving 39.67 MB of 185.49 MB
+2026-01-31T09:32:11.0048263Z Progress: 21% - Saving 39.83 MB of 185.49 MB
+2026-01-31T09:32:11.0048790Z Progress: 21% - Saving 39.98 MB of 185.49 MB
+2026-01-31T09:32:11.0049314Z Progress: 21% - Saving 40.12 MB of 185.49 MB
+2026-01-31T09:32:11.0049841Z Progress: 21% - Saving 40.28 MB of 185.49 MB
+2026-01-31T09:32:11.0050390Z Progress: 21% - Saving 40.44 MB of 185.49 MB
+2026-01-31T09:32:11.0050905Z Progress: 21% - Saving 40.59 MB of 185.49 MB
+2026-01-31T09:32:11.0051437Z Progress: 21% - Saving 40.75 MB of 185.49 MB
+2026-01-31T09:32:11.0051976Z Progress: 22% - Saving 40.91 MB of 185.49 MB
+2026-01-31T09:32:11.0730475Z Progress: 22% - Saving 41.06 MB of 185.49 MB
+2026-01-31T09:32:11.1120789Z Progress: 22% - Saving 41.22 MB of 185.49 MB
+2026-01-31T09:32:11.1415341Z Progress: 22% - Saving 41.37 MB of 185.49 MB
+2026-01-31T09:32:11.1504650Z Progress: 22% - Saving 41.53 MB of 185.49 MB
+2026-01-31T09:32:11.1877560Z Progress: 22% - Saving 41.69 MB of 185.49 MB
+2026-01-31T09:32:11.2063640Z Progress: 22% - Saving 41.84 MB of 185.49 MB
+2026-01-31T09:32:11.2064531Z Progress: 22% - Saving 42 MB of 185.49 MB
+2026-01-31T09:32:11.2065122Z Progress: 22% - Saving 42.16 MB of 185.49 MB
+2026-01-31T09:32:11.2065693Z Progress: 22% - Saving 42.31 MB of 185.49 MB
+2026-01-31T09:32:11.2066228Z Progress: 22% - Saving 42.47 MB of 185.49 MB
+2026-01-31T09:32:11.2066814Z Progress: 22% - Saving 42.62 MB of 185.49 MB
+2026-01-31T09:32:11.2067432Z Progress: 23% - Saving 42.78 MB of 185.49 MB
+2026-01-31T09:32:11.2067976Z Progress: 23% - Saving 42.94 MB of 185.49 MB
+2026-01-31T09:32:11.2068500Z Progress: 23% - Saving 43.09 MB of 185.49 MB
+2026-01-31T09:32:11.2069032Z Progress: 23% - Saving 43.25 MB of 185.49 MB
+2026-01-31T09:32:11.2069560Z Progress: 23% - Saving 43.41 MB of 185.49 MB
+2026-01-31T09:32:11.2070096Z Progress: 23% - Saving 43.56 MB of 185.49 MB
+2026-01-31T09:32:11.2070648Z Progress: 23% - Saving 43.72 MB of 185.49 MB
+2026-01-31T09:32:11.2071174Z Progress: 23% - Saving 43.87 MB of 185.49 MB
+2026-01-31T09:32:11.2071710Z Progress: 23% - Saving 44.03 MB of 185.49 MB
+2026-01-31T09:32:11.2072232Z Progress: 23% - Saving 44.19 MB of 185.49 MB
+2026-01-31T09:32:11.2072763Z Progress: 23% - Saving 44.34 MB of 185.49 MB
+2026-01-31T09:32:11.2073288Z Progress: 23% - Saving 44.5 MB of 185.49 MB
+2026-01-31T09:32:11.2073816Z Progress: 24% - Saving 44.66 MB of 185.49 MB
+2026-01-31T09:32:11.2074360Z Progress: 24% - Saving 44.81 MB of 185.49 MB
+2026-01-31T09:32:11.2074892Z Progress: 24% - Saving 44.97 MB of 185.49 MB
+2026-01-31T09:32:11.2075433Z Progress: 24% - Saving 45.12 MB of 185.49 MB
+2026-01-31T09:32:11.2075965Z Progress: 24% - Saving 45.28 MB of 185.49 MB
+2026-01-31T09:32:11.2076485Z Progress: 24% - Saving 45.44 MB of 185.49 MB
+2026-01-31T09:32:11.2077027Z Progress: 24% - Saving 45.59 MB of 185.49 MB
+2026-01-31T09:32:11.2077552Z Progress: 24% - Saving 45.75 MB of 185.49 MB
+2026-01-31T09:32:11.2078456Z Progress: 24% - Saving 45.91 MB of 185.49 MB
+2026-01-31T09:32:11.2079088Z Progress: 24% - Saving 46.06 MB of 185.49 MB
+2026-01-31T09:32:11.2079642Z Progress: 24% - Saving 46.22 MB of 185.49 MB
+2026-01-31T09:32:11.2080187Z Progress: 25% - Saving 46.37 MB of 185.49 MB
+2026-01-31T09:32:11.2080718Z Progress: 25% - Saving 46.53 MB of 185.49 MB
+2026-01-31T09:32:11.2081534Z Progress: 25% - Saving 46.69 MB of 185.49 MB
+2026-01-31T09:32:11.2082362Z Progress: 25% - Saving 46.84 MB of 185.49 MB
+2026-01-31T09:32:11.2082910Z Progress: 25% - Saving 47 MB of 185.49 MB
+2026-01-31T09:32:11.2083443Z Progress: 25% - Saving 47.16 MB of 185.49 MB
+2026-01-31T09:32:11.2083978Z Progress: 25% - Saving 47.31 MB of 185.49 MB
+2026-01-31T09:32:11.2084508Z Progress: 25% - Saving 47.47 MB of 185.49 MB
+2026-01-31T09:32:11.2085090Z Progress: 25% - Saving 47.62 MB of 185.49 MB
+2026-01-31T09:32:11.2085647Z Progress: 25% - Saving 47.78 MB of 185.49 MB
+2026-01-31T09:32:11.2086197Z Progress: 25% - Saving 47.94 MB of 185.49 MB
+2026-01-31T09:32:11.2086736Z Progress: 25% - Saving 48.09 MB of 185.49 MB
+2026-01-31T09:32:11.2087275Z Progress: 26% - Saving 48.25 MB of 185.49 MB
+2026-01-31T09:32:11.2087803Z Progress: 26% - Saving 48.41 MB of 185.49 MB
+2026-01-31T09:32:11.2088342Z Progress: 26% - Saving 48.56 MB of 185.49 MB
+2026-01-31T09:32:11.2088869Z Progress: 26% - Saving 48.72 MB of 185.49 MB
+2026-01-31T09:32:11.2089410Z Progress: 26% - Saving 48.87 MB of 185.49 MB
+2026-01-31T09:32:11.2089942Z Progress: 26% - Saving 49.03 MB of 185.49 MB
+2026-01-31T09:32:11.2090474Z Progress: 26% - Saving 49.19 MB of 185.49 MB
+2026-01-31T09:32:11.2090993Z Progress: 26% - Saving 49.34 MB of 185.49 MB
+2026-01-31T09:32:11.2091532Z Progress: 26% - Saving 49.5 MB of 185.49 MB
+2026-01-31T09:32:11.2092054Z Progress: 26% - Saving 49.66 MB of 185.49 MB
+2026-01-31T09:32:11.2092590Z Progress: 26% - Saving 49.81 MB of 185.49 MB
+2026-01-31T09:32:11.2093110Z Progress: 26% - Saving 49.97 MB of 185.49 MB
+2026-01-31T09:32:11.2093647Z Progress: 27% - Saving 50.09 MB of 185.49 MB
+2026-01-31T09:32:11.2094174Z Progress: 27% - Saving 50.25 MB of 185.49 MB
+2026-01-31T09:32:11.2094710Z Progress: 27% - Saving 50.4 MB of 185.49 MB
+2026-01-31T09:32:11.2095237Z Progress: 27% - Saving 50.55 MB of 185.49 MB
+2026-01-31T09:32:11.2095773Z Progress: 27% - Saving 50.7 MB of 185.49 MB
+2026-01-31T09:32:11.2096289Z Progress: 27% - Saving 50.86 MB of 185.49 MB
+2026-01-31T09:32:11.2096823Z Progress: 27% - Saving 51.01 MB of 185.49 MB
+2026-01-31T09:32:11.2097353Z Progress: 27% - Saving 51.17 MB of 185.49 MB
+2026-01-31T09:32:11.2097903Z Progress: 27% - Saving 51.33 MB of 185.49 MB
+2026-01-31T09:32:11.2098508Z Progress: 27% - Saving 51.47 MB of 185.49 MB
+2026-01-31T09:32:11.2099080Z Progress: 27% - Saving 51.62 MB of 185.49 MB
+2026-01-31T09:32:11.2099622Z Progress: 27% - Saving 51.78 MB of 185.49 MB
+2026-01-31T09:32:11.2100158Z Progress: 27% - Saving 51.93 MB of 185.49 MB
+2026-01-31T09:32:11.2100700Z Progress: 28% - Saving 52.09 MB of 185.49 MB
+2026-01-31T09:32:11.2101260Z Progress: 28% - Saving 52.24 MB of 185.49 MB
+2026-01-31T09:32:11.2101845Z Progress: 28% - Saving 52.4 MB of 185.49 MB
+2026-01-31T09:32:11.2102359Z Progress: 28% - Saving 52.56 MB of 185.49 MB
+2026-01-31T09:32:11.2102906Z Progress: 28% - Saving 52.71 MB of 185.49 MB
+2026-01-31T09:32:11.2103432Z Progress: 28% - Saving 52.87 MB of 185.49 MB
+2026-01-31T09:32:11.2103976Z Progress: 28% - Saving 53.03 MB of 185.49 MB
+2026-01-31T09:32:11.2104507Z Progress: 28% - Saving 53.18 MB of 185.49 MB
+2026-01-31T09:32:11.2105060Z Progress: 28% - Saving 53.34 MB of 185.49 MB
+2026-01-31T09:32:11.2105592Z Progress: 28% - Saving 53.49 MB of 185.49 MB
+2026-01-31T09:32:11.2106124Z Progress: 28% - Saving 53.65 MB of 185.49 MB
+2026-01-31T09:32:11.2106994Z Progress: 29% - Saving 53.81 MB of 185.49 MB
+2026-01-31T09:32:11.2107524Z Progress: 29% - Saving 53.95 MB of 185.49 MB
+2026-01-31T09:32:11.2108061Z Progress: 29% - Saving 54.11 MB of 185.49 MB
+2026-01-31T09:32:11.2108597Z Progress: 29% - Saving 54.26 MB of 185.49 MB
+2026-01-31T09:32:11.2109384Z Progress: 29% - Saving 54.42 MB of 185.49 MB
+2026-01-31T09:32:11.2109968Z Progress: 29% - Saving 54.58 MB of 185.49 MB
+2026-01-31T09:32:11.2110508Z Progress: 29% - Saving 54.73 MB of 185.49 MB
+2026-01-31T09:32:11.2111061Z Progress: 29% - Saving 54.89 MB of 185.49 MB
+2026-01-31T09:32:11.2111589Z Progress: 29% - Saving 55.05 MB of 185.49 MB
+2026-01-31T09:32:11.2525126Z Progress: 29% - Saving 55.2 MB of 185.49 MB
+2026-01-31T09:32:11.2584302Z Progress: 29% - Saving 55.36 MB of 185.49 MB
+2026-01-31T09:32:11.2585144Z Progress: 29% - Saving 55.51 MB of 185.49 MB
+2026-01-31T09:32:11.2585918Z Progress: 30% - Saving 55.67 MB of 185.49 MB
+2026-01-31T09:32:11.2586578Z Progress: 30% - Saving 55.83 MB of 185.49 MB
+2026-01-31T09:32:11.2587234Z Progress: 30% - Saving 55.98 MB of 185.49 MB
+2026-01-31T09:32:11.2597184Z Progress: 30% - Saving 56.14 MB of 185.49 MB
+2026-01-31T09:32:11.2597838Z Progress: 30% - Saving 56.3 MB of 185.49 MB
+2026-01-31T09:32:11.2598499Z Progress: 30% - Saving 56.45 MB of 185.49 MB
+2026-01-31T09:32:11.2599231Z Progress: 30% - Saving 56.61 MB of 185.49 MB
+2026-01-31T09:32:11.2599868Z Progress: 30% - Saving 56.76 MB of 185.49 MB
+2026-01-31T09:32:11.2612681Z Progress: 30% - Saving 56.92 MB of 185.49 MB
+2026-01-31T09:32:11.2622452Z Progress: 30% - Saving 57.08 MB of 185.49 MB
+2026-01-31T09:32:11.2623294Z Progress: 30% - Saving 57.23 MB of 185.49 MB
+2026-01-31T09:32:11.2623932Z Progress: 30% - Saving 57.39 MB of 185.49 MB
+2026-01-31T09:32:11.2624592Z Progress: 31% - Saving 57.55 MB of 185.49 MB
+2026-01-31T09:32:11.2625235Z Progress: 31% - Saving 57.7 MB of 185.49 MB
+2026-01-31T09:32:11.2625867Z Progress: 31% - Saving 57.86 MB of 185.49 MB
+2026-01-31T09:32:11.2626503Z Progress: 31% - Saving 58.01 MB of 185.49 MB
+2026-01-31T09:32:11.2627120Z Progress: 31% - Saving 58.17 MB of 185.49 MB
+2026-01-31T09:32:11.2627738Z Progress: 31% - Saving 58.33 MB of 185.49 MB
+2026-01-31T09:32:11.2628358Z Progress: 31% - Saving 58.48 MB of 185.49 MB
+2026-01-31T09:32:11.2629020Z Progress: 31% - Saving 58.64 MB of 185.49 MB
+2026-01-31T09:32:11.2629661Z Progress: 31% - Saving 58.8 MB of 185.49 MB
+2026-01-31T09:32:11.2630292Z Progress: 31% - Saving 58.95 MB of 185.49 MB
+2026-01-31T09:32:11.2630916Z Progress: 31% - Saving 59.11 MB of 185.49 MB
+2026-01-31T09:32:11.2631540Z Progress: 31% - Saving 59.26 MB of 185.49 MB
+2026-01-31T09:32:11.2632185Z Progress: 32% - Saving 59.42 MB of 185.49 MB
+2026-01-31T09:32:11.2632823Z Progress: 32% - Saving 59.58 MB of 185.49 MB
+2026-01-31T09:32:11.2633809Z Progress: 32% - Saving 59.72 MB of 185.49 MB
+2026-01-31T09:32:11.2634459Z Progress: 32% - Saving 59.87 MB of 185.49 MB
+2026-01-31T09:32:11.2635090Z Progress: 32% - Saving 60.02 MB of 185.49 MB
+2026-01-31T09:32:11.2635732Z Progress: 32% - Saving 60.17 MB of 185.49 MB
+2026-01-31T09:32:11.2636365Z Progress: 32% - Saving 60.33 MB of 185.49 MB
+2026-01-31T09:32:11.2637009Z Progress: 32% - Saving 60.48 MB of 185.49 MB
+2026-01-31T09:32:11.2637636Z Progress: 32% - Saving 60.64 MB of 185.49 MB
+2026-01-31T09:32:11.2638243Z Progress: 32% - Saving 60.8 MB of 185.49 MB
+2026-01-31T09:32:11.2638861Z Progress: 32% - Saving 60.95 MB of 185.49 MB
+2026-01-31T09:32:11.2639481Z Progress: 32% - Saving 61.11 MB of 185.49 MB
+2026-01-31T09:32:11.2640156Z Progress: 33% - Saving 61.27 MB of 185.49 MB
+2026-01-31T09:32:11.2640771Z Progress: 33% - Saving 61.42 MB of 185.49 MB
+2026-01-31T09:32:11.2641394Z Progress: 33% - Saving 61.58 MB of 185.49 MB
+2026-01-31T09:32:11.2642041Z Progress: 33% - Saving 61.73 MB of 185.49 MB
+2026-01-31T09:32:11.2642660Z Progress: 33% - Saving 61.89 MB of 185.49 MB
+2026-01-31T09:32:11.2643336Z Progress: 33% - Saving 62.05 MB of 185.49 MB
+2026-01-31T09:32:11.2643958Z Progress: 33% - Saving 62.2 MB of 185.49 MB
+2026-01-31T09:32:11.2644585Z Progress: 33% - Saving 62.36 MB of 185.49 MB
+2026-01-31T09:32:11.2645198Z Progress: 33% - Saving 62.52 MB of 185.49 MB
+2026-01-31T09:32:11.2645791Z Progress: 33% - Saving 62.67 MB of 185.49 MB
+2026-01-31T09:32:11.2646745Z Progress: 33% - Saving 62.83 MB of 185.49 MB
+2026-01-31T09:32:11.2647427Z Progress: 33% - Saving 62.98 MB of 185.49 MB
+2026-01-31T09:32:11.2648060Z Progress: 34% - Saving 63.14 MB of 185.49 MB
+2026-01-31T09:32:11.2648700Z Progress: 34% - Saving 63.3 MB of 185.49 MB
+2026-01-31T09:32:11.2649323Z Progress: 34% - Saving 63.45 MB of 185.49 MB
+2026-01-31T09:32:11.2649937Z Progress: 34% - Saving 63.61 MB of 185.49 MB
+2026-01-31T09:32:11.2650566Z Progress: 34% - Saving 63.77 MB of 185.49 MB
+2026-01-31T09:32:11.2651492Z Progress: 34% - Saving 63.92 MB of 185.49 MB
+2026-01-31T09:32:11.2652123Z Progress: 34% - Saving 64.08 MB of 185.49 MB
+2026-01-31T09:32:11.2652745Z Progress: 34% - Saving 64.23 MB of 185.49 MB
+2026-01-31T09:32:11.2653694Z Progress: 34% - Saving 64.39 MB of 185.49 MB
+2026-01-31T09:32:11.2654340Z Progress: 34% - Saving 64.55 MB of 185.49 MB
+2026-01-31T09:32:11.2654876Z Progress: 34% - Saving 64.7 MB of 185.49 MB
+2026-01-31T09:32:11.2655464Z Progress: 34% - Saving 64.86 MB of 185.49 MB
+2026-01-31T09:32:11.2656083Z Progress: 35% - Saving 65.02 MB of 185.49 MB
+2026-01-31T09:32:11.2656726Z Progress: 35% - Saving 65.17 MB of 185.49 MB
+2026-01-31T09:32:11.2657346Z Progress: 35% - Saving 65.33 MB of 185.49 MB
+2026-01-31T09:32:11.2657971Z Progress: 35% - Saving 65.48 MB of 185.49 MB
+2026-01-31T09:32:11.2658621Z Progress: 35% - Saving 65.64 MB of 185.49 MB
+2026-01-31T09:32:11.2908211Z Progress: 35% - Saving 65.8 MB of 185.49 MB
+2026-01-31T09:32:11.2909459Z Progress: 35% - Saving 65.95 MB of 185.49 MB
+2026-01-31T09:32:11.2972064Z Progress: 35% - Saving 66.11 MB of 185.49 MB
+2026-01-31T09:32:11.3355493Z Progress: 35% - Saving 66.27 MB of 185.49 MB
+2026-01-31T09:32:11.3368815Z Progress: 35% - Saving 66.42 MB of 185.49 MB
+2026-01-31T09:32:11.3681020Z Progress: 35% - Saving 66.58 MB of 185.49 MB
+2026-01-31T09:32:11.3877495Z Progress: 35% - Saving 66.73 MB of 185.49 MB
+2026-01-31T09:32:11.3878192Z Progress: 36% - Saving 66.89 MB of 185.49 MB
+2026-01-31T09:32:11.3878712Z Progress: 36% - Saving 67.05 MB of 185.49 MB
+2026-01-31T09:32:11.3879243Z Progress: 36% - Saving 67.2 MB of 185.49 MB
+2026-01-31T09:32:11.3879745Z Progress: 36% - Saving 67.36 MB of 185.49 MB
+2026-01-31T09:32:11.3880235Z Progress: 36% - Saving 67.52 MB of 185.49 MB
+2026-01-31T09:32:11.3880733Z Progress: 36% - Saving 67.67 MB of 185.49 MB
+2026-01-31T09:32:11.3881208Z Progress: 36% - Saving 67.83 MB of 185.49 MB
+2026-01-31T09:32:11.3881688Z Progress: 36% - Saving 67.98 MB of 185.49 MB
+2026-01-31T09:32:11.3882186Z Progress: 36% - Saving 68.14 MB of 185.49 MB
+2026-01-31T09:32:11.3882687Z Progress: 36% - Saving 68.3 MB of 185.49 MB
+2026-01-31T09:32:11.3883171Z Progress: 36% - Saving 68.45 MB of 185.49 MB
+2026-01-31T09:32:11.3883662Z Progress: 36% - Saving 68.61 MB of 185.49 MB
+2026-01-31T09:32:11.3884165Z Progress: 37% - Saving 68.77 MB of 185.49 MB
+2026-01-31T09:32:11.3884647Z Progress: 37% - Saving 68.92 MB of 185.49 MB
+2026-01-31T09:32:11.3885484Z Progress: 37% - Saving 69.08 MB of 185.49 MB
+2026-01-31T09:32:11.3886023Z Progress: 37% - Saving 69.23 MB of 185.49 MB
+2026-01-31T09:32:11.4508541Z Progress: 37% - Saving 69.39 MB of 185.49 MB
+2026-01-31T09:32:11.4847731Z Progress: 37% - Saving 69.55 MB of 185.49 MB
+2026-01-31T09:32:11.5182216Z Progress: 37% - Saving 69.7 MB of 185.49 MB
+2026-01-31T09:32:11.5280832Z Progress: 37% - Saving 69.86 MB of 185.49 MB
+2026-01-31T09:32:11.5289875Z Progress: 37% - Saving 70 MB of 185.49 MB
+2026-01-31T09:32:11.5290719Z Progress: 37% - Saving 70.03 MB of 185.49 MB
+2026-01-31T09:32:11.5291401Z Progress: 37% - Saving 70.05 MB of 185.49 MB
+2026-01-31T09:32:11.5292015Z Progress: 37% - Saving 70.06 MB of 185.49 MB
+2026-01-31T09:32:11.5299662Z Progress: 37% - Saving 70.22 MB of 185.49 MB
+2026-01-31T09:32:11.5300299Z Progress: 37% - Saving 70.37 MB of 185.49 MB
+2026-01-31T09:32:11.5300868Z Progress: 38% - Saving 70.53 MB of 185.49 MB
+2026-01-31T09:32:11.5301418Z Progress: 38% - Saving 70.69 MB of 185.49 MB
+2026-01-31T09:32:11.5303421Z Progress: 38% - Saving 70.84 MB of 185.49 MB
+2026-01-31T09:32:11.5424585Z Progress: 38% - Saving 71 MB of 185.49 MB
+2026-01-31T09:32:11.5425450Z Progress: 38% - Saving 71.15 MB of 185.49 MB
+2026-01-31T09:32:11.5426064Z Progress: 38% - Saving 71.31 MB of 185.49 MB
+2026-01-31T09:32:11.5426641Z Progress: 38% - Saving 71.47 MB of 185.49 MB
+2026-01-31T09:32:11.5427206Z Progress: 38% - Saving 71.62 MB of 185.49 MB
+2026-01-31T09:32:11.5427780Z Progress: 38% - Saving 71.78 MB of 185.49 MB
+2026-01-31T09:32:11.5673501Z Progress: 38% - Saving 71.94 MB of 185.49 MB
+2026-01-31T09:32:11.5674444Z Progress: 38% - Saving 72.09 MB of 185.49 MB
+2026-01-31T09:32:11.5674952Z Progress: 38% - Saving 72.25 MB of 185.49 MB
+2026-01-31T09:32:11.5675432Z Progress: 39% - Saving 72.4 MB of 185.49 MB
+2026-01-31T09:32:11.5675904Z Progress: 39% - Saving 72.56 MB of 185.49 MB
+2026-01-31T09:32:11.5676375Z Progress: 39% - Saving 72.72 MB of 185.49 MB
+2026-01-31T09:32:11.5676845Z Progress: 39% - Saving 72.87 MB of 185.49 MB
+2026-01-31T09:32:11.5677308Z Progress: 39% - Saving 73.03 MB of 185.49 MB
+2026-01-31T09:32:11.5677798Z Progress: 39% - Saving 73.19 MB of 185.49 MB
+2026-01-31T09:32:11.5678259Z Progress: 39% - Saving 73.34 MB of 185.49 MB
+2026-01-31T09:32:11.5678721Z Progress: 39% - Saving 73.5 MB of 185.49 MB
+2026-01-31T09:32:11.5679190Z Progress: 39% - Saving 73.65 MB of 185.49 MB
+2026-01-31T09:32:11.5679653Z Progress: 39% - Saving 73.81 MB of 185.49 MB
+2026-01-31T09:32:11.5680119Z Progress: 39% - Saving 73.97 MB of 185.49 MB
+2026-01-31T09:32:11.5680595Z Progress: 39% - Saving 74.12 MB of 185.49 MB
+2026-01-31T09:32:11.5681050Z Progress: 40% - Saving 74.28 MB of 185.49 MB
+2026-01-31T09:32:11.5681518Z Progress: 40% - Saving 74.44 MB of 185.49 MB
+2026-01-31T09:32:11.5681988Z Progress: 40% - Saving 74.59 MB of 185.49 MB
+2026-01-31T09:32:11.5682481Z Progress: 40% - Saving 74.75 MB of 185.49 MB
+2026-01-31T09:32:11.5682945Z Progress: 40% - Saving 74.9 MB of 185.49 MB
+2026-01-31T09:32:11.5683399Z Progress: 40% - Saving 75.06 MB of 185.49 MB
+2026-01-31T09:32:11.5683876Z Progress: 40% - Saving 75.22 MB of 185.49 MB
+2026-01-31T09:32:11.5703965Z Progress: 40% - Saving 75.37 MB of 185.49 MB
+2026-01-31T09:32:11.5704647Z Progress: 40% - Saving 75.53 MB of 185.49 MB
+2026-01-31T09:32:11.5705150Z Progress: 40% - Saving 75.69 MB of 185.49 MB
+2026-01-31T09:32:11.5705635Z Progress: 40% - Saving 75.84 MB of 185.49 MB
+2026-01-31T09:32:11.5706126Z Progress: 40% - Saving 76 MB of 185.49 MB
+2026-01-31T09:32:11.5706602Z Progress: 41% - Saving 76.15 MB of 185.49 MB
+2026-01-31T09:32:11.5707084Z Progress: 41% - Saving 76.31 MB of 185.49 MB
+2026-01-31T09:32:11.5708325Z Progress: 41% - Saving 76.47 MB of 185.49 MB
+2026-01-31T09:32:11.5708816Z Progress: 41% - Saving 76.62 MB of 185.49 MB
+2026-01-31T09:32:11.5709304Z Progress: 41% - Saving 76.78 MB of 185.49 MB
+2026-01-31T09:32:11.5709782Z Progress: 41% - Saving 76.94 MB of 185.49 MB
+2026-01-31T09:32:11.5710252Z Progress: 41% - Saving 77.09 MB of 185.49 MB
+2026-01-31T09:32:11.5710733Z Progress: 41% - Saving 77.25 MB of 185.49 MB
+2026-01-31T09:32:11.5711213Z Progress: 41% - Saving 77.4 MB of 185.49 MB
+2026-01-31T09:32:11.5711693Z Progress: 41% - Saving 77.56 MB of 185.49 MB
+2026-01-31T09:32:11.5712178Z Progress: 41% - Saving 77.72 MB of 185.49 MB
+2026-01-31T09:32:11.5712641Z Progress: 41% - Saving 77.87 MB of 185.49 MB
+2026-01-31T09:32:11.5713105Z Progress: 42% - Saving 78.03 MB of 185.49 MB
+2026-01-31T09:32:11.5713559Z Progress: 42% - Saving 78.19 MB of 185.49 MB
+2026-01-31T09:32:11.5714024Z Progress: 42% - Saving 78.34 MB of 185.49 MB
+2026-01-31T09:32:11.5714503Z Progress: 42% - Saving 78.5 MB of 185.49 MB
+2026-01-31T09:32:11.5714966Z Progress: 42% - Saving 78.65 MB of 185.49 MB
+2026-01-31T09:32:11.5715459Z Progress: 42% - Saving 78.81 MB of 185.49 MB
+2026-01-31T09:32:11.5715925Z Progress: 42% - Saving 78.97 MB of 185.49 MB
+2026-01-31T09:32:11.5716401Z Progress: 42% - Saving 79.12 MB of 185.49 MB
+2026-01-31T09:32:11.5716870Z Progress: 42% - Saving 79.28 MB of 185.49 MB
+2026-01-31T09:32:11.5717340Z Progress: 42% - Saving 79.44 MB of 185.49 MB
+2026-01-31T09:32:11.5718068Z Progress: 42% - Saving 79.59 MB of 185.49 MB
+2026-01-31T09:32:11.5718570Z Progress: 42% - Saving 79.75 MB of 185.49 MB
+2026-01-31T09:32:11.5719046Z Progress: 43% - Saving 79.9 MB of 185.49 MB
+2026-01-31T09:32:11.5719517Z Progress: 43% - Saving 80.05 MB of 185.49 MB
+2026-01-31T09:32:11.5719986Z Progress: 43% - Saving 80.2 MB of 185.49 MB
+2026-01-31T09:32:11.5720446Z Progress: 43% - Saving 80.36 MB of 185.49 MB
+2026-01-31T09:32:11.5721124Z Progress: 43% - Saving 80.51 MB of 185.49 MB
+2026-01-31T09:32:11.5721594Z Progress: 43% - Saving 80.67 MB of 185.49 MB
+2026-01-31T09:32:11.5722054Z Progress: 43% - Saving 80.83 MB of 185.49 MB
+2026-01-31T09:32:11.5722526Z Progress: 43% - Saving 80.98 MB of 185.49 MB
+2026-01-31T09:32:11.5723001Z Progress: 43% - Saving 81.14 MB of 185.49 MB
+2026-01-31T09:32:11.5723463Z Progress: 43% - Saving 81.29 MB of 185.49 MB
+2026-01-31T09:32:11.5723934Z Progress: 43% - Saving 81.45 MB of 185.49 MB
+2026-01-31T09:32:11.5724407Z Progress: 43% - Saving 81.61 MB of 185.49 MB
+2026-01-31T09:32:11.5724875Z Progress: 44% - Saving 81.76 MB of 185.49 MB
+2026-01-31T09:32:11.5725350Z Progress: 44% - Saving 81.92 MB of 185.49 MB
+2026-01-31T09:32:11.5725820Z Progress: 44% - Saving 82.08 MB of 185.49 MB
+2026-01-31T09:32:11.5726287Z Progress: 44% - Saving 82.23 MB of 185.49 MB
+2026-01-31T09:32:11.5726765Z Progress: 44% - Saving 82.39 MB of 185.49 MB
+2026-01-31T09:32:11.5727237Z Progress: 44% - Saving 82.54 MB of 185.49 MB
+2026-01-31T09:32:11.5728035Z Progress: 44% - Saving 82.7 MB of 185.49 MB
+2026-01-31T09:32:11.5728516Z Progress: 44% - Saving 82.86 MB of 185.49 MB
+2026-01-31T09:32:11.5728997Z Progress: 44% - Saving 83.01 MB of 185.49 MB
+2026-01-31T09:32:11.5729468Z Progress: 44% - Saving 83.17 MB of 185.49 MB
+2026-01-31T09:32:11.6339303Z Progress: 44% - Saving 83.33 MB of 185.49 MB
+2026-01-31T09:32:11.6773794Z Progress: 45% - Saving 83.48 MB of 185.49 MB
+2026-01-31T09:32:11.7156108Z Progress: 45% - Saving 83.64 MB of 185.49 MB
+2026-01-31T09:32:11.7197322Z Progress: 45% - Saving 83.79 MB of 185.49 MB
+2026-01-31T09:32:11.7198152Z Progress: 45% - Saving 83.95 MB of 185.49 MB
+2026-01-31T09:32:11.7198829Z Progress: 45% - Saving 84.11 MB of 185.49 MB
+2026-01-31T09:32:11.7199480Z Progress: 45% - Saving 84.26 MB of 185.49 MB
+2026-01-31T09:32:11.7200204Z Progress: 45% - Saving 84.42 MB of 185.49 MB
+2026-01-31T09:32:11.7205629Z Progress: 45% - Saving 84.58 MB of 185.49 MB
+2026-01-31T09:32:11.7206332Z Progress: 45% - Saving 84.73 MB of 185.49 MB
+2026-01-31T09:32:11.7207024Z Progress: 45% - Saving 84.89 MB of 185.49 MB
+2026-01-31T09:32:11.7207658Z Progress: 45% - Saving 85.04 MB of 185.49 MB
+2026-01-31T09:32:11.7208271Z Progress: 45% - Saving 85.2 MB of 185.49 MB
+2026-01-31T09:32:11.7208916Z Progress: 46% - Saving 85.36 MB of 185.49 MB
+2026-01-31T09:32:11.7212971Z Progress: 46% - Saving 85.51 MB of 185.49 MB
+2026-01-31T09:32:11.7213732Z Progress: 46% - Saving 85.67 MB of 185.49 MB
+2026-01-31T09:32:11.7214401Z Progress: 46% - Saving 85.83 MB of 185.49 MB
+2026-01-31T09:32:11.7215074Z Progress: 46% - Saving 85.98 MB of 185.49 MB
+2026-01-31T09:32:11.7216145Z Progress: 46% - Saving 86.14 MB of 185.49 MB
+2026-01-31T09:32:11.7221926Z Progress: 46% - Saving 86.29 MB of 185.49 MB
+2026-01-31T09:32:11.7222682Z Progress: 46% - Saving 86.45 MB of 185.49 MB
+2026-01-31T09:32:11.7223604Z Progress: 46% - Saving 86.61 MB of 185.49 MB
+2026-01-31T09:32:11.7225188Z Progress: 46% - Saving 86.76 MB of 185.49 MB
+2026-01-31T09:32:11.7225882Z Progress: 46% - Saving 86.92 MB of 185.49 MB
+2026-01-31T09:32:11.7226520Z Progress: 46% - Saving 87.08 MB of 185.49 MB
+2026-01-31T09:32:11.7227161Z Progress: 47% - Saving 87.23 MB of 185.49 MB
+2026-01-31T09:32:11.7243247Z Progress: 47% - Saving 87.39 MB of 185.49 MB
+2026-01-31T09:32:11.7244307Z Progress: 47% - Saving 87.54 MB of 185.49 MB
+2026-01-31T09:32:11.7244911Z Progress: 47% - Saving 87.7 MB of 185.49 MB
+2026-01-31T09:32:11.7245519Z Progress: 47% - Saving 87.86 MB of 185.49 MB
+2026-01-31T09:32:11.7246488Z Progress: 47% - Saving 88.01 MB of 185.49 MB
+2026-01-31T09:32:11.7247190Z Progress: 47% - Saving 88.17 MB of 185.49 MB
+2026-01-31T09:32:11.7247902Z Progress: 47% - Saving 88.33 MB of 185.49 MB
+2026-01-31T09:32:11.7248530Z Progress: 47% - Saving 88.48 MB of 185.49 MB
+2026-01-31T09:32:11.7249181Z Progress: 47% - Saving 88.64 MB of 185.49 MB
+2026-01-31T09:32:11.7249802Z Progress: 47% - Saving 88.79 MB of 185.49 MB
+2026-01-31T09:32:11.7250431Z Progress: 47% - Saving 88.95 MB of 185.49 MB
+2026-01-31T09:32:11.7251370Z Progress: 48% - Saving 89.11 MB of 185.49 MB
+2026-01-31T09:32:11.7251995Z Progress: 48% - Saving 89.26 MB of 185.49 MB
+2026-01-31T09:32:11.7252636Z Progress: 48% - Saving 89.42 MB of 185.49 MB
+2026-01-31T09:32:11.7253272Z Progress: 48% - Saving 89.58 MB of 185.49 MB
+2026-01-31T09:32:11.7253888Z Progress: 48% - Saving 89.73 MB of 185.49 MB
+2026-01-31T09:32:11.7254516Z Progress: 48% - Saving 89.89 MB of 185.49 MB
+2026-01-31T09:32:11.7255139Z Progress: 48% - Saving 90.03 MB of 185.49 MB
+2026-01-31T09:32:11.7255779Z Progress: 48% - Saving 90.19 MB of 185.49 MB
+2026-01-31T09:32:11.7256423Z Progress: 48% - Saving 90.34 MB of 185.49 MB
+2026-01-31T09:32:11.7257031Z Progress: 48% - Saving 90.5 MB of 185.49 MB
+2026-01-31T09:32:11.7257662Z Progress: 48% - Saving 90.64 MB of 185.49 MB
+2026-01-31T09:32:11.7258280Z Progress: 48% - Saving 90.8 MB of 185.49 MB
+2026-01-31T09:32:11.7258930Z Progress: 49% - Saving 90.95 MB of 185.49 MB
+2026-01-31T09:32:11.7259567Z Progress: 49% - Saving 91.11 MB of 185.49 MB
+2026-01-31T09:32:11.7260164Z Progress: 49% - Saving 91.26 MB of 185.49 MB
+2026-01-31T09:32:11.7260794Z Progress: 49% - Saving 91.42 MB of 185.49 MB
+2026-01-31T09:32:11.7261422Z Progress: 49% - Saving 91.58 MB of 185.49 MB
+2026-01-31T09:32:11.7262056Z Progress: 49% - Saving 91.73 MB of 185.49 MB
+2026-01-31T09:32:11.7262676Z Progress: 49% - Saving 91.89 MB of 185.49 MB
+2026-01-31T09:32:11.7263318Z Progress: 49% - Saving 92.05 MB of 185.49 MB
+2026-01-31T09:32:11.7264370Z Progress: 49% - Saving 92.2 MB of 185.49 MB
+2026-01-31T09:32:11.7265021Z Progress: 49% - Saving 92.36 MB of 185.49 MB
+2026-01-31T09:32:11.7265661Z Progress: 49% - Saving 92.51 MB of 185.49 MB
+2026-01-31T09:32:11.7266275Z Progress: 49% - Saving 92.67 MB of 185.49 MB
+2026-01-31T09:32:11.7266847Z Progress: 50% - Saving 92.83 MB of 185.49 MB
+2026-01-31T09:32:11.7267460Z Progress: 50% - Saving 92.98 MB of 185.49 MB
+2026-01-31T09:32:11.7268141Z Progress: 50% - Saving 93.14 MB of 185.49 MB
+2026-01-31T09:32:11.7268774Z Progress: 50% - Saving 93.3 MB of 185.49 MB
+2026-01-31T09:32:11.7269356Z Progress: 50% - Saving 93.45 MB of 185.49 MB
+2026-01-31T09:32:11.7269975Z Progress: 50% - Saving 93.61 MB of 185.49 MB
+2026-01-31T09:32:11.7270589Z Progress: 50% - Saving 93.76 MB of 185.49 MB
+2026-01-31T09:32:11.7271221Z Progress: 50% - Saving 93.92 MB of 185.49 MB
+2026-01-31T09:32:11.7271808Z Progress: 50% - Saving 94.08 MB of 185.49 MB
+2026-01-31T09:32:11.7272412Z Progress: 50% - Saving 94.23 MB of 185.49 MB
+2026-01-31T09:32:11.7273048Z Progress: 50% - Saving 94.39 MB of 185.49 MB
+2026-01-31T09:32:11.7273684Z Progress: 50% - Saving 94.55 MB of 185.49 MB
+2026-01-31T09:32:11.7274315Z Progress: 51% - Saving 94.7 MB of 185.49 MB
+2026-01-31T09:32:11.7274955Z Progress: 51% - Saving 94.86 MB of 185.49 MB
+2026-01-31T09:32:11.7275599Z Progress: 51% - Saving 95.01 MB of 185.49 MB
+2026-01-31T09:32:11.7276243Z Progress: 51% - Saving 95.17 MB of 185.49 MB
+2026-01-31T09:32:11.7276856Z Progress: 51% - Saving 95.33 MB of 185.49 MB
+2026-01-31T09:32:11.7277493Z Progress: 51% - Saving 95.48 MB of 185.49 MB
+2026-01-31T09:32:11.7278124Z Progress: 51% - Saving 95.64 MB of 185.49 MB
+2026-01-31T09:32:11.7278748Z Progress: 51% - Saving 95.8 MB of 185.49 MB
+2026-01-31T09:32:11.7279372Z Progress: 51% - Saving 95.95 MB of 185.49 MB
+2026-01-31T09:32:11.7279988Z Progress: 51% - Saving 96.11 MB of 185.49 MB
+2026-01-31T09:32:11.7280636Z Progress: 51% - Saving 96.26 MB of 185.49 MB
+2026-01-31T09:32:11.7281246Z Progress: 51% - Saving 96.42 MB of 185.49 MB
+2026-01-31T09:32:11.7282132Z Progress: 52% - Saving 96.58 MB of 185.49 MB
+2026-01-31T09:32:11.7282808Z Progress: 52% - Saving 96.73 MB of 185.49 MB
+2026-01-31T09:32:11.7283447Z Progress: 52% - Saving 96.89 MB of 185.49 MB
+2026-01-31T09:32:11.7287175Z Progress: 52% - Saving 97.05 MB of 185.49 MB
+2026-01-31T09:32:11.7287852Z Progress: 52% - Saving 97.2 MB of 185.49 MB
+2026-01-31T09:32:11.7288508Z Progress: 52% - Saving 97.36 MB of 185.49 MB
+2026-01-31T09:32:11.7289585Z Progress: 52% - Saving 97.51 MB of 185.49 MB
+2026-01-31T09:32:11.7290551Z Progress: 52% - Saving 97.67 MB of 185.49 MB
+2026-01-31T09:32:11.7291192Z Progress: 52% - Saving 97.83 MB of 185.49 MB
+2026-01-31T09:32:11.7291890Z Progress: 52% - Saving 97.98 MB of 185.49 MB
+2026-01-31T09:32:11.7292541Z Progress: 52% - Saving 98.14 MB of 185.49 MB
+2026-01-31T09:32:11.7293183Z Progress: 52% - Saving 98.3 MB of 185.49 MB
+2026-01-31T09:32:11.7294894Z Progress: 53% - Saving 98.45 MB of 185.49 MB
+2026-01-31T09:32:11.7296241Z Progress: 53% - Saving 98.61 MB of 185.49 MB
+2026-01-31T09:32:11.7296925Z Progress: 53% - Saving 98.76 MB of 185.49 MB
+2026-01-31T09:32:11.7297576Z Progress: 53% - Saving 98.92 MB of 185.49 MB
+2026-01-31T09:32:11.7298209Z Progress: 53% - Saving 99.08 MB of 185.49 MB
+2026-01-31T09:32:11.7298848Z Progress: 53% - Saving 99.23 MB of 185.49 MB
+2026-01-31T09:32:11.7299481Z Progress: 53% - Saving 99.39 MB of 185.49 MB
+2026-01-31T09:32:11.7300185Z Progress: 53% - Saving 99.55 MB of 185.49 MB
+2026-01-31T09:32:11.7300850Z Progress: 53% - Saving 99.7 MB of 185.49 MB
+2026-01-31T09:32:11.7301480Z Progress: 53% - Saving 99.86 MB of 185.49 MB
+2026-01-31T09:32:11.7302107Z Progress: 53% - Saving 100 MB of 185.49 MB
+2026-01-31T09:32:11.7302754Z Progress: 53% - Saving 100.15 MB of 185.49 MB
+2026-01-31T09:32:11.7303419Z Progress: 54% - Saving 100.31 MB of 185.49 MB
+2026-01-31T09:32:11.7304068Z Progress: 54% - Saving 100.47 MB of 185.49 MB
+2026-01-31T09:32:11.7304698Z Progress: 54% - Saving 100.62 MB of 185.49 MB
+2026-01-31T09:32:11.7305320Z Progress: 54% - Saving 100.78 MB of 185.49 MB
+2026-01-31T09:32:11.7305957Z Progress: 54% - Saving 100.94 MB of 185.49 MB
+2026-01-31T09:32:11.7306608Z Progress: 54% - Saving 101.09 MB of 185.49 MB
+2026-01-31T09:32:11.7307245Z Progress: 54% - Saving 101.25 MB of 185.49 MB
+2026-01-31T09:32:11.7307880Z Progress: 54% - Saving 101.4 MB of 185.49 MB
+2026-01-31T09:32:11.7308515Z Progress: 54% - Saving 101.56 MB of 185.49 MB
+2026-01-31T09:32:11.7309157Z Progress: 54% - Saving 101.72 MB of 185.49 MB
+2026-01-31T09:32:11.7309824Z Progress: 54% - Saving 101.87 MB of 185.49 MB
+2026-01-31T09:32:11.7310481Z Progress: 55% - Saving 102.03 MB of 185.49 MB
+2026-01-31T09:32:11.7311117Z Progress: 55% - Saving 102.19 MB of 185.49 MB
+2026-01-31T09:32:11.7311759Z Progress: 55% - Saving 102.34 MB of 185.49 MB
+2026-01-31T09:32:11.7312364Z Progress: 55% - Saving 102.5 MB of 185.49 MB
+2026-01-31T09:32:11.7312931Z Progress: 55% - Saving 102.65 MB of 185.49 MB
+2026-01-31T09:32:11.7313623Z Progress: 55% - Saving 102.81 MB of 185.49 MB
+2026-01-31T09:32:11.7314703Z Progress: 55% - Saving 102.97 MB of 185.49 MB
+2026-01-31T09:32:11.7315360Z Progress: 55% - Saving 103.12 MB of 185.49 MB
+2026-01-31T09:32:11.7315973Z Progress: 55% - Saving 103.28 MB of 185.49 MB
+2026-01-31T09:32:11.7316616Z Progress: 55% - Saving 103.44 MB of 185.49 MB
+2026-01-31T09:32:11.7317272Z Progress: 55% - Saving 103.59 MB of 185.49 MB
+2026-01-31T09:32:11.7317887Z Progress: 55% - Saving 103.75 MB of 185.49 MB
+2026-01-31T09:32:11.7318501Z Progress: 56% - Saving 103.9 MB of 185.49 MB
+2026-01-31T09:32:11.7319131Z Progress: 56% - Saving 104.06 MB of 185.49 MB
+2026-01-31T09:32:11.7319764Z Progress: 56% - Saving 104.22 MB of 185.49 MB
+2026-01-31T09:32:11.7320360Z Progress: 56% - Saving 104.37 MB of 185.49 MB
+2026-01-31T09:32:11.7320969Z Progress: 56% - Saving 104.53 MB of 185.49 MB
+2026-01-31T09:32:11.7321603Z Progress: 56% - Saving 104.69 MB of 185.49 MB
+2026-01-31T09:32:11.7322254Z Progress: 56% - Saving 104.84 MB of 185.49 MB
+2026-01-31T09:32:11.7323065Z Progress: 56% - Saving 105 MB of 185.49 MB
+2026-01-31T09:32:11.7323735Z Progress: 56% - Saving 105.15 MB of 185.49 MB
+2026-01-31T09:32:11.7324404Z Progress: 56% - Saving 105.31 MB of 185.49 MB
+2026-01-31T09:32:11.7325050Z Progress: 56% - Saving 105.47 MB of 185.49 MB
+2026-01-31T09:32:11.7325715Z Progress: 56% - Saving 105.62 MB of 185.49 MB
+2026-01-31T09:32:11.7326360Z Progress: 57% - Saving 105.78 MB of 185.49 MB
+2026-01-31T09:32:11.7327023Z Progress: 57% - Saving 105.94 MB of 185.49 MB
+2026-01-31T09:32:11.7327960Z Progress: 57% - Saving 106.09 MB of 185.49 MB
+2026-01-31T09:32:11.7328596Z Progress: 57% - Saving 106.25 MB of 185.49 MB
+2026-01-31T09:32:11.7329235Z Progress: 57% - Saving 106.4 MB of 185.49 MB
+2026-01-31T09:32:11.7335529Z Progress: 57% - Saving 106.56 MB of 185.49 MB
+2026-01-31T09:32:11.7336263Z Progress: 57% - Saving 106.72 MB of 185.49 MB
+2026-01-31T09:32:11.7336936Z Progress: 57% - Saving 106.87 MB of 185.49 MB
+2026-01-31T09:32:11.7337584Z Progress: 57% - Saving 107.03 MB of 185.49 MB
+2026-01-31T09:32:11.7338247Z Progress: 57% - Saving 107.19 MB of 185.49 MB
+2026-01-31T09:32:11.7354997Z Progress: 57% - Saving 107.34 MB of 185.49 MB
+2026-01-31T09:32:11.7361131Z Progress: 57% - Saving 107.5 MB of 185.49 MB
+2026-01-31T09:32:11.7361910Z Progress: 58% - Saving 107.65 MB of 185.49 MB
+2026-01-31T09:32:11.7362532Z Progress: 58% - Saving 107.81 MB of 185.49 MB
+2026-01-31T09:32:11.7494456Z Progress: 58% - Saving 107.97 MB of 185.49 MB
+2026-01-31T09:32:11.7821413Z Progress: 58% - Saving 108.12 MB of 185.49 MB
+2026-01-31T09:32:11.7947338Z Progress: 58% - Saving 108.28 MB of 185.49 MB
+2026-01-31T09:32:11.7948144Z Progress: 58% - Saving 108.44 MB of 185.49 MB
+2026-01-31T09:32:11.7948754Z Progress: 58% - Saving 108.59 MB of 185.49 MB
+2026-01-31T09:32:11.7949361Z Progress: 58% - Saving 108.75 MB of 185.49 MB
+2026-01-31T09:32:11.7949955Z Progress: 58% - Saving 108.9 MB of 185.49 MB
+2026-01-31T09:32:11.7950759Z Progress: 58% - Saving 109.06 MB of 185.49 MB
+2026-01-31T09:32:11.7951399Z Progress: 58% - Saving 109.22 MB of 185.49 MB
+2026-01-31T09:32:11.7951986Z Progress: 58% - Saving 109.37 MB of 185.49 MB
+2026-01-31T09:32:11.8105099Z Progress: 59% - Saving 109.53 MB of 185.49 MB
+2026-01-31T09:32:11.8105855Z Progress: 59% - Saving 109.69 MB of 185.49 MB
+2026-01-31T09:32:11.8106876Z Progress: 59% - Saving 109.84 MB of 185.49 MB
+2026-01-31T09:32:11.8107479Z Progress: 59% - Saving 110 MB of 185.49 MB
+2026-01-31T09:32:11.8108049Z Progress: 59% - Saving 110.14 MB of 185.49 MB
+2026-01-31T09:32:11.8108633Z Progress: 59% - Saving 110.29 MB of 185.49 MB
+2026-01-31T09:32:11.8109188Z Progress: 59% - Saving 110.45 MB of 185.49 MB
+2026-01-31T09:32:11.8109894Z Progress: 59% - Saving 110.61 MB of 185.49 MB
+2026-01-31T09:32:11.8110473Z Progress: 59% - Saving 110.75 MB of 185.49 MB
+2026-01-31T09:32:11.8111025Z Progress: 59% - Saving 110.9 MB of 185.49 MB
+2026-01-31T09:32:11.8111583Z Progress: 59% - Saving 111.04 MB of 185.49 MB
+2026-01-31T09:32:11.8112440Z Progress: 59% - Saving 111.2 MB of 185.49 MB
+2026-01-31T09:32:11.8113463Z Progress: 60% - Saving 111.36 MB of 185.49 MB
+2026-01-31T09:32:11.8114049Z Progress: 60% - Saving 111.5 MB of 185.49 MB
+2026-01-31T09:32:11.8114619Z Progress: 60% - Saving 111.65 MB of 185.49 MB
+2026-01-31T09:32:11.8116295Z Progress: 60% - Saving 111.81 MB of 185.49 MB
+2026-01-31T09:32:11.8116876Z Progress: 60% - Saving 111.97 MB of 185.49 MB
+2026-01-31T09:32:11.8118650Z Progress: 60% - Saving 112.12 MB of 185.49 MB
+2026-01-31T09:32:11.8119284Z Progress: 60% - Saving 112.28 MB of 185.49 MB
+2026-01-31T09:32:11.8119957Z Progress: 60% - Saving 112.43 MB of 185.49 MB
+2026-01-31T09:32:11.8120528Z Progress: 60% - Saving 112.59 MB of 185.49 MB
+2026-01-31T09:32:11.8121095Z Progress: 60% - Saving 112.75 MB of 185.49 MB
+2026-01-31T09:32:11.8121630Z Progress: 60% - Saving 112.9 MB of 185.49 MB
+2026-01-31T09:32:11.8122175Z Progress: 60% - Saving 113.06 MB of 185.49 MB
+2026-01-31T09:32:11.8122714Z Progress: 61% - Saving 113.22 MB of 185.49 MB
+2026-01-31T09:32:11.8190334Z Progress: 61% - Saving 113.37 MB of 185.49 MB
+2026-01-31T09:32:11.8191073Z Progress: 61% - Saving 113.53 MB of 185.49 MB
+2026-01-31T09:32:11.8191500Z Progress: 61% - Saving 113.68 MB of 185.49 MB
+2026-01-31T09:32:11.8191912Z Progress: 61% - Saving 113.84 MB of 185.49 MB
+2026-01-31T09:32:11.8192320Z Progress: 61% - Saving 114 MB of 185.49 MB
+2026-01-31T09:32:11.8192730Z Progress: 61% - Saving 114.15 MB of 185.49 MB
+2026-01-31T09:32:11.8193147Z Progress: 61% - Saving 114.31 MB of 185.49 MB
+2026-01-31T09:32:11.8193776Z Progress: 61% - Saving 114.47 MB of 185.49 MB
+2026-01-31T09:32:11.8194175Z Progress: 61% - Saving 114.62 MB of 185.49 MB
+2026-01-31T09:32:11.8195364Z Progress: 61% - Saving 114.78 MB of 185.49 MB
+2026-01-31T09:32:11.8195809Z Progress: 61% - Saving 114.93 MB of 185.49 MB
+2026-01-31T09:32:11.8196221Z Progress: 62% - Saving 115.09 MB of 185.49 MB
+2026-01-31T09:32:11.8196634Z Progress: 62% - Saving 115.25 MB of 185.49 MB
+2026-01-31T09:32:11.8197039Z Progress: 62% - Saving 115.4 MB of 185.49 MB
+2026-01-31T09:32:11.8197464Z Progress: 62% - Saving 115.56 MB of 185.49 MB
+2026-01-31T09:32:11.8197876Z Progress: 62% - Saving 115.72 MB of 185.49 MB
+2026-01-31T09:32:11.8198280Z Progress: 62% - Saving 115.87 MB of 185.49 MB
+2026-01-31T09:32:11.8198681Z Progress: 62% - Saving 116.03 MB of 185.49 MB
+2026-01-31T09:32:11.8199078Z Progress: 62% - Saving 116.18 MB of 185.49 MB
+2026-01-31T09:32:11.8299198Z Progress: 62% - Saving 116.34 MB of 185.49 MB
+2026-01-31T09:32:11.8308809Z Progress: 62% - Saving 116.5 MB of 185.49 MB
+2026-01-31T09:32:11.8309534Z Progress: 62% - Saving 116.65 MB of 185.49 MB
+2026-01-31T09:32:11.8310219Z Progress: 62% - Saving 116.81 MB of 185.49 MB
+2026-01-31T09:32:11.8310940Z Progress: 63% - Saving 116.97 MB of 185.49 MB
+2026-01-31T09:32:11.8323771Z Progress: 63% - Saving 117.12 MB of 185.49 MB
+2026-01-31T09:32:11.8340457Z Progress: 63% - Saving 117.28 MB of 185.49 MB
+2026-01-31T09:32:11.8355783Z Progress: 63% - Saving 117.43 MB of 185.49 MB
+2026-01-31T09:32:11.8372133Z Progress: 63% - Saving 117.59 MB of 185.49 MB
+2026-01-31T09:32:11.8407580Z Progress: 63% - Saving 117.75 MB of 185.49 MB
+2026-01-31T09:32:11.8420340Z Progress: 63% - Saving 117.9 MB of 185.49 MB
+2026-01-31T09:32:11.8434423Z Progress: 63% - Saving 118.06 MB of 185.49 MB
+2026-01-31T09:32:11.8453241Z Progress: 63% - Saving 118.22 MB of 185.49 MB
+2026-01-31T09:32:11.8468730Z Progress: 63% - Saving 118.37 MB of 185.49 MB
+2026-01-31T09:32:11.8485571Z Progress: 63% - Saving 118.53 MB of 185.49 MB
+2026-01-31T09:32:11.8507201Z Progress: 63% - Saving 118.68 MB of 185.49 MB
+2026-01-31T09:32:11.8527289Z Progress: 64% - Saving 118.84 MB of 185.49 MB
+2026-01-31T09:32:11.8543350Z Progress: 64% - Saving 119 MB of 185.49 MB
+2026-01-31T09:32:11.8556403Z Progress: 64% - Saving 119.15 MB of 185.49 MB
+2026-01-31T09:32:11.8572816Z Progress: 64% - Saving 119.31 MB of 185.49 MB
+2026-01-31T09:32:11.8587333Z Progress: 64% - Saving 119.47 MB of 185.49 MB
+2026-01-31T09:32:11.8600874Z Progress: 64% - Saving 119.62 MB of 185.49 MB
+2026-01-31T09:32:11.8631179Z Progress: 64% - Saving 119.78 MB of 185.49 MB
+2026-01-31T09:32:11.8643607Z Progress: 64% - Saving 119.93 MB of 185.49 MB
+2026-01-31T09:32:11.8657251Z Progress: 64% - Saving 120.08 MB of 185.49 MB
+2026-01-31T09:32:11.8673833Z Progress: 64% - Saving 120.23 MB of 185.49 MB
+2026-01-31T09:32:11.8687352Z Progress: 64% - Saving 120.39 MB of 185.49 MB
+2026-01-31T09:32:11.8702331Z Progress: 64% - Saving 120.54 MB of 185.49 MB
+2026-01-31T09:32:11.8717394Z Progress: 65% - Saving 120.7 MB of 185.49 MB
+2026-01-31T09:32:11.8736559Z Progress: 65% - Saving 120.86 MB of 185.49 MB
+2026-01-31T09:32:11.8755321Z Progress: 65% - Saving 121.01 MB of 185.49 MB
+2026-01-31T09:32:11.8770983Z Progress: 65% - Saving 121.17 MB of 185.49 MB
+2026-01-31T09:32:11.8791884Z Progress: 65% - Saving 121.33 MB of 185.49 MB
+2026-01-31T09:32:11.8805732Z Progress: 65% - Saving 121.48 MB of 185.49 MB
+2026-01-31T09:32:11.8823195Z Progress: 65% - Saving 121.64 MB of 185.49 MB
+2026-01-31T09:32:11.8848732Z Progress: 65% - Saving 121.79 MB of 185.49 MB
+2026-01-31T09:32:11.8860894Z Progress: 65% - Saving 121.95 MB of 185.49 MB
+2026-01-31T09:32:11.8905861Z Progress: 65% - Saving 122.11 MB of 185.49 MB
+2026-01-31T09:32:11.8906373Z Progress: 65% - Saving 122.26 MB of 185.49 MB
+2026-01-31T09:32:11.8939011Z Progress: 65% - Saving 122.42 MB of 185.49 MB
+2026-01-31T09:32:11.8944585Z Progress: 66% - Saving 122.58 MB of 185.49 MB
+2026-01-31T09:32:11.8962897Z Progress: 66% - Saving 122.73 MB of 185.49 MB
+2026-01-31T09:32:11.8977082Z Progress: 66% - Saving 122.89 MB of 185.49 MB
+2026-01-31T09:32:11.8993417Z Progress: 66% - Saving 123.04 MB of 185.49 MB
+2026-01-31T09:32:11.9006184Z Progress: 66% - Saving 123.2 MB of 185.49 MB
+2026-01-31T09:32:11.9024377Z Progress: 66% - Saving 123.36 MB of 185.49 MB
+2026-01-31T09:32:11.9037270Z Progress: 66% - Saving 123.51 MB of 185.49 MB
+2026-01-31T09:32:11.9070209Z Progress: 66% - Saving 123.67 MB of 185.49 MB
+2026-01-31T09:32:11.9084826Z Progress: 66% - Saving 123.83 MB of 185.49 MB
+2026-01-31T09:32:11.9097244Z Progress: 66% - Saving 123.98 MB of 185.49 MB
+2026-01-31T09:32:11.9113859Z Progress: 66% - Saving 124.14 MB of 185.49 MB
+2026-01-31T09:32:11.9127636Z Progress: 67% - Saving 124.29 MB of 185.49 MB
+2026-01-31T09:32:11.9142279Z Progress: 67% - Saving 124.45 MB of 185.49 MB
+2026-01-31T09:32:11.9159188Z Progress: 67% - Saving 124.61 MB of 185.49 MB
+2026-01-31T09:32:11.9186495Z Progress: 67% - Saving 124.76 MB of 185.49 MB
+2026-01-31T09:32:11.9201814Z Progress: 67% - Saving 124.92 MB of 185.49 MB
+2026-01-31T09:32:11.9216528Z Progress: 67% - Saving 125.08 MB of 185.49 MB
+2026-01-31T09:32:11.9230769Z Progress: 67% - Saving 125.23 MB of 185.49 MB
+2026-01-31T09:32:11.9246791Z Progress: 67% - Saving 125.39 MB of 185.49 MB
+2026-01-31T09:32:11.9265742Z Progress: 67% - Saving 125.54 MB of 185.49 MB
+2026-01-31T09:32:11.9284550Z Progress: 67% - Saving 125.7 MB of 185.49 MB
+2026-01-31T09:32:11.9299066Z Progress: 67% - Saving 125.86 MB of 185.49 MB
+2026-01-31T09:32:11.9313638Z Progress: 67% - Saving 126.01 MB of 185.49 MB
+2026-01-31T09:32:11.9327462Z Progress: 68% - Saving 126.17 MB of 185.49 MB
+2026-01-31T09:32:11.9339508Z Progress: 68% - Saving 126.33 MB of 185.49 MB
+2026-01-31T09:32:11.9354066Z Progress: 68% - Saving 126.48 MB of 185.49 MB
+2026-01-31T09:32:11.9525375Z Progress: 68% - Saving 126.64 MB of 185.49 MB
+2026-01-31T09:32:11.9619524Z Progress: 68% - Saving 126.79 MB of 185.49 MB
+2026-01-31T09:32:11.9637517Z Progress: 68% - Saving 126.95 MB of 185.49 MB
+2026-01-31T09:32:11.9698781Z Progress: 68% - Saving 127.11 MB of 185.49 MB
+2026-01-31T09:32:11.9803482Z Progress: 68% - Saving 127.26 MB of 185.49 MB
+2026-01-31T09:32:11.9804231Z Progress: 68% - Saving 127.42 MB of 185.49 MB
+2026-01-31T09:32:11.9804861Z Progress: 68% - Saving 127.58 MB of 185.49 MB
+2026-01-31T09:32:11.9805593Z Progress: 68% - Saving 127.73 MB of 185.49 MB
+2026-01-31T09:32:11.9806187Z Progress: 68% - Saving 127.89 MB of 185.49 MB
+2026-01-31T09:32:11.9806778Z Progress: 69% - Saving 128.04 MB of 185.49 MB
+2026-01-31T09:32:11.9807382Z Progress: 69% - Saving 128.2 MB of 185.49 MB
+2026-01-31T09:32:11.9807969Z Progress: 69% - Saving 128.36 MB of 185.49 MB
+2026-01-31T09:32:11.9808551Z Progress: 69% - Saving 128.51 MB of 185.49 MB
+2026-01-31T09:32:11.9809132Z Progress: 69% - Saving 128.67 MB of 185.49 MB
+2026-01-31T09:32:11.9809716Z Progress: 69% - Saving 128.83 MB of 185.49 MB
+2026-01-31T09:32:11.9810277Z Progress: 69% - Saving 128.98 MB of 185.49 MB
+2026-01-31T09:32:11.9810865Z Progress: 69% - Saving 129.14 MB of 185.49 MB
+2026-01-31T09:32:11.9811415Z Progress: 69% - Saving 129.29 MB of 185.49 MB
+2026-01-31T09:32:11.9811970Z Progress: 69% - Saving 129.45 MB of 185.49 MB
+2026-01-31T09:32:11.9812517Z Progress: 69% - Saving 129.61 MB of 185.49 MB
+2026-01-31T09:32:12.4029991Z Progress: 69% - Saving 129.76 MB of 185.49 MB
+2026-01-31T09:32:12.4386210Z Progress: 70% - Saving 129.92 MB of 185.49 MB
+2026-01-31T09:32:12.4743786Z Progress: 70% - Saving 130.06 MB of 185.49 MB
+2026-01-31T09:32:12.5156417Z Progress: 70% - Saving 130.22 MB of 185.49 MB
+2026-01-31T09:32:12.5306002Z Progress: 70% - Saving 130.37 MB of 185.49 MB
+2026-01-31T09:32:12.5306891Z Progress: 70% - Saving 130.53 MB of 185.49 MB
+2026-01-31T09:32:12.5307584Z Progress: 70% - Saving 130.69 MB of 185.49 MB
+2026-01-31T09:32:12.5308250Z Progress: 70% - Saving 130.84 MB of 185.49 MB
+2026-01-31T09:32:12.5308911Z Progress: 70% - Saving 131 MB of 185.49 MB
+2026-01-31T09:32:12.5336836Z Progress: 70% - Saving 131.15 MB of 185.49 MB
+2026-01-31T09:32:12.5337941Z Progress: 70% - Saving 131.31 MB of 185.49 MB
+2026-01-31T09:32:12.5338626Z Progress: 70% - Saving 131.47 MB of 185.49 MB
+2026-01-31T09:32:12.5901060Z Progress: 70% - Saving 131.62 MB of 185.49 MB
+2026-01-31T09:32:12.6172668Z Progress: 71% - Saving 131.78 MB of 185.49 MB
+2026-01-31T09:32:12.6173652Z Progress: 71% - Saving 131.94 MB of 185.49 MB
+2026-01-31T09:32:12.6174259Z Progress: 71% - Saving 132.09 MB of 185.49 MB
+2026-01-31T09:32:12.6174822Z Progress: 71% - Saving 132.25 MB of 185.49 MB
+2026-01-31T09:32:12.6176182Z Progress: 71% - Saving 132.4 MB of 185.49 MB
+2026-01-31T09:32:12.6346753Z Progress: 71% - Saving 132.56 MB of 185.49 MB
+2026-01-31T09:32:12.6347802Z Progress: 71% - Saving 132.72 MB of 185.49 MB
+2026-01-31T09:32:12.6357133Z Progress: 71% - Saving 132.87 MB of 185.49 MB
+2026-01-31T09:32:12.6358198Z Progress: 71% - Saving 133.03 MB of 185.49 MB
+2026-01-31T09:32:12.6583487Z Progress: 71% - Saving 133.19 MB of 185.49 MB
+2026-01-31T09:32:12.6810051Z Progress: 71% - Saving 133.34 MB of 185.49 MB
+2026-01-31T09:32:12.6810917Z Progress: 71% - Saving 133.5 MB of 185.49 MB
+2026-01-31T09:32:12.6811549Z Progress: 72% - Saving 133.65 MB of 185.49 MB
+2026-01-31T09:32:12.6912547Z Progress: 72% - Saving 133.81 MB of 185.49 MB
+2026-01-31T09:32:12.6913141Z Progress: 72% - Saving 133.97 MB of 185.49 MB
+2026-01-31T09:32:12.6913696Z Progress: 72% - Saving 134.12 MB of 185.49 MB
+2026-01-31T09:32:12.6914235Z Progress: 72% - Saving 134.28 MB of 185.49 MB
+2026-01-31T09:32:12.6914896Z Progress: 72% - Saving 134.44 MB of 185.49 MB
+2026-01-31T09:32:12.6961139Z Progress: 72% - Saving 134.59 MB of 185.49 MB
+2026-01-31T09:32:12.6961830Z Progress: 72% - Saving 134.75 MB of 185.49 MB
+2026-01-31T09:32:12.6962366Z Progress: 72% - Saving 134.9 MB of 185.49 MB
+2026-01-31T09:32:12.6963260Z Progress: 72% - Saving 135.06 MB of 185.49 MB
+2026-01-31T09:32:12.6963782Z Progress: 72% - Saving 135.22 MB of 185.49 MB
+2026-01-31T09:32:12.6964288Z Progress: 72% - Saving 135.37 MB of 185.49 MB
+2026-01-31T09:32:12.6964814Z Progress: 73% - Saving 135.53 MB of 185.49 MB
+2026-01-31T09:32:12.7011182Z Progress: 73% - Saving 135.69 MB of 185.49 MB
+2026-01-31T09:32:12.7011863Z Progress: 73% - Saving 135.84 MB of 185.49 MB
+2026-01-31T09:32:12.7012395Z Progress: 73% - Saving 136 MB of 185.49 MB
+2026-01-31T09:32:12.7012898Z Progress: 73% - Saving 136.15 MB of 185.49 MB
+2026-01-31T09:32:12.7013393Z Progress: 73% - Saving 136.31 MB of 185.49 MB
+2026-01-31T09:32:12.7013894Z Progress: 73% - Saving 136.47 MB of 185.49 MB
+2026-01-31T09:32:12.7014421Z Progress: 73% - Saving 136.62 MB of 185.49 MB
+2026-01-31T09:32:12.7014923Z Progress: 73% - Saving 136.78 MB of 185.49 MB
+2026-01-31T09:32:12.7015431Z Progress: 73% - Saving 136.94 MB of 185.49 MB
+2026-01-31T09:32:12.7015916Z Progress: 73% - Saving 137.09 MB of 185.49 MB
+2026-01-31T09:32:12.7016480Z Progress: 73% - Saving 137.25 MB of 185.49 MB
+2026-01-31T09:32:12.7017020Z Progress: 74% - Saving 137.4 MB of 185.49 MB
+2026-01-31T09:32:12.7186089Z Progress: 74% - Saving 137.56 MB of 185.49 MB
+2026-01-31T09:32:12.7186766Z Progress: 74% - Saving 137.72 MB of 185.49 MB
+2026-01-31T09:32:12.7187344Z Progress: 74% - Saving 137.87 MB of 185.49 MB
+2026-01-31T09:32:12.7191067Z Progress: 74% - Saving 138.03 MB of 185.49 MB
+2026-01-31T09:32:12.7191788Z Progress: 74% - Saving 138.19 MB of 185.49 MB
+2026-01-31T09:32:12.7192396Z Progress: 74% - Saving 138.34 MB of 185.49 MB
+2026-01-31T09:32:12.7192973Z Progress: 74% - Saving 138.5 MB of 185.49 MB
+2026-01-31T09:32:12.7276145Z Progress: 74% - Saving 138.65 MB of 185.49 MB
+2026-01-31T09:32:12.7277011Z Progress: 74% - Saving 138.81 MB of 185.49 MB
+2026-01-31T09:32:12.7286846Z Progress: 74% - Saving 138.97 MB of 185.49 MB
+2026-01-31T09:32:12.7663810Z Progress: 75% - Saving 139.12 MB of 185.49 MB
+2026-01-31T09:32:12.7851399Z Progress: 75% - Saving 139.28 MB of 185.49 MB
+2026-01-31T09:32:12.7852116Z Progress: 75% - Saving 139.44 MB of 185.49 MB
+2026-01-31T09:32:12.7853491Z Progress: 75% - Saving 139.59 MB of 185.49 MB
+2026-01-31T09:32:12.7854369Z Progress: 75% - Saving 139.75 MB of 185.49 MB
+2026-01-31T09:32:12.7854856Z Progress: 75% - Saving 139.9 MB of 185.49 MB
+2026-01-31T09:32:12.7855350Z Progress: 75% - Saving 140.05 MB of 185.49 MB
+2026-01-31T09:32:12.7855814Z Progress: 75% - Saving 140.2 MB of 185.49 MB
+2026-01-31T09:32:12.7856295Z Progress: 75% - Saving 140.36 MB of 185.49 MB
+2026-01-31T09:32:12.7856777Z Progress: 75% - Saving 140.51 MB of 185.49 MB
+2026-01-31T09:32:12.7857251Z Progress: 75% - Saving 140.67 MB of 185.49 MB
+2026-01-31T09:32:12.7857738Z Progress: 75% - Saving 140.83 MB of 185.49 MB
+2026-01-31T09:32:12.7858209Z Progress: 76% - Saving 140.98 MB of 185.49 MB
+2026-01-31T09:32:12.7858688Z Progress: 76% - Saving 141.14 MB of 185.49 MB
+2026-01-31T09:32:12.7859495Z Progress: 76% - Saving 141.29 MB of 185.49 MB
+2026-01-31T09:32:12.7860033Z Progress: 76% - Saving 141.45 MB of 185.49 MB
+2026-01-31T09:32:12.7862773Z Progress: 76% - Saving 141.61 MB of 185.49 MB
+2026-01-31T09:32:12.7863275Z Progress: 76% - Saving 141.76 MB of 185.49 MB
+2026-01-31T09:32:12.7863755Z Progress: 76% - Saving 141.92 MB of 185.49 MB
+2026-01-31T09:32:12.7864244Z Progress: 76% - Saving 142.08 MB of 185.49 MB
+2026-01-31T09:32:12.7864720Z Progress: 76% - Saving 142.23 MB of 185.49 MB
+2026-01-31T09:32:12.7865197Z Progress: 76% - Saving 142.39 MB of 185.49 MB
+2026-01-31T09:32:12.7865663Z Progress: 76% - Saving 142.54 MB of 185.49 MB
+2026-01-31T09:32:12.7866143Z Progress: 76% - Saving 142.7 MB of 185.49 MB
+2026-01-31T09:32:12.7866630Z Progress: 77% - Saving 142.86 MB of 185.49 MB
+2026-01-31T09:32:12.7867114Z Progress: 77% - Saving 143.01 MB of 185.49 MB
+2026-01-31T09:32:12.7869820Z Progress: 77% - Saving 143.17 MB of 185.49 MB
+2026-01-31T09:32:12.7870335Z Progress: 77% - Saving 143.33 MB of 185.49 MB
+2026-01-31T09:32:12.7870833Z Progress: 77% - Saving 143.48 MB of 185.49 MB
+2026-01-31T09:32:12.7871316Z Progress: 77% - Saving 143.64 MB of 185.49 MB
+2026-01-31T09:32:12.7871797Z Progress: 77% - Saving 143.79 MB of 185.49 MB
+2026-01-31T09:32:12.7872297Z Progress: 77% - Saving 143.95 MB of 185.49 MB
+2026-01-31T09:32:12.7872788Z Progress: 77% - Saving 144.11 MB of 185.49 MB
+2026-01-31T09:32:12.7873287Z Progress: 77% - Saving 144.26 MB of 185.49 MB
+2026-01-31T09:32:12.7873762Z Progress: 77% - Saving 144.42 MB of 185.49 MB
+2026-01-31T09:32:12.7874239Z Progress: 77% - Saving 144.58 MB of 185.49 MB
+2026-01-31T09:32:12.7874715Z Progress: 78% - Saving 144.73 MB of 185.49 MB
+2026-01-31T09:32:12.7875192Z Progress: 78% - Saving 144.89 MB of 185.49 MB
+2026-01-31T09:32:12.7875683Z Progress: 78% - Saving 145.04 MB of 185.49 MB
+2026-01-31T09:32:12.7876152Z Progress: 78% - Saving 145.2 MB of 185.49 MB
+2026-01-31T09:32:12.7878771Z Progress: 78% - Saving 145.36 MB of 185.49 MB
+2026-01-31T09:32:12.7879564Z Progress: 78% - Saving 145.51 MB of 185.49 MB
+2026-01-31T09:32:12.7880086Z Progress: 78% - Saving 145.67 MB of 185.49 MB
+2026-01-31T09:32:12.7880575Z Progress: 78% - Saving 145.83 MB of 185.49 MB
+2026-01-31T09:32:12.7881069Z Progress: 78% - Saving 145.98 MB of 185.49 MB
+2026-01-31T09:32:12.7881550Z Progress: 78% - Saving 146.14 MB of 185.49 MB
+2026-01-31T09:32:12.7882033Z Progress: 78% - Saving 146.29 MB of 185.49 MB
+2026-01-31T09:32:12.7882513Z Progress: 78% - Saving 146.45 MB of 185.49 MB
+2026-01-31T09:32:12.7976986Z Progress: 79% - Saving 146.61 MB of 185.49 MB
+2026-01-31T09:32:12.8399719Z Progress: 79% - Saving 146.76 MB of 185.49 MB
+2026-01-31T09:32:12.8640097Z Progress: 79% - Saving 146.92 MB of 185.49 MB
+2026-01-31T09:32:12.8641428Z Progress: 79% - Saving 147.08 MB of 185.49 MB
+2026-01-31T09:32:12.8642186Z Progress: 79% - Saving 147.23 MB of 185.49 MB
+2026-01-31T09:32:12.8642864Z Progress: 79% - Saving 147.39 MB of 185.49 MB
+2026-01-31T09:32:12.8643516Z Progress: 79% - Saving 147.54 MB of 185.49 MB
+2026-01-31T09:32:12.8644156Z Progress: 79% - Saving 147.7 MB of 185.49 MB
+2026-01-31T09:32:12.8644805Z Progress: 79% - Saving 147.86 MB of 185.49 MB
+2026-01-31T09:32:12.8645470Z Progress: 79% - Saving 148.01 MB of 185.49 MB
+2026-01-31T09:32:12.8682893Z Progress: 79% - Saving 148.17 MB of 185.49 MB
+2026-01-31T09:32:12.8683641Z Progress: 79% - Saving 148.33 MB of 185.49 MB
+2026-01-31T09:32:12.8684401Z Progress: 80% - Saving 148.48 MB of 185.49 MB
+2026-01-31T09:32:12.8685047Z Progress: 80% - Saving 148.64 MB of 185.49 MB
+2026-01-31T09:32:12.8685710Z Progress: 80% - Saving 148.79 MB of 185.49 MB
+2026-01-31T09:32:12.8686374Z Progress: 80% - Saving 148.95 MB of 185.49 MB
+2026-01-31T09:32:12.8687013Z Progress: 80% - Saving 149.11 MB of 185.49 MB
+2026-01-31T09:32:12.8687664Z Progress: 80% - Saving 149.26 MB of 185.49 MB
+2026-01-31T09:32:12.8688320Z Progress: 80% - Saving 149.42 MB of 185.49 MB
+2026-01-31T09:32:12.8688962Z Progress: 80% - Saving 149.58 MB of 185.49 MB
+2026-01-31T09:32:12.8689594Z Progress: 80% - Saving 149.73 MB of 185.49 MB
+2026-01-31T09:32:12.8690217Z Progress: 80% - Saving 149.89 MB of 185.49 MB
+2026-01-31T09:32:12.8690852Z Progress: 80% - Saving 150.03 MB of 185.49 MB
+2026-01-31T09:32:12.8691498Z Progress: 80% - Saving 150.18 MB of 185.49 MB
+2026-01-31T09:32:12.8692128Z Progress: 81% - Saving 150.34 MB of 185.49 MB
+2026-01-31T09:32:12.8692761Z Progress: 81% - Saving 150.5 MB of 185.49 MB
+2026-01-31T09:32:12.8693489Z Progress: 81% - Saving 150.65 MB of 185.49 MB
+2026-01-31T09:32:12.8694126Z Progress: 81% - Saving 150.81 MB of 185.49 MB
+2026-01-31T09:32:12.8694756Z Progress: 81% - Saving 150.97 MB of 185.49 MB
+2026-01-31T09:32:12.8695381Z Progress: 81% - Saving 151.12 MB of 185.49 MB
+2026-01-31T09:32:12.8696027Z Progress: 81% - Saving 151.28 MB of 185.49 MB
+2026-01-31T09:32:12.8696655Z Progress: 81% - Saving 151.43 MB of 185.49 MB
+2026-01-31T09:32:12.8701125Z Progress: 81% - Saving 151.59 MB of 185.49 MB
+2026-01-31T09:32:12.8701827Z Progress: 81% - Saving 151.75 MB of 185.49 MB
+2026-01-31T09:32:12.8702487Z Progress: 81% - Saving 151.9 MB of 185.49 MB
+2026-01-31T09:32:12.8703149Z Progress: 81% - Saving 152.06 MB of 185.49 MB
+2026-01-31T09:32:12.8703765Z Progress: 82% - Saving 152.22 MB of 185.49 MB
+2026-01-31T09:32:12.8704736Z Progress: 82% - Saving 152.37 MB of 185.49 MB
+2026-01-31T09:32:12.8705385Z Progress: 82% - Saving 152.53 MB of 185.49 MB
+2026-01-31T09:32:12.8707004Z Progress: 82% - Saving 152.68 MB of 185.49 MB
+2026-01-31T09:32:12.8707690Z Progress: 82% - Saving 152.84 MB of 185.49 MB
+2026-01-31T09:32:12.8708334Z Progress: 82% - Saving 153 MB of 185.49 MB
+2026-01-31T09:32:12.8708955Z Progress: 82% - Saving 153.15 MB of 185.49 MB
+2026-01-31T09:32:12.8709949Z Progress: 82% - Saving 153.31 MB of 185.49 MB
+2026-01-31T09:32:12.8710663Z Progress: 82% - Saving 153.47 MB of 185.49 MB
+2026-01-31T09:32:12.8711384Z Progress: 82% - Saving 153.62 MB of 185.49 MB
+2026-01-31T09:32:12.8712006Z Progress: 82% - Saving 153.78 MB of 185.49 MB
+2026-01-31T09:32:12.8712746Z Progress: 82% - Saving 153.93 MB of 185.49 MB
+2026-01-31T09:32:12.8713383Z Progress: 83% - Saving 154.09 MB of 185.49 MB
+2026-01-31T09:32:12.8714033Z Progress: 83% - Saving 154.25 MB of 185.49 MB
+2026-01-31T09:32:12.8714691Z Progress: 83% - Saving 154.4 MB of 185.49 MB
+2026-01-31T09:32:12.8715321Z Progress: 83% - Saving 154.56 MB of 185.49 MB
+2026-01-31T09:32:12.8715946Z Progress: 83% - Saving 154.72 MB of 185.49 MB
+2026-01-31T09:32:12.8716572Z Progress: 83% - Saving 154.87 MB of 185.49 MB
+2026-01-31T09:32:12.8717241Z Progress: 83% - Saving 155.03 MB of 185.49 MB
+2026-01-31T09:32:12.8717871Z Progress: 83% - Saving 155.18 MB of 185.49 MB
+2026-01-31T09:32:12.8718527Z Progress: 83% - Saving 155.34 MB of 185.49 MB
+2026-01-31T09:32:12.8719415Z Progress: 83% - Saving 155.5 MB of 185.49 MB
+2026-01-31T09:32:12.8720109Z Progress: 83% - Saving 155.65 MB of 185.49 MB
+2026-01-31T09:32:12.8720698Z Progress: 84% - Saving 155.81 MB of 185.49 MB
+2026-01-31T09:32:12.8721315Z Progress: 84% - Saving 155.97 MB of 185.49 MB
+2026-01-31T09:32:12.8721964Z Progress: 84% - Saving 156.12 MB of 185.49 MB
+2026-01-31T09:32:12.8722600Z Progress: 84% - Saving 156.28 MB of 185.49 MB
+2026-01-31T09:32:12.8723293Z Progress: 84% - Saving 156.43 MB of 185.49 MB
+2026-01-31T09:32:12.8724263Z Progress: 84% - Saving 156.59 MB of 185.49 MB
+2026-01-31T09:32:12.8724903Z Progress: 84% - Saving 156.75 MB of 185.49 MB
+2026-01-31T09:32:12.8725528Z Progress: 84% - Saving 156.9 MB of 185.49 MB
+2026-01-31T09:32:12.8726172Z Progress: 84% - Saving 157.06 MB of 185.49 MB
+2026-01-31T09:32:12.8726787Z Progress: 84% - Saving 157.22 MB of 185.49 MB
+2026-01-31T09:32:12.8727403Z Progress: 84% - Saving 157.37 MB of 185.49 MB
+2026-01-31T09:32:12.8728032Z Progress: 84% - Saving 157.53 MB of 185.49 MB
+2026-01-31T09:32:12.8728669Z Progress: 85% - Saving 157.68 MB of 185.49 MB
+2026-01-31T09:32:12.8729307Z Progress: 85% - Saving 157.84 MB of 185.49 MB
+2026-01-31T09:32:12.8730370Z Progress: 85% - Saving 158 MB of 185.49 MB
+2026-01-31T09:32:12.8731036Z Progress: 85% - Saving 158.15 MB of 185.49 MB
+2026-01-31T09:32:12.8731584Z Progress: 85% - Saving 158.31 MB of 185.49 MB
+2026-01-31T09:32:12.8732182Z Progress: 85% - Saving 158.47 MB of 185.49 MB
+2026-01-31T09:32:12.8732795Z Progress: 85% - Saving 158.62 MB of 185.49 MB
+2026-01-31T09:32:12.8733438Z Progress: 85% - Saving 158.78 MB of 185.49 MB
+2026-01-31T09:32:12.8734073Z Progress: 85% - Saving 158.93 MB of 185.49 MB
+2026-01-31T09:32:12.8734708Z Progress: 85% - Saving 159.09 MB of 185.49 MB
+2026-01-31T09:32:12.8735347Z Progress: 85% - Saving 159.25 MB of 185.49 MB
+2026-01-31T09:32:12.8735980Z Progress: 85% - Saving 159.4 MB of 185.49 MB
+2026-01-31T09:32:12.8736573Z Progress: 86% - Saving 159.56 MB of 185.49 MB
+2026-01-31T09:32:12.8737150Z Progress: 86% - Saving 159.72 MB of 185.49 MB
+2026-01-31T09:32:12.8737760Z Progress: 86% - Saving 159.87 MB of 185.49 MB
+2026-01-31T09:32:12.8747309Z Progress: 86% - Saving 160.02 MB of 185.49 MB
+2026-01-31T09:32:12.8747961Z Progress: 86% - Saving 160.17 MB of 185.49 MB
+2026-01-31T09:32:12.8748584Z Progress: 86% - Saving 160.33 MB of 185.49 MB
+2026-01-31T09:32:12.8749495Z Progress: 86% - Saving 160.48 MB of 185.49 MB
+2026-01-31T09:32:12.8750554Z Progress: 86% - Saving 160.64 MB of 185.49 MB
+2026-01-31T09:32:12.8751258Z Progress: 86% - Saving 160.79 MB of 185.49 MB
+2026-01-31T09:32:12.8751871Z Progress: 86% - Saving 160.95 MB of 185.49 MB
+2026-01-31T09:32:12.8752426Z Progress: 86% - Saving 161.11 MB of 185.49 MB
+2026-01-31T09:32:12.8753213Z Progress: 86% - Saving 161.26 MB of 185.49 MB
+2026-01-31T09:32:12.8753814Z Progress: 87% - Saving 161.42 MB of 185.49 MB
+2026-01-31T09:32:12.8754384Z Progress: 87% - Saving 161.58 MB of 185.49 MB
+2026-01-31T09:32:12.8755091Z Progress: 87% - Saving 161.73 MB of 185.49 MB
+2026-01-31T09:32:12.8755739Z Progress: 87% - Saving 161.89 MB of 185.49 MB
+2026-01-31T09:32:12.8756377Z Progress: 87% - Saving 162.04 MB of 185.49 MB
+2026-01-31T09:32:12.8757019Z Progress: 87% - Saving 162.2 MB of 185.49 MB
+2026-01-31T09:32:12.8757643Z Progress: 87% - Saving 162.36 MB of 185.49 MB
+2026-01-31T09:32:12.8758290Z Progress: 87% - Saving 162.51 MB of 185.49 MB
+2026-01-31T09:32:12.8758913Z Progress: 87% - Saving 162.67 MB of 185.49 MB
+2026-01-31T09:32:12.8759575Z Progress: 87% - Saving 162.83 MB of 185.49 MB
+2026-01-31T09:32:12.8760213Z Progress: 87% - Saving 162.98 MB of 185.49 MB
+2026-01-31T09:32:12.8760847Z Progress: 87% - Saving 163.14 MB of 185.49 MB
+2026-01-31T09:32:12.8761487Z Progress: 88% - Saving 163.29 MB of 185.49 MB
+2026-01-31T09:32:12.8762122Z Progress: 88% - Saving 163.45 MB of 185.49 MB
+2026-01-31T09:32:12.8762754Z Progress: 88% - Saving 163.61 MB of 185.49 MB
+2026-01-31T09:32:12.8763382Z Progress: 88% - Saving 163.76 MB of 185.49 MB
+2026-01-31T09:32:12.8764249Z Progress: 88% - Saving 163.92 MB of 185.49 MB
+2026-01-31T09:32:12.8764952Z Progress: 88% - Saving 164.08 MB of 185.49 MB
+2026-01-31T09:32:12.8765585Z Progress: 88% - Saving 164.23 MB of 185.49 MB
+2026-01-31T09:32:12.8766251Z Progress: 88% - Saving 164.39 MB of 185.49 MB
+2026-01-31T09:32:12.8766933Z Progress: 88% - Saving 164.54 MB of 185.49 MB
+2026-01-31T09:32:12.8767371Z Progress: 88% - Saving 164.7 MB of 185.49 MB
+2026-01-31T09:32:12.8768010Z Progress: 88% - Saving 164.86 MB of 185.49 MB
+2026-01-31T09:32:12.8768942Z Progress: 88% - Saving 165.01 MB of 185.49 MB
+2026-01-31T09:32:12.8769536Z Progress: 89% - Saving 165.17 MB of 185.49 MB
+2026-01-31T09:32:12.8770523Z Progress: 89% - Saving 165.33 MB of 185.49 MB
+2026-01-31T09:32:12.8771228Z Progress: 89% - Saving 165.48 MB of 185.49 MB
+2026-01-31T09:32:12.8771840Z Progress: 89% - Saving 165.64 MB of 185.49 MB
+2026-01-31T09:32:12.8772467Z Progress: 89% - Saving 165.79 MB of 185.49 MB
+2026-01-31T09:32:12.8773087Z Progress: 89% - Saving 165.95 MB of 185.49 MB
+2026-01-31T09:32:12.8773781Z Progress: 89% - Saving 166.11 MB of 185.49 MB
+2026-01-31T09:32:12.8774375Z Progress: 89% - Saving 166.26 MB of 185.49 MB
+2026-01-31T09:32:12.8774989Z Progress: 89% - Saving 166.42 MB of 185.49 MB
+2026-01-31T09:32:12.8775621Z Progress: 89% - Saving 166.58 MB of 185.49 MB
+2026-01-31T09:32:12.8776241Z Progress: 89% - Saving 166.73 MB of 185.49 MB
+2026-01-31T09:32:12.8776892Z Progress: 89% - Saving 166.89 MB of 185.49 MB
+2026-01-31T09:32:12.8777540Z Progress: 90% - Saving 167.04 MB of 185.49 MB
+2026-01-31T09:32:12.8778168Z Progress: 90% - Saving 167.2 MB of 185.49 MB
+2026-01-31T09:32:12.8778809Z Progress: 90% - Saving 167.36 MB of 185.49 MB
+2026-01-31T09:32:12.8779428Z Progress: 90% - Saving 167.51 MB of 185.49 MB
+2026-01-31T09:32:12.8780134Z Progress: 90% - Saving 167.67 MB of 185.49 MB
+2026-01-31T09:32:12.8782316Z Progress: 90% - Saving 167.83 MB of 185.49 MB
+2026-01-31T09:32:12.9087018Z Progress: 90% - Saving 167.98 MB of 185.49 MB
+2026-01-31T09:32:12.9446133Z Progress: 90% - Saving 168.14 MB of 185.49 MB
+2026-01-31T09:32:12.9505855Z Progress: 90% - Saving 168.29 MB of 185.49 MB
+2026-01-31T09:32:12.9722591Z Progress: 90% - Saving 168.45 MB of 185.49 MB
+2026-01-31T09:32:12.9724118Z Progress: 90% - Saving 168.61 MB of 185.49 MB
+2026-01-31T09:32:12.9724855Z Progress: 90% - Saving 168.76 MB of 185.49 MB
+2026-01-31T09:32:12.9725535Z Progress: 91% - Saving 168.92 MB of 185.49 MB
+2026-01-31T09:32:12.9726240Z Progress: 91% - Saving 169.08 MB of 185.49 MB
+2026-01-31T09:32:12.9726950Z Progress: 91% - Saving 169.23 MB of 185.49 MB
+2026-01-31T09:32:12.9727635Z Progress: 91% - Saving 169.39 MB of 185.49 MB
+2026-01-31T09:32:12.9728312Z Progress: 91% - Saving 169.54 MB of 185.49 MB
+2026-01-31T09:32:12.9728981Z Progress: 91% - Saving 169.7 MB of 185.49 MB
+2026-01-31T09:32:12.9729656Z Progress: 91% - Saving 169.86 MB of 185.49 MB
+2026-01-31T09:32:12.9730320Z Progress: 91% - Saving 170 MB of 185.49 MB
+2026-01-31T09:32:12.9730990Z Progress: 91% - Saving 170.02 MB of 185.49 MB
+2026-01-31T09:32:12.9794240Z Progress: 91% - Saving 170.12 MB of 185.49 MB
+2026-01-31T09:32:12.9794932Z Progress: 91% - Saving 170.28 MB of 185.49 MB
+2026-01-31T09:32:12.9795902Z Progress: 91% - Saving 170.42 MB of 185.49 MB
+2026-01-31T09:32:12.9796589Z Progress: 91% - Saving 170.58 MB of 185.49 MB
+2026-01-31T09:32:12.9797225Z Progress: 92% - Saving 170.73 MB of 185.49 MB
+2026-01-31T09:32:12.9806740Z Progress: 92% - Saving 170.87 MB of 185.49 MB
+2026-01-31T09:32:12.9807513Z Progress: 92% - Saving 171.03 MB of 185.49 MB
+2026-01-31T09:32:12.9808189Z Progress: 92% - Saving 171.18 MB of 185.49 MB
+2026-01-31T09:32:12.9808873Z Progress: 92% - Saving 171.34 MB of 185.49 MB
+2026-01-31T09:32:12.9809544Z Progress: 92% - Saving 171.5 MB of 185.49 MB
+2026-01-31T09:32:12.9810223Z Progress: 92% - Saving 171.65 MB of 185.49 MB
+2026-01-31T09:32:12.9810875Z Progress: 92% - Saving 171.81 MB of 185.49 MB
+2026-01-31T09:32:12.9833261Z Progress: 92% - Saving 171.97 MB of 185.49 MB
+2026-01-31T09:32:12.9834275Z Progress: 92% - Saving 172.12 MB of 185.49 MB
+2026-01-31T09:32:12.9835009Z Progress: 92% - Saving 172.28 MB of 185.49 MB
+2026-01-31T09:32:12.9835694Z Progress: 92% - Saving 172.43 MB of 185.49 MB
+2026-01-31T09:32:13.0133379Z Progress: 93% - Saving 172.59 MB of 185.49 MB
+2026-01-31T09:32:13.0341377Z Progress: 93% - Saving 172.75 MB of 185.49 MB
+2026-01-31T09:32:13.0522375Z Progress: 93% - Saving 172.9 MB of 185.49 MB
+2026-01-31T09:32:13.0596310Z Progress: 93% - Saving 173.04 MB of 185.49 MB
+2026-01-31T09:32:13.0597517Z Progress: 93% - Saving 173.2 MB of 185.49 MB
+2026-01-31T09:32:13.0598230Z Progress: 93% - Saving 173.36 MB of 185.49 MB
+2026-01-31T09:32:13.0599347Z Progress: 93% - Saving 173.51 MB of 185.49 MB
+2026-01-31T09:32:13.0903594Z Progress: 93% - Saving 173.67 MB of 185.49 MB
+2026-01-31T09:32:13.1061743Z Progress: 93% - Saving 173.83 MB of 185.49 MB
+2026-01-31T09:32:13.1063728Z Progress: 93% - Saving 173.98 MB of 185.49 MB
+2026-01-31T09:32:13.1064931Z Progress: 93% - Saving 174.14 MB of 185.49 MB
+2026-01-31T09:32:13.1068188Z Progress: 93% - Saving 174.29 MB of 185.49 MB
+2026-01-31T09:32:13.1068815Z Progress: 94% - Saving 174.45 MB of 185.49 MB
+2026-01-31T09:32:13.1069383Z Progress: 94% - Saving 174.61 MB of 185.49 MB
+2026-01-31T09:32:13.1069971Z Progress: 94% - Saving 174.76 MB of 185.49 MB
+2026-01-31T09:32:13.1070562Z Progress: 94% - Saving 174.9 MB of 185.49 MB
+2026-01-31T09:32:13.1071117Z Progress: 94% - Saving 175.06 MB of 185.49 MB
+2026-01-31T09:32:13.1071714Z Progress: 94% - Saving 175.22 MB of 185.49 MB
+2026-01-31T09:32:13.1076323Z Progress: 94% - Saving 175.37 MB of 185.49 MB
+2026-01-31T09:32:13.1077006Z Progress: 94% - Saving 175.53 MB of 185.49 MB
+2026-01-31T09:32:13.1077642Z Progress: 94% - Saving 175.68 MB of 185.49 MB
+2026-01-31T09:32:13.1078237Z Progress: 94% - Saving 175.84 MB of 185.49 MB
+2026-01-31T09:32:13.1078842Z Progress: 94% - Saving 176 MB of 185.49 MB
+2026-01-31T09:32:13.1079739Z Progress: 94% - Saving 176.14 MB of 185.49 MB
+2026-01-31T09:32:13.1080331Z Progress: 95% - Saving 176.29 MB of 185.49 MB
+2026-01-31T09:32:13.1080912Z Progress: 95% - Saving 176.45 MB of 185.49 MB
+2026-01-31T09:32:13.1081516Z Progress: 95% - Saving 176.61 MB of 185.49 MB
+2026-01-31T09:32:13.1082077Z Progress: 95% - Saving 176.76 MB of 185.49 MB
+2026-01-31T09:32:13.1082627Z Progress: 95% - Saving 176.92 MB of 185.49 MB
+2026-01-31T09:32:13.1083187Z Progress: 95% - Saving 177.08 MB of 185.49 MB
+2026-01-31T09:32:13.1083753Z Progress: 95% - Saving 177.23 MB of 185.49 MB
+2026-01-31T09:32:13.1084330Z Progress: 95% - Saving 177.39 MB of 185.49 MB
+2026-01-31T09:32:13.1085178Z Progress: 95% - Saving 177.54 MB of 185.49 MB
+2026-01-31T09:32:13.1085738Z Progress: 95% - Saving 177.7 MB of 185.49 MB
+2026-01-31T09:32:13.1086299Z Progress: 95% - Saving 177.86 MB of 185.49 MB
+2026-01-31T09:32:13.1086855Z Progress: 95% - Saving 178.01 MB of 185.49 MB
+2026-01-31T09:32:13.1087427Z Progress: 96% - Saving 178.17 MB of 185.49 MB
+2026-01-31T09:32:13.1088015Z Progress: 96% - Saving 178.33 MB of 185.49 MB
+2026-01-31T09:32:13.1088593Z Progress: 96% - Saving 178.48 MB of 185.49 MB
+2026-01-31T09:32:13.1089149Z Progress: 96% - Saving 178.64 MB of 185.49 MB
+2026-01-31T09:32:13.1089988Z Progress: 96% - Saving 178.79 MB of 185.49 MB
+2026-01-31T09:32:13.1090637Z Progress: 96% - Saving 178.95 MB of 185.49 MB
+2026-01-31T09:32:13.1091197Z Progress: 96% - Saving 179.11 MB of 185.49 MB
+2026-01-31T09:32:13.1091731Z Progress: 96% - Saving 179.26 MB of 185.49 MB
+2026-01-31T09:32:13.1092287Z Progress: 96% - Saving 179.42 MB of 185.49 MB
+2026-01-31T09:32:13.1092865Z Progress: 96% - Saving 179.58 MB of 185.49 MB
+2026-01-31T09:32:13.1093407Z Progress: 96% - Saving 179.73 MB of 185.49 MB
+2026-01-31T09:32:13.1093941Z Progress: 96% - Saving 179.89 MB of 185.49 MB
+2026-01-31T09:32:13.1094478Z Progress: 97% - Saving 180.03 MB of 185.49 MB
+2026-01-31T09:32:13.1095826Z Progress: 97% - Saving 180.18 MB of 185.49 MB
+2026-01-31T09:32:13.1096424Z Progress: 97% - Saving 180.33 MB of 185.49 MB
+2026-01-31T09:32:13.1097264Z Progress: 97% - Saving 180.48 MB of 185.49 MB
+2026-01-31T09:32:13.1097839Z Progress: 97% - Saving 180.64 MB of 185.49 MB
+2026-01-31T09:32:13.1098391Z Progress: 97% - Saving 180.79 MB of 185.49 MB
+2026-01-31T09:32:13.1098936Z Progress: 97% - Saving 180.95 MB of 185.49 MB
+2026-01-31T09:32:13.1099464Z Progress: 97% - Saving 181.11 MB of 185.49 MB
+2026-01-31T09:32:13.1100010Z Progress: 97% - Saving 181.26 MB of 185.49 MB
+2026-01-31T09:32:13.1100545Z Progress: 97% - Saving 181.42 MB of 185.49 MB
+2026-01-31T09:32:13.1101323Z Progress: 97% - Saving 181.57 MB of 185.49 MB
+2026-01-31T09:32:13.1101871Z Progress: 97% - Saving 181.73 MB of 185.49 MB
+2026-01-31T09:32:13.1102413Z Progress: 98% - Saving 181.89 MB of 185.49 MB
+2026-01-31T09:32:13.1102955Z Progress: 98% - Saving 182.04 MB of 185.49 MB
+2026-01-31T09:32:13.1103494Z Progress: 98% - Saving 182.2 MB of 185.49 MB
+2026-01-31T09:32:13.1104050Z Progress: 98% - Saving 182.36 MB of 185.49 MB
+2026-01-31T09:32:13.1104587Z Progress: 98% - Saving 182.51 MB of 185.49 MB
+2026-01-31T09:32:13.1105148Z Progress: 98% - Saving 182.67 MB of 185.49 MB
+2026-01-31T09:32:13.1105701Z Progress: 98% - Saving 182.82 MB of 185.49 MB
+2026-01-31T09:32:13.1106230Z Progress: 98% - Saving 182.98 MB of 185.49 MB
+2026-01-31T09:32:13.1106763Z Progress: 98% - Saving 183.14 MB of 185.49 MB
+2026-01-31T09:32:13.1107298Z Progress: 98% - Saving 183.29 MB of 185.49 MB
+2026-01-31T09:32:13.1107833Z Progress: 98% - Saving 183.45 MB of 185.49 MB
+2026-01-31T09:32:13.1108428Z Progress: 98% - Saving 183.61 MB of 185.49 MB
+2026-01-31T09:32:13.1108955Z Progress: 99% - Saving 183.76 MB of 185.49 MB
+2026-01-31T09:32:13.1109495Z Progress: 99% - Saving 183.92 MB of 185.49 MB
+2026-01-31T09:32:13.1110038Z Progress: 99% - Saving 184.07 MB of 185.49 MB
+2026-01-31T09:32:13.1110582Z Progress: 99% - Saving 184.23 MB of 185.49 MB
+2026-01-31T09:32:13.1111117Z Progress: 99% - Saving 184.39 MB of 185.49 MB
+2026-01-31T09:32:13.1111656Z Progress: 99% - Saving 184.54 MB of 185.49 MB
+2026-01-31T09:32:13.1112213Z Progress: 99% - Saving 184.7 MB of 185.49 MB
+2026-01-31T09:32:13.1112802Z Progress: 99% - Saving 184.86 MB of 185.49 MB
+2026-01-31T09:32:13.1113355Z Progress: 99% - Saving 185.01 MB of 185.49 MB
+2026-01-31T09:32:13.1113912Z Progress: 99% - Saving 185.17 MB of 185.49 MB
+2026-01-31T09:32:13.1114466Z Progress: 99% - Saving 185.32 MB of 185.49 MB
+2026-01-31T09:32:13.1114992Z Progress: 99% - Saving 185.48 MB of 185.49 MB
+2026-01-31T09:32:13.1116309Z Progress: 100% - Completed download of C:\Users\runneradmin\AppData\Local\Temp\OpenCV\4.13.0\opencv-4.13.0-windows.exe (185.49 MB).
+2026-01-31T09:32:13.1117511Z Download of opencv-4.13.0-windows.exe (185.49 MB) completed.
+2026-01-31T09:32:33.9903480Z Hashes match.
+2026-01-31T09:32:34.9008767Z Extracting C:\Users\runneradmin\AppData\Local\Temp\OpenCV\4.13.0\opencv-4.13.0-windows.exe to C:\tools...
+2026-01-31T09:33:19.2902793Z C:\tools
+2026-01-31T09:33:19.5701594Z Environment Vars (like PATH) have changed. Close/reopen your shell to
+2026-01-31T09:33:19.5702667Z  see the changes (or in powershell/cmd.exe just type `refreshenv`).
+2026-01-31T09:33:19.7091044Z  The install of OpenCV was successful.
+2026-01-31T09:33:19.7092904Z   Deployed to 'C:\tools'
+2026-01-31T09:33:20.5381817Z llvm v20.1.8 already installed.
+2026-01-31T09:33:20.5382773Z  Use --force to reinstall, specify a version to install, or try upgrade.
+2026-01-31T09:33:20.7519596Z ninja v1.13.2 already installed.
+2026-01-31T09:33:20.7521867Z  Use --force to reinstall, specify a version to install, or try upgrade.
+2026-01-31T09:33:21.3716688Z Downloading package from source 'https://community.chocolatey.org/api/v2/'
+2026-01-31T09:33:21.4492018Z
+2026-01-31T09:33:21.4492877Z Progress: Downloading pkgconfiglite 0.28... 21%
+2026-01-31T09:33:21.4494095Z Progress: Downloading pkgconfiglite 0.28... 63%
+2026-01-31T09:33:21.4494849Z Progress: Downloading pkgconfiglite 0.28... 100%
+2026-01-31T09:33:21.5011152Z
+2026-01-31T09:33:21.5334014Z pkgconfiglite v0.28.0
+2026-01-31T09:33:21.5697085Z pkgconfiglite package files install completed. Performing other installation steps.
+2026-01-31T09:33:22.5183308Z WARNING: Url has SSL/TLS available, switching to HTTPS for download
+2026-01-31T09:33:23.1660213Z Downloading pkgconfiglite 64 bit
+2026-01-31T09:33:23.1661496Z   from 'https://downloads.sourceforge.net/project/pkgconfiglite/0.28-1/pkg-config-lite-0.28-1_bin-win32.zip'
+2026-01-31T09:33:23.5417831Z
+2026-01-31T09:33:23.5419801Z Progress: 100% - Completed download of C:\Users\runneradmin\AppData\Local\Temp\chocolatey\pkgconfiglite\0.28.0\pkg-config-lite-0.28-1_bin-win32.zip (46.57 KB).
+2026-01-31T09:33:23.5481112Z Download of pkg-config-lite-0.28-1_bin-win32.zip (46.57 KB) completed.
+2026-01-31T09:33:26.5691032Z Extracting C:\Users\runneradmin\AppData\Local\Temp\chocolatey\pkgconfiglite\0.28.0\pkg-config-lite-0.28-1_bin-win32.zip to C:\ProgramData\chocolatey\lib\pkgconfiglite\tools...
+2026-01-31T09:33:26.6909144Z C:\ProgramData\chocolatey\lib\pkgconfiglite\tools
+2026-01-31T09:33:27.7181714Z  ShimGen has successfully created a shim for pkg-config.exe
+2026-01-31T09:33:27.7251990Z  The install of pkgconfiglite was successful.
+2026-01-31T09:33:27.7252842Z   Deployed to 'C:\ProgramData\chocolatey\lib\pkgconfiglite\tools'
+2026-01-31T09:33:27.7521094Z
+2026-01-31T09:33:27.7521612Z Chocolatey installed 2/4 packages.
+2026-01-31T09:33:27.7522403Z  See the log for details (C:\ProgramData\chocolatey\logs\chocolatey.log).
+2026-01-31T09:33:27.7523090Z
+2026-01-31T09:33:27.7523331Z Warnings:
+2026-01-31T09:33:27.7523772Z  - llvm - llvm v20.1.8 already installed.
+2026-01-31T09:33:27.7564994Z  Use --force to reinstall, specify a version to install, or try upgrade.
+2026-01-31T09:33:27.7644641Z  - ninja - ninja v1.13.2 already installed.
+2026-01-31T09:33:27.7648392Z  Use --force to reinstall, specify a version to install, or try upgrade.
+2026-01-31T09:33:28.5628024Z ##[group]Run actions/setup-node@v4
+2026-01-31T09:33:28.5628447Z with:
+2026-01-31T09:33:28.5628684Z   node-version: 20
+2026-01-31T09:33:28.5628962Z   cache: npm
+2026-01-31T09:33:28.5629198Z   always-auth: false
+2026-01-31T09:33:28.5629492Z   check-latest: false
+2026-01-31T09:33:28.5629953Z   token: ***
+2026-01-31T09:33:28.5630193Z ##[endgroup]
+2026-01-31T09:33:29.6837284Z Found in cache @ C:\hostedtoolcache\windows\node\20.20.0\x64
+2026-01-31T09:33:29.6922501Z ##[group]Environment details
+2026-01-31T09:33:34.2408564Z node: v20.20.0
+2026-01-31T09:33:34.2409540Z npm: 10.8.2
+2026-01-31T09:33:34.2410649Z yarn: 1.22.22
+2026-01-31T09:33:34.2412954Z ##[endgroup]
+2026-01-31T09:33:34.3263402Z [command]C:\Windows\system32\cmd.exe /D /S /C "C:\hostedtoolcache\windows\node\20.20.0\x64\npm.cmd config get cache"
+2026-01-31T09:33:35.1468075Z C:\npm\cache
+2026-01-31T09:33:35.7032159Z npm cache is not found
+2026-01-31T09:33:35.7849907Z ##[group]Run dtolnay/rust-toolchain@stable
+2026-01-31T09:33:35.7850357Z with:
+2026-01-31T09:33:35.7850626Z   targets: x86_64-pc-windows-msvc
+2026-01-31T09:33:35.7850976Z   toolchain: stable
+2026-01-31T09:33:35.7851223Z ##[endgroup]
+2026-01-31T09:33:35.8205504Z ##[group]Run : parse toolchain version
+2026-01-31T09:33:35.8205954Z [36;1m: parse toolchain version[0m
+2026-01-31T09:33:35.8206323Z [36;1mif [[ -z $toolchain ]]; then[0m
+2026-01-31T09:33:35.8207067Z [36;1m  # GitHub does not enforce `required: true` inputs itself. https://github.com/actions/runner/issues/1070[0m
+2026-01-31T09:33:35.8208191Z [36;1m  echo "'toolchain' is a required input" >&2[0m
+2026-01-31T09:33:35.8208591Z [36;1m  exit 1[0m
+2026-01-31T09:33:35.8209066Z [36;1melif [[ $toolchain =~ ^stable' '[0-9]+' '(year|month|week|day)s?' 'ago$ ]]; then[0m
+2026-01-31T09:33:35.8209674Z [36;1m  if [[ Windows == macOS ]]; then[0m
+2026-01-31T09:33:35.8210501Z [36;1m    echo "toolchain=1.$((($(date -v-$(sed 's/stable \([0-9]*\) \(.\).*/\1\2/' <<< $toolchain) +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT[0m
+2026-01-31T09:33:35.8211259Z [36;1m  else[0m
+2026-01-31T09:33:35.8211833Z [36;1m    echo "toolchain=1.$((($(date --date "${toolchain#stable }" +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT[0m
+2026-01-31T09:33:35.8212523Z [36;1m  fi[0m
+2026-01-31T09:33:35.8212913Z [36;1melif [[ $toolchain =~ ^stable' 'minus' '[0-9]+' 'releases?$ ]]; then[0m
+2026-01-31T09:33:35.8213710Z [36;1m  echo "toolchain=1.$((($(date +%s)/60/60/24-16569)/7/6-${toolchain//[^0-9]/}))" >> $GITHUB_OUTPUT[0m
+2026-01-31T09:33:35.8214386Z [36;1melif [[ $toolchain =~ ^1\.[0-9]+$ ]]; then[0m
+2026-01-31T09:33:35.8215168Z [36;1m  echo "toolchain=1.$((i=${toolchain#1.}, c=($(date +%s)/60/60/24-16569)/7/6, i+9*i*(10*i<=c)+90*i*(100*i<=c)))" >> $GITHUB_OUTPUT[0m
+2026-01-31T09:33:35.8216172Z [36;1melse[0m
+2026-01-31T09:33:35.8216490Z [36;1m  echo "toolchain=$toolchain" >> $GITHUB_OUTPUT[0m
+2026-01-31T09:33:35.8216919Z [36;1mfi[0m
+2026-01-31T09:33:35.8241164Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-01-31T09:33:35.8241730Z env:
+2026-01-31T09:33:35.8241949Z   toolchain: stable
+2026-01-31T09:33:35.8242206Z ##[endgroup]
+2026-01-31T09:33:36.0773996Z ##[group]Run : construct rustup command line
+2026-01-31T09:33:36.0774466Z [36;1m: construct rustup command line[0m
+2026-01-31T09:33:36.0775104Z [36;1mecho "targets=$(for t in ${targets//,/ }; do echo -n ' --target' $t; done)" >> $GITHUB_OUTPUT[0m
+2026-01-31T09:33:36.0776060Z [36;1mecho "components=$(for c in ${components//,/ }; do echo -n ' --component' $c; done)" >> $GITHUB_OUTPUT[0m
+2026-01-31T09:33:36.0776823Z [36;1mecho "downgrade=" >> $GITHUB_OUTPUT[0m
+2026-01-31T09:33:36.0798296Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-01-31T09:33:36.0798859Z env:
+2026-01-31T09:33:36.0799105Z   targets: x86_64-pc-windows-msvc
+2026-01-31T09:33:36.0799447Z   components:
+2026-01-31T09:33:36.0799704Z ##[endgroup]
+2026-01-31T09:33:36.2098236Z ##[group]Run : set $CARGO_HOME
+2026-01-31T09:33:36.2098645Z [36;1m: set $CARGO_HOME[0m
+2026-01-31T09:33:36.2099168Z [36;1mecho CARGO_HOME=${CARGO_HOME:-"$USERPROFILE\.cargo"} >> $GITHUB_ENV[0m
+2026-01-31T09:33:36.2122167Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-01-31T09:33:36.2122780Z ##[endgroup]
+2026-01-31T09:33:36.3149488Z ##[group]Run : install rustup if needed on windows
+2026-01-31T09:33:36.3150011Z [36;1m: install rustup if needed on windows[0m
+2026-01-31T09:33:36.3150457Z [36;1mif ! command -v rustup &>/dev/null; then[0m
+2026-01-31T09:33:36.3151641Z [36;1m  curl --proto '=https' --tlsv1.2 --retry 10 --retry-connrefused --location --silent --show-error --fail https://win.rustup.rs/x86_64 --output 'D:\a\_temp\rustup-init.exe'[0m
+2026-01-31T09:33:36.3153016Z [36;1m  'D:\a\_temp\rustup-init.exe' --default-toolchain none --no-modify-path -y[0m
+2026-01-31T09:33:36.3156562Z [36;1m  echo "$CARGO_HOME\bin" >> $GITHUB_PATH[0m
+2026-01-31T09:33:36.3157038Z [36;1mfi[0m
+2026-01-31T09:33:36.3178426Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-01-31T09:33:36.3179009Z env:
+2026-01-31T09:33:36.3179263Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-01-31T09:33:36.3179627Z ##[endgroup]
+2026-01-31T09:33:36.4214408Z ##[group]Run rustup toolchain install stable --target x86_64-pc-windows-msvc --profile minimal --no-self-update
+2026-01-31T09:33:36.4215566Z [36;1mrustup toolchain install stable --target x86_64-pc-windows-msvc --profile minimal --no-self-update[0m
+2026-01-31T09:33:36.4240845Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-01-31T09:33:36.4241431Z env:
+2026-01-31T09:33:36.4241698Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-01-31T09:33:36.4242071Z   RUSTUP_PERMIT_COPY_RENAME: 1
+2026-01-31T09:33:36.4242389Z ##[endgroup]
+2026-01-31T09:33:39.5619527Z info: syncing channel updates for 'stable-x86_64-pc-windows-msvc'
+2026-01-31T09:33:40.2110784Z info: latest update on 2026-01-22, rust version 1.93.0 (254b59607 2026-01-19)
+2026-01-31T09:33:40.2866094Z info: component 'rust-std' for target 'x86_64-pc-windows-msvc' is up to date
+2026-01-31T09:33:40.2866675Z
+2026-01-31T09:33:40.3148140Z   stable-x86_64-pc-windows-msvc unchanged - rustc 1.93.0 (254b59607 2026-01-19)
+2026-01-31T09:33:40.3155356Z
+2026-01-31T09:33:40.3587638Z ##[group]Run rustup default stable
+2026-01-31T09:33:40.3588026Z [36;1mrustup default stable[0m
+2026-01-31T09:33:40.3609181Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-01-31T09:33:40.3609821Z env:
+2026-01-31T09:33:40.3610073Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-01-31T09:33:40.3610672Z ##[endgroup]
+2026-01-31T09:33:40.4837751Z info: using existing install for 'stable-x86_64-pc-windows-msvc'
+2026-01-31T09:33:40.5487522Z info: default toolchain set to 'stable-x86_64-pc-windows-msvc'
+2026-01-31T09:33:40.5488010Z
+2026-01-31T09:33:40.5747576Z   stable-x86_64-pc-windows-msvc unchanged - rustc 1.93.0 (254b59607 2026-01-19)
+2026-01-31T09:33:40.5764612Z
+2026-01-31T09:33:40.6078676Z ##[group]Run : create cachekey
+2026-01-31T09:33:40.6079057Z [36;1m: create cachekey[0m
+2026-01-31T09:33:40.6079803Z [36;1mDATE=$(rustc +stable --version --verbose | sed -ne 's/^commit-date: \(20[0-9][0-9]\)-\([01][0-9]\)-\([0-3][0-9]\)$/\1\2\3/p')[0m
+2026-01-31T09:33:40.6080789Z [36;1mHASH=$(rustc +stable --version --verbose | sed -ne 's/^commit-hash: //p')[0m
+2026-01-31T09:33:40.6081518Z [36;1mecho "cachekey=$(echo $DATE$HASH | head -c12)" >> $GITHUB_OUTPUT[0m
+2026-01-31T09:33:40.6102903Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-01-31T09:33:40.6103491Z env:
+2026-01-31T09:33:40.6103731Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-01-31T09:33:40.6104092Z ##[endgroup]
+2026-01-31T09:33:41.6544404Z ##[group]Run : disable incremental compilation
+2026-01-31T09:33:41.6544900Z [36;1m: disable incremental compilation[0m
+2026-01-31T09:33:41.6545346Z [36;1mif [ -z "${CARGO_INCREMENTAL+set}" ]; then[0m
+2026-01-31T09:33:41.6545879Z [36;1m  echo CARGO_INCREMENTAL=0 >> $GITHUB_ENV[0m
+2026-01-31T09:33:41.6546268Z [36;1mfi[0m
+2026-01-31T09:33:41.6567013Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-01-31T09:33:41.6567584Z env:
+2026-01-31T09:33:41.6567840Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-01-31T09:33:41.6568199Z ##[endgroup]
+2026-01-31T09:33:41.7592757Z ##[group]Run : enable colors in Cargo output
+2026-01-31T09:33:41.7593255Z [36;1m: enable colors in Cargo output[0m
+2026-01-31T09:33:41.7593710Z [36;1mif [ -z "${CARGO_TERM_COLOR+set}" ]; then[0m
+2026-01-31T09:33:41.7594218Z [36;1m  echo CARGO_TERM_COLOR=always >> $GITHUB_ENV[0m
+2026-01-31T09:33:41.7594617Z [36;1mfi[0m
+2026-01-31T09:33:41.7616078Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-01-31T09:33:41.7616658Z env:
+2026-01-31T09:33:41.7617794Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-01-31T09:33:41.7618225Z   CARGO_INCREMENTAL: 0
+2026-01-31T09:33:41.7618502Z ##[endgroup]
+2026-01-31T09:33:41.8785184Z ##[group]Run : enable Cargo sparse registry
+2026-01-31T09:33:41.8785631Z [36;1m: enable Cargo sparse registry[0m
+2026-01-31T09:33:41.8786140Z [36;1m# implemented in 1.66, stabilized in 1.68, made default in 1.70[0m
+2026-01-31T09:33:41.8787179Z [36;1mif [ -z "${CARGO_REGISTRIES_CRATES_IO_PROTOCOL+set}" -o -f "D:\a\_temp"/.implicit_cargo_registries_crates_io_protocol ]; then[0m
+2026-01-31T09:33:41.8788228Z [36;1m  if rustc +stable --version --verbose | grep -q '^release: 1\.6[89]\.'; then[0m
+2026-01-31T09:33:41.8788990Z [36;1m    touch "D:\a\_temp"/.implicit_cargo_registries_crates_io_protocol || true[0m
+2026-01-31T09:33:41.8789747Z [36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse >> $GITHUB_ENV[0m
+2026-01-31T09:33:41.8790487Z [36;1m  elif rustc +stable --version --verbose | grep -q '^release: 1\.6[67]\.'; then[0m
+2026-01-31T09:33:41.8791275Z [36;1m    touch "D:\a\_temp"/.implicit_cargo_registries_crates_io_protocol || true[0m
+2026-01-31T09:33:41.8791972Z [36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=git >> $GITHUB_ENV[0m
+2026-01-31T09:33:41.8792468Z [36;1m  fi[0m
+2026-01-31T09:33:41.8792694Z [36;1mfi[0m
+2026-01-31T09:33:41.8813356Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-01-31T09:33:41.8813906Z env:
+2026-01-31T09:33:41.8814168Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-01-31T09:33:41.8814534Z   CARGO_INCREMENTAL: 0
+2026-01-31T09:33:41.8814804Z   CARGO_TERM_COLOR: always
+2026-01-31T09:33:41.8815086Z ##[endgroup]
+2026-01-31T09:33:42.2375867Z ##[group]Run : work around spurious network errors in curl 8.0
+2026-01-31T09:33:42.2376436Z [36;1m: work around spurious network errors in curl 8.0[0m
+2026-01-31T09:33:42.2376934Z [36;1m# https://rust-lang.zulipchat.com/#narrow/stream/246057-t-cargo/topic/timeout.20investigation[0m
+2026-01-31T09:33:42.2377516Z [36;1mif rustc +stable --version --verbose | grep -q '^release: 1\.7[01]\.'; then[0m
+2026-01-31T09:33:42.2377927Z [36;1m  echo CARGO_HTTP_MULTIPLEXING=false >> $GITHUB_ENV[0m
+2026-01-31T09:33:42.2378183Z [36;1mfi[0m
+2026-01-31T09:33:42.2392738Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-01-31T09:33:42.2393088Z env:
+2026-01-31T09:33:42.2393249Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-01-31T09:33:42.2393472Z   CARGO_INCREMENTAL: 0
+2026-01-31T09:33:42.2393645Z   CARGO_TERM_COLOR: always
+2026-01-31T09:33:42.2393816Z ##[endgroup]
+2026-01-31T09:33:42.4859857Z ##[group]Run rustc +stable --version --verbose
+2026-01-31T09:33:42.4860325Z [36;1mrustc +stable --version --verbose[0m
+2026-01-31T09:33:42.4881449Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-01-31T09:33:42.4882027Z env:
+2026-01-31T09:33:42.4882267Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-01-31T09:33:42.4882642Z   CARGO_INCREMENTAL: 0
+2026-01-31T09:33:42.4882936Z   CARGO_TERM_COLOR: always
+2026-01-31T09:33:42.4883221Z ##[endgroup]
+2026-01-31T09:33:42.6219239Z rustc 1.93.0 (254b59607 2026-01-19)
+2026-01-31T09:33:42.6246603Z binary: rustc
+2026-01-31T09:33:42.6252853Z commit-hash: 254b59607d4417e9dffbc307138ae5c86280fe4c
+2026-01-31T09:33:42.6289989Z commit-date: 2026-01-19
+2026-01-31T09:33:42.6305391Z host: x86_64-pc-windows-msvc
+2026-01-31T09:33:42.6311049Z release: 1.93.0
+2026-01-31T09:33:42.6313333Z LLVM version: 21.1.8
+2026-01-31T09:33:42.6749119Z ##[group]Run swatinem/rust-cache@v2
+2026-01-31T09:33:42.6749544Z with:
+2026-01-31T09:33:42.6749795Z   workspaces: ./src-tauri -> target
+2026-01-31T09:33:42.6750160Z   prefix-key: v0-rust
+2026-01-31T09:33:42.6750456Z   add-job-id-key: true
+2026-01-31T09:33:42.6750776Z   add-rust-environment-hash-key: true
+2026-01-31T09:33:42.6751144Z   cache-targets: true
+2026-01-31T09:33:42.6751426Z   cache-all-crates: false
+2026-01-31T09:33:42.6751735Z   cache-workspace-crates: false
+2026-01-31T09:33:42.6752043Z   save-if: true
+2026-01-31T09:33:42.6752297Z   cache-provider: github
+2026-01-31T09:33:42.6752573Z   cache-bin: true
+2026-01-31T09:33:42.6752827Z   lookup-only: false
+2026-01-31T09:33:42.6753073Z env:
+2026-01-31T09:33:42.6753307Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-01-31T09:33:42.6753665Z   CARGO_INCREMENTAL: 0
+2026-01-31T09:33:42.6753942Z   CARGO_TERM_COLOR: always
+2026-01-31T09:33:42.6754214Z ##[endgroup]
+2026-01-31T09:33:46.1919747Z ##[group]Cache Configuration
+2026-01-31T09:33:46.1924773Z Cache Provider:
+2026-01-31T09:33:46.1931574Z     github
+2026-01-31T09:33:46.1947972Z Workspaces:
+2026-01-31T09:33:46.1951238Z     D:\a\SwishAI-desktop\SwishAI-desktop\src-tauri
+2026-01-31T09:33:46.1952422Z Cache Paths:
+2026-01-31T09:33:46.1953731Z     C:\Users\runneradmin\.cargo\bin
+2026-01-31T09:33:46.1955101Z     C:\Users\runneradmin\.cargo\.crates.toml
+2026-01-31T09:33:46.1959024Z     C:\Users\runneradmin\.cargo\.crates2.json
+2026-01-31T09:33:46.2030664Z     C:\Users\runneradmin\.cargo\registry
+2026-01-31T09:33:46.2034284Z     C:\Users\runneradmin\.cargo\git
+2026-01-31T09:33:46.2035813Z     D:\a\SwishAI-desktop\SwishAI-desktop\src-tauri\target
+2026-01-31T09:33:46.2037182Z Restore Key:
+2026-01-31T09:33:46.2038535Z     v0-rust-build-tauri-Windows_NT-x64-02f6e914
+2026-01-31T09:33:46.2043226Z Cache Key:
+2026-01-31T09:33:46.2048241Z     v0-rust-build-tauri-Windows_NT-x64-02f6e914-4f24e16a
+2026-01-31T09:33:46.2051280Z .. Prefix:
+2026-01-31T09:33:46.2078281Z   - v0-rust-build-tauri-Windows_NT-x64
+2026-01-31T09:33:46.2089199Z .. Environment considered:
+2026-01-31T09:33:46.2094298Z   - Rust Version: 1.93.0 x86_64-pc-windows-msvc (254b59607d4417e9dffbc307138ae5c86280fe4c)
+2026-01-31T09:33:46.2097571Z   - CARGO_HOME
+2026-01-31T09:33:46.2100020Z   - CARGO_INCREMENTAL
+2026-01-31T09:33:46.2102106Z   - CARGO_TERM_COLOR
+2026-01-31T09:33:46.2104627Z .. Lockfiles considered:
+2026-01-31T09:33:46.2107015Z   - D:\a\SwishAI-desktop\SwishAI-desktop\src-tauri\Cargo.lock
+2026-01-31T09:33:46.2109910Z   - D:\a\SwishAI-desktop\SwishAI-desktop\src-tauri\Cargo.toml
+2026-01-31T09:33:46.2112599Z ##[endgroup]
+2026-01-31T09:33:46.2114488Z
+2026-01-31T09:33:46.2116366Z ... Restoring cache ...
+2026-01-31T09:33:46.4892484Z No cache found.
+2026-01-31T09:33:46.5231961Z ##[group]Run npm ci
+2026-01-31T09:33:46.5232306Z [36;1mnpm ci[0m
+2026-01-31T09:33:46.5337703Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-01-31T09:33:46.5338185Z env:
+2026-01-31T09:33:46.5338449Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-01-31T09:33:46.5338826Z   CARGO_INCREMENTAL: 0
+2026-01-31T09:33:46.5339105Z   CARGO_TERM_COLOR: always
+2026-01-31T09:33:46.5339398Z   CACHE_ON_FAILURE: false
+2026-01-31T09:33:46.5339712Z ##[endgroup]
+2026-01-31T09:33:50.2755190Z npm warn EBADENGINE Unsupported engine {
+2026-01-31T09:33:50.2764153Z npm warn EBADENGINE   package: 'angular-tauri@2.0.0',
+2026-01-31T09:33:50.2772661Z npm warn EBADENGINE   required: { node: '>= 22.12.0 || >= 24.0.0' },
+2026-01-31T09:33:50.2775582Z npm warn EBADENGINE   current: { node: 'v20.20.0', npm: '10.8.2' }
+2026-01-31T09:33:50.2776988Z npm warn EBADENGINE }
+2026-01-31T09:33:59.8800013Z npm warn deprecated whatwg-encoding@3.1.1: Use @exodus/bytes instead for a more spec-conformant and faster implementation
+2026-01-31T09:34:07.5966107Z npm warn deprecated har-validator@5.1.5: this library is no longer supported
+2026-01-31T09:34:15.2151444Z npm warn deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+2026-01-31T09:34:15.2154010Z npm warn deprecated request@2.88.2: request has been deprecated, see https://github.com/request/request/issues/3142
+2026-01-31T09:34:22.3396882Z npm warn deprecated tar@4.4.19: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exhorbitant rates) by contacting i@izs.me
+2026-01-31T09:34:57.4883607Z
+2026-01-31T09:34:57.5176337Z added 1020 packages, and audited 1021 packages in 1m
+2026-01-31T09:34:57.5207692Z
+2026-01-31T09:34:57.5208735Z 247 packages are looking for funding
+2026-01-31T09:34:57.5209766Z   run `npm fund` for details
+2026-01-31T09:34:57.7291513Z
+2026-01-31T09:34:57.7300345Z 19 vulnerabilities (4 moderate, 13 high, 2 critical)
+2026-01-31T09:34:57.7304818Z
+2026-01-31T09:34:57.7305373Z To address issues that do not require attention, run:
+2026-01-31T09:34:57.7307067Z   npm audit fix
+2026-01-31T09:34:57.7330124Z
+2026-01-31T09:34:57.7334177Z To address all issues possible, run:
+2026-01-31T09:34:57.7337411Z   npm audit fix --force
+2026-01-31T09:34:57.7655775Z
+2026-01-31T09:34:57.7787206Z Some issues need review, and may require choosing
+2026-01-31T09:34:57.7821489Z a different dependency.
+2026-01-31T09:34:57.7825314Z
+2026-01-31T09:34:57.7826013Z Run `npm audit` for details.
+2026-01-31T09:35:01.8241647Z ##[group]Run echo "OPENCV_DIR=C:\tools\opencv\build" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+2026-01-31T09:35:01.8242879Z [36;1mecho "OPENCV_DIR=C:\tools\opencv\build" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append[0m
+2026-01-31T09:35:01.8244019Z [36;1mecho "C:\tools\opencv\build\x64\vc16\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append[0m
+2026-01-31T09:35:01.8326476Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-01-31T09:35:01.8326791Z env:
+2026-01-31T09:35:01.8326962Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-01-31T09:35:01.8327216Z   CARGO_INCREMENTAL: 0
+2026-01-31T09:35:01.8327391Z   CARGO_TERM_COLOR: always
+2026-01-31T09:35:01.8327805Z   CACHE_ON_FAILURE: false
+2026-01-31T09:35:01.8327989Z ##[endgroup]
+2026-01-31T09:35:02.7311650Z ##[group]Run tauri-apps/tauri-action@v0
+2026-01-31T09:35:02.7311974Z with:
+2026-01-31T09:35:02.7312125Z   tagName: 1.0.0
+2026-01-31T09:35:02.7312297Z   releaseName: Release 1.0.0
+2026-01-31T09:35:02.7312497Z   releaseBody: Release 1.0.0
+2026-01-31T09:35:02.7312693Z   releaseDraft: true
+2026-01-31T09:35:02.7312856Z   prerelease: false
+2026-01-31T09:35:02.7313024Z   projectPath: .
+2026-01-31T09:35:02.7313182Z   includeDebug: false
+2026-01-31T09:35:02.7313352Z   includeRelease: true
+2026-01-31T09:35:02.7313528Z   includeUpdaterJson: true
+2026-01-31T09:35:02.7313736Z   updaterJsonKeepUniversal: false
+2026-01-31T09:35:02.7313942Z   isGitea: false
+2026-01-31T09:35:02.7314107Z   uploadPlainBinary: false
+2026-01-31T09:35:02.7314306Z   generateReleaseNotes: false
+2026-01-31T09:35:02.7314486Z env:
+2026-01-31T09:35:02.7314639Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-01-31T09:35:02.7314875Z   CARGO_INCREMENTAL: 0
+2026-01-31T09:35:02.7315066Z   CARGO_TERM_COLOR: always
+2026-01-31T09:35:02.7315246Z   CACHE_ON_FAILURE: false
+2026-01-31T09:35:02.7315517Z   OPENCV_DIR: C:\tools\opencv\build
+2026-01-31T09:35:02.7316075Z   GITHUB_TOKEN: ***
+2026-01-31T09:35:02.7316453Z ##[endgroup]
+2026-01-31T09:35:03.5698036Z running npm [ 'run', 'tauri', 'build' ]
+2026-01-31T09:35:04.0327042Z
+2026-01-31T09:35:04.0327803Z > angular-tauri@2.0.0 tauri
+2026-01-31T09:35:04.0328482Z > tauri build
+2026-01-31T09:35:04.0328857Z
+2026-01-31T09:35:06.2053141Z         Info Looking up installed tauri packages to check mismatched versions...
+2026-01-31T09:35:07.9679752Z      Running beforeBuildCommand `npm run web:prod`
+2026-01-31T09:35:08.2954103Z
+2026-01-31T09:35:08.2954924Z > angular-tauri@2.0.0 web:prod
+2026-01-31T09:35:08.2955802Z > npm run web:build -- -c production
+2026-01-31T09:35:08.2956333Z
+2026-01-31T09:35:08.7063795Z
+2026-01-31T09:35:08.7079027Z > angular-tauri@2.0.0 web:build
+2026-01-31T09:35:08.7102923Z > ng build --base-href ./ -c production
+2026-01-31T09:35:08.7324020Z
+2026-01-31T09:35:10.3556305Z [33m❯[39m Building...
+2026-01-31T09:35:25.8707016Z [32m✔[39m Building...
+2026-01-31T09:35:25.8822228Z Initial chunk files   | Names         |  Raw size | Estimated transfer size
+2026-01-31T09:35:25.8825663Z main-6RGOS5RC.js      | main          | 315.67 kB |                82.54 kB
+2026-01-31T09:35:25.8826833Z polyfills-6ISPNSXF.js | polyfills     |  35.68 kB |                11.57 kB
+2026-01-31T09:35:25.8828370Z styles-HN3BP7MT.css   | styles        |  16.56 kB |                 3.46 kB
+2026-01-31T09:35:25.8832322Z
+2026-01-31T09:35:25.8835497Z                       | Initial total | 367.91 kB |                97.57 kB
+2026-01-31T09:35:25.8837648Z
+2026-01-31T09:35:25.8841997Z Application bundle generation complete. [15.511 seconds] - 2026-01-31T09:35:25.865Z
+2026-01-31T09:35:25.8857499Z
+2026-01-31T09:35:25.8862933Z Output location: D:\a\SwishAI-desktop\SwishAI-desktop\dist
+2026-01-31T09:35:25.8866451Z
+2026-01-31T09:35:27.6740572Z [1m[92m    Updating[0m crates.io index
+2026-01-31T09:35:29.4881445Z [1m[92m Downloading[0m crates ...
+2026-01-31T09:35:29.6656041Z [1m[92m  Downloaded[0m adler2 v2.0.1
+2026-01-31T09:35:29.7261521Z [1m[92m  Downloaded[0m once_cell v1.21.3
+2026-01-31T09:35:29.7612052Z [1m[92m  Downloaded[0m num-traits v0.2.19
+2026-01-31T09:35:29.8039344Z [1m[92m  Downloaded[0m ref-cast-impl v1.0.25
+2026-01-31T09:35:29.8263372Z [1m[92m  Downloaded[0m same-file v1.0.6
+2026-01-31T09:35:29.8511351Z [1m[92m  Downloaded[0m serde_with_macros v3.16.1
+2026-01-31T09:35:29.8780090Z [1m[92m  Downloaded[0m serde_derive_internals v0.29.1
+2026-01-31T09:35:29.8990646Z [1m[92m  Downloaded[0m time-core v0.1.6
+2026-01-31T09:35:29.9174098Z [1m[92m  Downloaded[0m time-macros v0.2.24
+2026-01-31T09:35:29.9469570Z [1m[92m  Downloaded[0m windows-version v0.1.7
+2026-01-31T09:35:29.9582376Z [1m[92m  Downloaded[0m windows-targets v0.53.5
+2026-01-31T09:35:29.9734904Z [1m[92m  Downloaded[0m zerovec-derive v0.11.2
+2026-01-31T09:35:29.9901120Z [1m[92m  Downloaded[0m writeable v0.6.2
+2026-01-31T09:35:30.0093630Z [1m[92m  Downloaded[0m tauri-runtime-wry v2.9.2
+2026-01-31T09:35:30.0308951Z [1m[92m  Downloaded[0m ureq v3.1.4
+2026-01-31T09:35:30.0839089Z [1m[92m  Downloaded[0m vcpkg v0.2.15
+2026-01-31T09:35:30.8523503Z [1m[92m  Downloaded[0m url v2.5.7
+2026-01-31T09:35:30.8757106Z [1m[92m  Downloaded[0m tower v0.5.2
+2026-01-31T09:35:30.9808190Z [1m[92m  Downloaded[0m unicode-segmentation v1.12.0
+2026-01-31T09:35:31.0012951Z [1m[92m  Downloaded[0m typenum v1.19.0
+2026-01-31T09:35:31.0247417Z [1m[92m  Downloaded[0m webpki-root-certs v1.0.5
+2026-01-31T09:35:31.0373870Z [1m[92m  Downloaded[0m tower-http v0.6.7
+2026-01-31T09:35:31.1307771Z [1m[92m  Downloaded[0m tracing v0.1.43
+2026-01-31T09:35:31.1672657Z [1m[92m  Downloaded[0m webpki-roots v1.0.5
+2026-01-31T09:35:31.1839115Z [1m[92m  Downloaded[0m tokio v1.48.0
+2026-01-31T09:35:31.6616084Z [1m[92m  Downloaded[0m tokio-util v0.7.17
+2026-01-31T09:35:31.7440094Z [1m[92m  Downloaded[0m time v0.3.44
+2026-01-31T09:35:31.8252218Z [1m[92m  Downloaded[0m tauri-utils v2.8.1
+2026-01-31T09:35:32.1717858Z [1m[92m  Downloaded[0m tauri-plugin-shell v2.3.3
+2026-01-31T09:35:32.2162012Z [1m[92m  Downloaded[0m tauri-plugin-fs v2.4.5
+2026-01-31T09:35:32.2986079Z [1m[92m  Downloaded[0m tauri-plugin-dialog v2.6.0
+2026-01-31T09:35:32.3461894Z [1m[92m  Downloaded[0m tauri v2.9.4
+2026-01-31T09:35:32.4821588Z [1m[92m  Downloaded[0m tao v0.34.5
+2026-01-31T09:35:32.5839073Z [1m[92m  Downloaded[0m syn v2.0.111
+2026-01-31T09:35:32.6727073Z [1m[92m  Downloaded[0m syn v1.0.109
+2026-01-31T09:35:32.7533943Z [1m[92m  Downloaded[0m tauri-plugin-http v2.5.6
+2026-01-31T09:35:32.7848213Z [1m[92m  Downloaded[0m winreg v0.55.0
+2026-01-31T09:35:32.8163682Z [1m[92m  Downloaded[0m zeroize v1.8.2
+2026-01-31T09:35:32.8304926Z [1m[92m  Downloaded[0m zerofrom-derive v0.1.6
+2026-01-31T09:35:32.8399545Z [1m[92m  Downloaded[0m zerofrom v0.1.6
+2026-01-31T09:35:32.8495896Z [1m[92m  Downloaded[0m yoke-derive v0.8.1
+2026-01-31T09:35:32.8596607Z [1m[92m  Downloaded[0m yoke v0.8.1
+2026-01-31T09:35:32.8773660Z [1m[92m  Downloaded[0m windows_x86_64_msvc v0.52.6
+2026-01-31T09:35:32.8985698Z [1m[92m  Downloaded[0m winapi v0.3.9
+2026-01-31T09:35:33.1960426Z [1m[92m  Downloaded[0m version_check v0.9.5
+2026-01-31T09:35:33.2533403Z [1m[92m  Downloaded[0m windows-strings v0.4.2
+2026-01-31T09:35:33.5995059Z [1m[92m  Downloaded[0m windows-strings v0.1.0
+2026-01-31T09:35:33.6201248Z [1m[92m  Downloaded[0m zerovec v0.11.5
+2026-01-31T09:35:33.6756514Z [1m[92m  Downloaded[0m zerotrie v0.2.3
+2026-01-31T09:35:33.7118107Z [1m[92m  Downloaded[0m windows-result v0.4.1
+2026-01-31T09:35:33.7273802Z [1m[92m  Downloaded[0m winnow v0.7.14
+2026-01-31T09:35:33.8257043Z [1m[92m  Downloaded[0m windows-result v0.2.0
+2026-01-31T09:35:33.8397635Z [1m[92m  Downloaded[0m window-vibrancy v0.6.0
+2026-01-31T09:35:33.8769156Z [1m[92m  Downloaded[0m wry v0.53.5
+2026-01-31T09:35:33.9470431Z [1m[92m  Downloaded[0m windows-registry v0.6.1
+2026-01-31T09:35:33.9632573Z [1m[92m  Downloaded[0m windows-numerics v0.2.0
+2026-01-31T09:35:33.9771095Z [1m[92m  Downloaded[0m zerocopy v0.8.31
+2026-01-31T09:35:34.2883369Z [1m[92m  Downloaded[0m windows-link v0.2.1
+2026-01-31T09:35:34.2993631Z [1m[92m  Downloaded[0m windows-link v0.1.3
+2026-01-31T09:35:34.3099764Z [1m[92m  Downloaded[0m windows-interface v0.59.3
+2026-01-31T09:35:34.3194891Z [1m[92m  Downloaded[0m windows-interface v0.58.0
+2026-01-31T09:35:34.3272348Z [1m[92m  Downloaded[0m windows-implement v0.60.2
+2026-01-31T09:35:34.3388082Z [1m[92m  Downloaded[0m windows-implement v0.58.0
+2026-01-31T09:35:34.3466432Z [1m[92m  Downloaded[0m windows-future v0.2.1
+2026-01-31T09:35:34.3630318Z [1m[92m  Downloaded[0m windows-core v0.61.2
+2026-01-31T09:35:34.3940873Z [1m[92m  Downloaded[0m windows-core v0.58.0
+2026-01-31T09:35:34.4299122Z [1m[92m  Downloaded[0m windows-collections v0.2.0
+2026-01-31T09:35:34.4408562Z [1m[92m  Downloaded[0m winapi-util v0.1.11
+2026-01-31T09:35:34.4553515Z [1m[92m  Downloaded[0m webview2-com-macros v0.8.0
+2026-01-31T09:35:34.4627964Z [1m[92m  Downloaded[0m webview2-com v0.38.0
+2026-01-31T09:35:34.4736012Z [1m[92m  Downloaded[0m want v0.3.1
+2026-01-31T09:35:34.4856192Z [1m[92m  Downloaded[0m windows-sys v0.59.0
+2026-01-31T09:35:35.5910053Z [1m[92m  Downloaded[0m walkdir v2.5.0
+2026-01-31T09:35:35.6146859Z [1m[92m  Downloaded[0m vswhom-sys v0.1.3
+2026-01-31T09:35:35.6302539Z [1m[92m  Downloaded[0m vswhom v0.1.0
+2026-01-31T09:35:35.6414983Z [1m[92m  Downloaded[0m uuid v1.19.0
+2026-01-31T09:35:35.6678309Z [1m[92m  Downloaded[0m utf8_iter v1.0.4
+2026-01-31T09:35:35.6781919Z [1m[92m  Downloaded[0m utf-8 v0.7.6
+2026-01-31T09:35:35.6895086Z [1m[92m  Downloaded[0m urlpattern v0.3.0
+2026-01-31T09:35:35.7071348Z [1m[92m  Downloaded[0m ureq-proto v0.5.3
+2026-01-31T09:35:35.7523265Z [1m[92m  Downloaded[0m untrusted v0.9.0
+2026-01-31T09:35:35.7684313Z [1m[92m  Downloaded[0m unicode-ident v1.0.22
+2026-01-31T09:35:35.7972550Z [1m[92m  Downloaded[0m unic-ucd-version v0.9.0
+2026-01-31T09:35:35.8069115Z [1m[92m  Downloaded[0m unic-ucd-ident v0.9.0
+2026-01-31T09:35:35.8238036Z [1m[92m  Downloaded[0m windows_x86_64_msvc v0.53.1
+2026-01-31T09:35:35.8462565Z [1m[92m  Downloaded[0m toml v0.9.8
+2026-01-31T09:35:35.8854987Z [1m[92m  Downloaded[0m serde_json v1.0.145
+2026-01-31T09:35:36.1268335Z [1m[92m  Downloaded[0m serde v1.0.228
+2026-01-31T09:35:36.1591129Z [1m[92m  Downloaded[0m schemars v1.1.0
+2026-01-31T09:35:36.3512754Z [1m[92m  Downloaded[0m schemars v0.9.0
+2026-01-31T09:35:36.5164607Z [1m[92m  Downloaded[0m opencv v0.92.3
+2026-01-31T09:35:36.6948077Z [1m[92m  Downloaded[0m windows-threading v0.1.0
+2026-01-31T09:35:36.7045230Z [1m[92m  Downloaded[0m windows-targets v0.52.6
+2026-01-31T09:35:36.7129083Z [1m[92m  Downloaded[0m windows-strings v0.5.1
+2026-01-31T09:35:36.7368006Z [1m[92m  Downloaded[0m windows-result v0.3.4
+2026-01-31T09:35:36.7514533Z [1m[92m  Downloaded[0m unic-common v0.9.0
+2026-01-31T09:35:36.7595374Z [1m[92m  Downloaded[0m unic-char-range v0.9.0
+2026-01-31T09:35:36.7758965Z [1m[92m  Downloaded[0m unic-char-property v0.9.0
+2026-01-31T09:35:36.7922086Z [1m[92m  Downloaded[0m typeid v1.0.3
+2026-01-31T09:35:36.8064256Z [1m[92m  Downloaded[0m try-lock v0.2.5
+2026-01-31T09:35:36.8161611Z [1m[92m  Downloaded[0m tray-icon v0.21.2
+2026-01-31T09:35:36.8550231Z [1m[92m  Downloaded[0m tracing-core v0.1.35
+2026-01-31T09:35:36.8817938Z [1m[92m  Downloaded[0m tower-service v0.3.3
+2026-01-31T09:35:36.8907470Z [1m[92m  Downloaded[0m tower-layer v0.3.3
+2026-01-31T09:35:36.9010644Z [1m[92m  Downloaded[0m toml_writer v1.0.4
+2026-01-31T09:35:36.9128357Z [1m[92m  Downloaded[0m toml_parser v1.0.4
+2026-01-31T09:35:36.9356022Z [1m[92m  Downloaded[0m toml_datetime v0.7.3
+2026-01-31T09:35:36.9480894Z [1m[92m  Downloaded[0m tokio-rustls v0.26.4
+2026-01-31T09:35:36.9660346Z [1m[92m  Downloaded[0m tokio-macros v2.6.0
+2026-01-31T09:35:36.9764718Z [1m[92m  Downloaded[0m tinyvec_macros v0.1.1
+2026-01-31T09:35:36.9853528Z [1m[92m  Downloaded[0m tinyvec v1.10.0
+2026-01-31T09:35:37.0083192Z [1m[92m  Downloaded[0m tinystr v0.8.2
+2026-01-31T09:35:37.0287910Z [1m[92m  Downloaded[0m serde_with v3.16.1
+2026-01-31T09:35:37.1723001Z [1m[92m  Downloaded[0m ring v0.17.14
+2026-01-31T09:35:37.8926596Z [1m[92m  Downloaded[0m regex-automata v0.4.13
+2026-01-31T09:35:37.9996214Z [1m[92m  Downloaded[0m libc v0.2.178
+2026-01-31T09:35:38.2952150Z [1m[92m  Downloaded[0m thiserror v2.0.17
+2026-01-31T09:35:38.3800460Z [1m[92m  Downloaded[0m tendril v0.4.3
+2026-01-31T09:35:38.3996319Z [1m[92m  Downloaded[0m tauri-winres v0.3.5
+2026-01-31T09:35:38.4168255Z [1m[92m  Downloaded[0m tauri-runtime v2.9.2
+2026-01-31T09:35:38.4291256Z [1m[92m  Downloaded[0m tauri-plugin v2.5.2
+2026-01-31T09:35:38.4389172Z [1m[92m  Downloaded[0m tauri-macros v2.5.2
+2026-01-31T09:35:38.4520907Z [1m[92m  Downloaded[0m tauri-codegen v2.5.2
+2026-01-31T09:35:38.4666085Z [1m[92m  Downloaded[0m tauri-build v2.5.3
+2026-01-31T09:35:38.4827372Z [1m[92m  Downloaded[0m synstructure v0.13.2
+2026-01-31T09:35:38.4930832Z [1m[92m  Downloaded[0m sync_wrapper v1.0.2
+2026-01-31T09:35:38.5009880Z [1m[92m  Downloaded[0m subtle v2.6.1
+2026-01-31T09:35:38.5125005Z [1m[92m  Downloaded[0m strsim v0.11.1
+2026-01-31T09:35:38.5248008Z [1m[92m  Downloaded[0m string_cache_codegen v0.5.4
+2026-01-31T09:35:38.5328627Z [1m[92m  Downloaded[0m string_cache v0.8.9
+2026-01-31T09:35:38.5491925Z [1m[92m  Downloaded[0m stable_deref_trait v1.2.1
+2026-01-31T09:35:38.5632806Z [1m[92m  Downloaded[0m softbuffer v0.4.6
+2026-01-31T09:35:38.5999715Z [1m[92m  Downloaded[0m socks v0.3.4
+2026-01-31T09:35:38.6156234Z [1m[92m  Downloaded[0m socket2 v0.6.1
+2026-01-31T09:35:38.6311945Z [1m[92m  Downloaded[0m smallvec v1.15.1
+2026-01-31T09:35:38.6514256Z [1m[92m  Downloaded[0m slab v0.4.11
+2026-01-31T09:35:38.7130006Z [1m[92m  Downloaded[0m siphasher v1.0.1
+2026-01-31T09:35:38.9833309Z [1m[92m  Downloaded[0m siphasher v0.3.11
+2026-01-31T09:35:38.9952799Z [1m[92m  Downloaded[0m simd-adler32 v0.3.7
+2026-01-31T09:35:39.0153356Z [1m[92m  Downloaded[0m shlex v1.3.0
+2026-01-31T09:35:39.0281493Z [1m[92m  Downloaded[0m shared_child v1.1.1
+2026-01-31T09:35:39.0421688Z [1m[92m  Downloaded[0m sha2 v0.10.9
+2026-01-31T09:35:39.0756792Z [1m[92m  Downloaded[0m servo_arc v0.2.0
+2026-01-31T09:35:39.0833883Z [1m[92m  Downloaded[0m serialize-to-javascript-impl v0.1.2
+2026-01-31T09:35:39.0908019Z [1m[92m  Downloaded[0m serialize-to-javascript v0.1.2
+2026-01-31T09:35:39.1012061Z [1m[92m  Downloaded[0m rustls-webpki v0.103.9
+2026-01-31T09:35:39.1279592Z [1m[92m  Downloaded[0m rustls v0.23.36
+2026-01-31T09:35:39.2292499Z [1m[92m  Downloaded[0m encoding_rs v0.8.35
+2026-01-31T09:35:39.3265461Z [1m[92m  Downloaded[0m thiserror-impl v2.0.17
+2026-01-31T09:35:39.3420672Z [1m[92m  Downloaded[0m thiserror-impl v1.0.69
+2026-01-31T09:35:39.3600198Z [1m[92m  Downloaded[0m thiserror v1.0.69
+2026-01-31T09:35:39.4338742Z [1m[92m  Downloaded[0m serde_derive v1.0.228
+2026-01-31T09:35:39.4650884Z [1m[92m  Downloaded[0m serde_core v1.0.228
+2026-01-31T09:35:39.4926642Z [1m[92m  Downloaded[0m semver v1.0.27
+2026-01-31T09:35:39.5167659Z [1m[92m  Downloaded[0m selectors v0.24.0
+2026-01-31T09:35:39.5301994Z [1m[92m  Downloaded[0m schemars_derive v0.8.22
+2026-01-31T09:35:39.5466240Z [1m[92m  Downloaded[0m schemars v0.8.22
+2026-01-31T09:35:39.7136151Z [1m[92m  Downloaded[0m schannel v0.1.28
+2026-01-31T09:35:39.7433324Z [1m[92m  Downloaded[0m regex-syntax v0.8.8
+2026-01-31T09:35:39.7844946Z [1m[92m  Downloaded[0m quinn-proto v0.11.13
+2026-01-31T09:35:39.8347135Z [1m[92m  Downloaded[0m ndarray v0.17.2
+2026-01-31T09:35:39.9369147Z [1m[92m  Downloaded[0m ndarray v0.16.1
+2026-01-31T09:35:40.4648644Z [1m[92m  Downloaded[0m lzma-rust2 v0.15.7
+2026-01-31T09:35:40.5505339Z [1m[92m  Downloaded[0m serde-untagged v0.1.9
+2026-01-31T09:35:40.5698905Z [1m[92m  Downloaded[0m scopeguard v1.2.0
+2026-01-31T09:35:40.5835743Z [1m[92m  Downloaded[0m reqwest v0.12.24
+2026-01-31T09:35:40.6342323Z [1m[92m  Downloaded[0m regex v1.12.2
+2026-01-31T09:35:40.7165435Z [1m[92m  Downloaded[0m rand v0.9.2
+2026-01-31T09:35:40.7584040Z [1m[92m  Downloaded[0m rand v0.7.3
+2026-01-31T09:35:40.8109294Z [1m[92m  Downloaded[0m quinn v0.11.9
+2026-01-31T09:35:40.8443831Z [1m[92m  Downloaded[0m publicsuffix v2.3.0
+2026-01-31T09:35:40.8610474Z [1m[92m  Downloaded[0m png v0.17.16
+2026-01-31T09:35:40.9073728Z [1m[92m  Downloaded[0m ort v2.0.0-rc.11
+2026-01-31T09:35:40.9968818Z [1m[92m  Downloaded[0m opencv-binding-generator v0.90.2
+2026-01-31T09:35:41.1320403Z [1m[92m  Downloaded[0m muda v0.17.1
+2026-01-31T09:35:41.1891975Z [1m[92m  Downloaded[0m miniz_oxide v0.8.9
+2026-01-31T09:35:41.2159486Z [1m[92m  Downloaded[0m matrixmultiply v0.3.10
+2026-01-31T09:35:41.2579368Z [1m[92m  Downloaded[0m iri-string v0.7.9
+2026-01-31T09:35:41.3490215Z [1m[92m  Downloaded[0m idna v1.1.0
+2026-01-31T09:35:41.3769064Z [1m[92m  Downloaded[0m icu_properties_data v2.1.1
+2026-01-31T09:35:41.7543992Z [1m[92m  Downloaded[0m hyper v1.8.1
+2026-01-31T09:35:41.8240672Z [1m[92m  Downloaded[0m hashbrown v0.16.1
+2026-01-31T09:35:41.8683879Z [1m[92m  Downloaded[0m h2 v0.4.13
+2026-01-31T09:35:41.9432196Z [1m[92m  Downloaded[0m futures-util v0.3.31
+2026-01-31T09:35:42.1217862Z [1m[92m  Downloaded[0m chrono v0.4.42
+2026-01-31T09:35:42.1788479Z [1m[92m  Downloaded[0m brotli-decompressor v5.0.0
+2026-01-31T09:35:42.2201636Z [1m[92m  Downloaded[0m brotli v8.0.2
+2026-01-31T09:35:42.3055946Z [1m[92m  Downloaded[0m aho-corasick v1.1.4
+2026-01-31T09:35:42.3531551Z [1m[92m  Downloaded[0m serde_urlencoded v0.7.1
+2026-01-31T09:35:42.3714372Z [1m[92m  Downloaded[0m serde_spanned v1.0.3
+2026-01-31T09:35:42.3846531Z [1m[92m  Downloaded[0m serde_repr v0.1.20
+2026-01-31T09:35:42.4115644Z [1m[92m  Downloaded[0m ryu v1.0.20
+2026-01-31T09:35:42.4859482Z [1m[92m  Downloaded[0m rustls-pki-types v1.14.0
+2026-01-31T09:35:42.5220400Z [1m[92m  Downloaded[0m rfd v0.16.0
+2026-01-31T09:35:42.5835985Z [1m[92m  Downloaded[0m rand_core v0.5.1
+2026-01-31T09:35:42.5977202Z [1m[92m  Downloaded[0m rand v0.8.5
+2026-01-31T09:35:42.6407309Z [1m[92m  Downloaded[0m quinn-udp v0.5.14
+2026-01-31T09:35:42.6574897Z [1m[92m  Downloaded[0m proc-macro2 v1.0.103
+2026-01-31T09:35:42.6922989Z [1m[92m  Downloaded[0m ppv-lite86 v0.2.21
+2026-01-31T09:35:42.7053152Z [1m[92m  Downloaded[0m parking_lot_core v0.9.12
+2026-01-31T09:35:42.7348199Z [1m[92m  Downloaded[0m parking_lot v0.12.5
+2026-01-31T09:35:43.0414083Z [1m[92m  Downloaded[0m windows-sys v0.60.2
+2026-01-31T09:35:43.4387113Z [1m[92m  Downloaded[0m ort-sys v2.0.0-rc.11
+2026-01-31T09:35:43.4661500Z [1m[92m  Downloaded[0m open v5.3.3
+2026-01-31T09:35:43.4836890Z [1m[92m  Downloaded[0m windows-sys v0.61.2
+2026-01-31T09:35:44.7333725Z [1m[92m  Downloaded[0m native-tls v0.2.14
+2026-01-31T09:35:44.7613004Z [1m[92m  Downloaded[0m mio v1.1.1
+2026-01-31T09:35:44.8307642Z [1m[92m  Downloaded[0m memchr v2.7.6
+2026-01-31T09:35:44.8912689Z [1m[92m  Downloaded[0m markup5ever v0.14.1
+2026-01-31T09:35:44.9075907Z [1m[92m  Downloaded[0m log v0.4.29
+2026-01-31T09:35:44.9349573Z [1m[92m  Downloaded[0m litrs v1.0.0
+2026-01-31T09:35:44.9708134Z [1m[92m  Downloaded[0m keyboard-types v0.7.0
+2026-01-31T09:35:44.9907563Z [1m[92m  Downloaded[0m jsonptr v0.6.3
+2026-01-31T09:35:45.0228783Z [1m[92m  Downloaded[0m json-patch v3.0.1
+2026-01-31T09:35:45.0515725Z [1m[92m  Downloaded[0m ipnet v2.11.0
+2026-01-31T09:35:45.0726493Z [1m[92m  Downloaded[0m infer v0.19.0
+2026-01-31T09:35:45.1012669Z [1m[92m  Downloaded[0m indexmap v2.12.1
+2026-01-31T09:35:45.1414164Z [1m[92m  Downloaded[0m indexmap v1.9.3
+2026-01-31T09:35:45.1744535Z [1m[92m  Downloaded[0m icu_properties v2.1.1
+2026-01-31T09:35:45.1940075Z [1m[92m  Downloaded[0m icu_normalizer_data v2.1.1
+2026-01-31T09:35:45.2134477Z [1m[92m  Downloaded[0m icu_normalizer v2.1.1
+2026-01-31T09:35:45.2536884Z [1m[92m  Downloaded[0m icu_locale_core v2.1.1
+2026-01-31T09:35:45.3436675Z [1m[92m  Downloaded[0m icu_collections v2.1.1
+2026-01-31T09:35:45.4260865Z [1m[92m  Downloaded[0m ico v0.4.0
+2026-01-31T09:35:45.4639733Z [1m[92m  Downloaded[0m hyper-util v0.1.19
+2026-01-31T09:35:45.7969100Z [1m[92m  Downloaded[0m http v1.4.0
+2026-01-31T09:35:45.8322471Z [1m[92m  Downloaded[0m html5ever v0.29.1
+2026-01-31T09:35:45.8780495Z [1m[92m  Downloaded[0m hashbrown v0.12.3
+2026-01-31T09:35:45.9154648Z [1m[92m  Downloaded[0m getrandom v0.3.4
+2026-01-31T09:35:45.9577938Z [1m[92m  Downloaded[0m flate2 v1.1.7
+2026-01-31T09:35:46.0219377Z [1m[92m  Downloaded[0m derive_more v0.99.20
+2026-01-31T09:35:46.0864399Z [1m[92m  Downloaded[0m der v0.7.10
+2026-01-31T09:35:46.1489620Z [1m[92m  Downloaded[0m darling_core v0.21.3
+2026-01-31T09:35:46.2248798Z [1m[92m  Downloaded[0m darling v0.21.3
+2026-01-31T09:35:46.3030886Z [1m[92m  Downloaded[0m crossbeam-channel v0.5.15
+2026-01-31T09:35:46.3450778Z [1m[92m  Downloaded[0m crc32fast v1.5.0
+2026-01-31T09:35:46.3645863Z [1m[92m  Downloaded[0m clang v2.0.0
+2026-01-31T09:35:46.3949322Z [1m[92m  Downloaded[0m cfb v0.7.3
+2026-01-31T09:35:46.4437849Z [1m[92m  Downloaded[0m cc v1.2.48
+2026-01-31T09:35:46.4736162Z [1m[92m  Downloaded[0m cargo_metadata v0.19.2
+2026-01-31T09:35:46.4951553Z [1m[92m  Downloaded[0m bytes v1.11.0
+2026-01-31T09:35:46.5492366Z [1m[92m  Downloaded[0m base64 v0.22.1
+2026-01-31T09:35:46.5866843Z [1m[92m  Downloaded[0m rustc_version v0.4.1
+2026-01-31T09:35:46.6013877Z [1m[92m  Downloaded[0m rustc-hash v2.1.1
+2026-01-31T09:35:46.6161331Z [1m[92m  Downloaded[0m ref-cast v1.0.25
+2026-01-31T09:35:46.6668637Z [1m[92m  Downloaded[0m raw-window-handle v0.6.2
+2026-01-31T09:35:46.6912049Z [1m[92m  Downloaded[0m rand_core v0.9.5
+2026-01-31T09:35:46.7055448Z [1m[92m  Downloaded[0m rand_core v0.6.4
+2026-01-31T09:35:46.7225761Z [1m[92m  Downloaded[0m rand_chacha v0.9.0
+2026-01-31T09:35:46.7356725Z [1m[92m  Downloaded[0m quote v1.0.42
+2026-01-31T09:35:46.7686156Z [1m[92m  Downloaded[0m powerfmt v0.2.0
+2026-01-31T09:35:46.7824760Z [1m[92m  Downloaded[0m pkg-config v0.3.32
+2026-01-31T09:35:46.7998732Z [1m[92m  Downloaded[0m pin-project-lite v0.2.16
+2026-01-31T09:35:47.1828874Z [1m[92m  Downloaded[0m phf_shared v0.11.3
+2026-01-31T09:35:47.1948466Z [1m[92m  Downloaded[0m webview2-com-sys v0.38.0
+2026-01-31T09:35:47.3234374Z [1m[92m  Downloaded[0m phf_shared v0.10.0
+2026-01-31T09:35:47.3311056Z [1m[92m  Downloaded[0m phf_shared v0.8.0
+2026-01-31T09:35:47.3383982Z [1m[92m  Downloaded[0m phf_macros v0.11.3
+2026-01-31T09:35:47.3485910Z [1m[92m  Downloaded[0m phf_generator v0.10.0
+2026-01-31T09:35:47.3611990Z [1m[92m  Downloaded[0m phf_generator v0.8.0
+2026-01-31T09:35:47.3716717Z [1m[92m  Downloaded[0m phf_codegen v0.11.3
+2026-01-31T09:35:47.3818354Z [1m[92m  Downloaded[0m phf_codegen v0.8.0
+2026-01-31T09:35:47.3889333Z [1m[92m  Downloaded[0m phf v0.11.3
+2026-01-31T09:35:47.4043127Z [1m[92m  Downloaded[0m phf v0.8.0
+2026-01-31T09:35:47.4148695Z [1m[92m  Downloaded[0m percent-encoding v2.3.2
+2026-01-31T09:35:47.4256747Z [1m[92m  Downloaded[0m pem-rfc7468 v0.7.0
+2026-01-31T09:35:47.4503290Z [1m[92m  Downloaded[0m os_pipe v1.2.3
+2026-01-31T09:35:47.4673930Z [1m[92m  Downloaded[0m option-ext v0.2.0
+2026-01-31T09:35:47.4771051Z [1m[92m  Downloaded[0m num-integer v0.1.46
+2026-01-31T09:35:47.4950295Z [1m[92m  Downloaded[0m nodrop v0.1.14
+2026-01-31T09:35:47.5086082Z [1m[92m  Downloaded[0m matches v0.1.10
+2026-01-31T09:35:47.5182601Z [1m[92m  Downloaded[0m mac v0.1.1
+2026-01-31T09:35:47.5367837Z [1m[92m  Downloaded[0m icu_provider v2.1.1
+2026-01-31T09:35:47.5634262Z [1m[92m  Downloaded[0m hyper-rustls v0.27.7
+2026-01-31T09:35:47.5945537Z [1m[92m  Downloaded[0m httparse v1.10.1
+2026-01-31T09:35:47.6190238Z [1m[92m  Downloaded[0m glob v0.3.3
+2026-01-31T09:35:47.6353863Z [1m[92m  Downloaded[0m getrandom v0.2.16
+2026-01-31T09:35:47.6678964Z [1m[92m  Downloaded[0m getrandom v0.1.16
+2026-01-31T09:35:47.6999249Z [1m[92m  Downloaded[0m futures-channel v0.3.31
+2026-01-31T09:35:47.7255274Z [1m[92m  Downloaded[0m find-msvc-tools v0.1.5
+2026-01-31T09:35:47.7437339Z [1m[92m  Downloaded[0m fdeflate v0.3.7
+2026-01-31T09:35:47.7693938Z [1m[92m  Downloaded[0m erased-serde v0.4.9
+2026-01-31T09:35:47.7949724Z [1m[92m  Downloaded[0m embed-resource v3.0.6
+2026-01-31T09:35:47.8155254Z [1m[92m  Downloaded[0m dtoa v1.0.10
+2026-01-31T09:35:47.8319047Z [1m[92m  Downloaded[0m displaydoc v0.2.5
+2026-01-31T09:35:47.8734320Z [1m[92m  Downloaded[0m deranged v0.5.5
+2026-01-31T09:35:47.8865557Z [1m[92m  Downloaded[0m data-url v0.3.2
+2026-01-31T09:35:47.9064148Z [1m[92m  Downloaded[0m crossbeam-utils v0.8.21
+2026-01-31T09:35:47.9496981Z [1m[92m  Downloaded[0m cookie v0.18.1
+2026-01-31T09:35:47.9754740Z [1m[92m  Downloaded[0m cargo-platform v0.1.9
+2026-01-31T09:35:47.9943817Z [1m[92m  Downloaded[0m byteorder v1.5.0
+2026-01-31T09:35:48.0108461Z [1m[92m  Downloaded[0m bitflags v1.3.2
+2026-01-31T09:35:48.0745512Z [1m[92m  Downloaded[0m base64ct v1.8.3
+2026-01-31T09:35:48.1084776Z [1m[92m  Downloaded[0m autocfg v1.5.0
+2026-01-31T09:35:48.1347092Z [1m[92m  Downloaded[0m rawpointer v0.2.1
+2026-01-31T09:35:48.1466943Z [1m[92m  Downloaded[0m rand_pcg v0.2.1
+2026-01-31T09:35:48.1618139Z [1m[92m  Downloaded[0m rand_chacha v0.3.1
+2026-01-31T09:35:48.1711497Z [1m[92m  Downloaded[0m rand_chacha v0.2.2
+2026-01-31T09:35:48.1864167Z [1m[92m  Downloaded[0m psl-types v2.0.11
+2026-01-31T09:35:48.1984270Z [1m[92m  Downloaded[0m proc-macro-hack v0.5.20+deprecated
+2026-01-31T09:35:48.5595359Z [1m[92m  Downloaded[0m precomputed-hash v0.1.1
+2026-01-31T09:35:48.5669921Z [1m[92m  Downloaded[0m potential_utf v0.1.4
+2026-01-31T09:35:48.5781508Z [1m[92m  Downloaded[0m pin-utils v0.1.0
+2026-01-31T09:35:48.5958962Z [1m[92m  Downloaded[0m phf_macros v0.10.0
+2026-01-31T09:35:48.6042337Z [1m[92m  Downloaded[0m phf_generator v0.11.3
+2026-01-31T09:35:48.6167067Z [1m[92m  Downloaded[0m phf v0.10.1
+2026-01-31T09:35:48.6282612Z [1m[92m  Downloaded[0m num-conv v0.1.0
+2026-01-31T09:35:48.6369919Z [1m[92m  Downloaded[0m num-complex v0.4.6
+2026-01-31T09:35:48.6511990Z [1m[92m  Downloaded[0m new_debug_unreachable v1.0.6
+2026-01-31T09:35:48.6648351Z [1m[92m  Downloaded[0m mime v0.3.17
+2026-01-31T09:35:48.6791077Z [1m[92m  Downloaded[0m match_token v0.1.0
+2026-01-31T09:35:48.6873314Z [1m[92m  Downloaded[0m lru-slab v0.1.2
+2026-01-31T09:35:48.6974597Z [1m[92m  Downloaded[0m lock_api v0.4.14
+2026-01-31T09:35:48.7104855Z [1m[92m  Downloaded[0m idna_adapter v1.2.1
+2026-01-31T09:35:48.7216464Z [1m[92m  Downloaded[0m http-body-util v0.1.3
+2026-01-31T09:35:48.7527099Z [1m[92m  Downloaded[0m http-body v1.0.1
+2026-01-31T09:35:48.7637720Z [1m[92m  Downloaded[0m hmac-sha256 v1.1.13
+2026-01-31T09:35:48.7772042Z [1m[92m  Downloaded[0m hex v0.4.3
+2026-01-31T09:35:48.7949872Z [1m[92m  Downloaded[0m heck v0.5.0
+2026-01-31T09:35:48.8126154Z [1m[92m  Downloaded[0m futures-task v0.3.31
+2026-01-31T09:35:48.8282982Z [1m[92m  Downloaded[0m futures-sink v0.3.31
+2026-01-31T09:35:48.8370620Z [1m[92m  Downloaded[0m futures-core v0.3.31
+2026-01-31T09:35:48.8537246Z [1m[92m  Downloaded[0m futf v0.1.5
+2026-01-31T09:35:48.8655796Z [1m[92m  Downloaded[0m form_urlencoded v1.2.2
+2026-01-31T09:35:48.8750613Z [1m[92m  Downloaded[0m fnv v1.0.7
+2026-01-31T09:35:48.8876257Z [1m[92m  Downloaded[0m dyn-clone v1.0.20
+2026-01-31T09:35:48.9057389Z [1m[92m  Downloaded[0m dunce v1.0.5
+2026-01-31T09:35:48.9171241Z [1m[92m  Downloaded[0m dtoa-short v0.3.5
+2026-01-31T09:35:48.9274434Z [1m[92m  Downloaded[0m dirs-sys v0.5.0
+2026-01-31T09:35:48.9399406Z [1m[92m  Downloaded[0m dirs v6.0.0
+2026-01-31T09:35:48.9577853Z [1m[92m  Downloaded[0m digest v0.10.7
+2026-01-31T09:35:48.9801653Z [1m[92m  Downloaded[0m darling_macro v0.21.3
+2026-01-31T09:35:48.9888138Z [1m[92m  Downloaded[0m ctor v0.2.9
+2026-01-31T09:35:49.0003368Z [1m[92m  Downloaded[0m cssparser-macros v0.6.1
+2026-01-31T09:35:49.0082430Z [1m[92m  Downloaded[0m cfg_aliases v0.2.1
+2026-01-31T09:35:49.0223627Z [1m[92m  Downloaded[0m cfg-if v1.0.4
+2026-01-31T09:35:49.0362005Z [1m[92m  Downloaded[0m atomic-waker v1.1.2
+2026-01-31T09:35:49.0498033Z [1m[92m  Downloaded[0m alloc-no-stdlib v2.0.4
+2026-01-31T09:35:49.0724125Z [1m[92m  Downloaded[0m litemap v0.8.1
+2026-01-31T09:35:49.1049729Z [1m[92m  Downloaded[0m kuchikiki v0.8.8-speedreader
+2026-01-31T09:35:49.1346289Z [1m[92m  Downloaded[0m jobserver v0.1.34
+2026-01-31T09:35:49.1577354Z [1m[92m  Downloaded[0m itoa v1.0.15
+2026-01-31T09:35:49.1716543Z [1m[92m  Downloaded[0m generic-array v0.14.7
+2026-01-31T09:35:49.1911482Z [1m[92m  Downloaded[0m fxhash v0.2.1
+2026-01-31T09:35:49.1988987Z [1m[92m  Downloaded[0m futures-macro v0.3.31
+2026-01-31T09:35:49.2133432Z [1m[92m  Downloaded[0m futures-io v0.3.31
+2026-01-31T09:35:49.2254568Z [1m[92m  Downloaded[0m equivalent v1.0.2
+2026-01-31T09:35:49.2396910Z [1m[92m  Downloaded[0m dpi v0.1.2
+2026-01-31T09:35:49.2530950Z [1m[92m  Downloaded[0m document-features v0.2.12
+2026-01-31T09:35:49.2677539Z [1m[92m  Downloaded[0m cssparser v0.29.6
+2026-01-31T09:35:49.2938972Z [1m[92m  Downloaded[0m crypto-common v0.1.7
+2026-01-31T09:35:49.3056128Z [1m[92m  Downloaded[0m cpufeatures v0.2.17
+2026-01-31T09:35:49.3210873Z [1m[92m  Downloaded[0m cookie_store v0.21.1
+2026-01-31T09:35:49.3435186Z [1m[92m  Downloaded[0m convert_case v0.4.0
+2026-01-31T09:35:49.3534360Z [1m[92m  Downloaded[0m clang-sys v1.8.1
+2026-01-31T09:35:49.3757852Z [1m[92m  Downloaded[0m block-buffer v0.10.4
+2026-01-31T09:35:49.3933822Z [1m[92m  Downloaded[0m lazy_static v1.5.0
+2026-01-31T09:35:49.4165117Z [1m[92m  Downloaded[0m ident_case v1.0.1
+2026-01-31T09:35:49.4298059Z [1m[92m  Downloaded[0m cargo_toml v0.22.3
+2026-01-31T09:35:49.4571539Z [1m[92m  Downloaded[0m camino v1.2.1
+2026-01-31T09:35:49.4753110Z [1m[92m  Downloaded[0m bitflags v2.10.0
+2026-01-31T09:35:49.5311744Z [1m[92m  Downloaded[0m anyhow v1.0.100
+2026-01-31T09:35:49.8935699Z [1m[92m  Downloaded[0m alloc-stdlib v0.2.2
+2026-01-31T09:35:49.9213238Z [1m[92m  Downloaded[0m windows v0.61.3
+2026-01-31T09:35:52.5460040Z [1m[92m  Downloaded[0m windows v0.58.0
+2026-01-31T09:35:55.7890477Z [1m[92m   Compiling[0m proc-macro2 v1.0.103
+2026-01-31T09:35:55.7892364Z [1m[92m   Compiling[0m unicode-ident v1.0.22
+2026-01-31T09:36:02.4462016Z [1m[92m   Compiling[0m quote v1.0.42
+2026-01-31T09:36:04.4536556Z [1m[92m   Compiling[0m cfg-if v1.0.4
+2026-01-31T09:36:04.6498189Z [1m[92m   Compiling[0m serde_core v1.0.228
+2026-01-31T09:36:08.9985557Z [1m[92m   Compiling[0m syn v2.0.111
+2026-01-31T09:36:09.8772579Z [1m[92m   Compiling[0m zerocopy v0.8.31
+2026-01-31T09:36:13.7167589Z [1m[92m   Compiling[0m ppv-lite86 v0.2.21
+2026-01-31T09:36:14.4543352Z [1m[92m   Compiling[0m synstructure v0.13.2
+2026-01-31T09:36:15.4506058Z [1m[92m   Compiling[0m getrandom v0.3.4
+2026-01-31T09:36:16.1457250Z [1m[92m   Compiling[0m getrandom v0.2.16
+2026-01-31T09:36:16.3201563Z [1m[92m   Compiling[0m icu_properties_data v2.1.1
+2026-01-31T09:36:16.5586358Z [1m[92m   Compiling[0m icu_normalizer_data v2.1.1
+2026-01-31T09:36:17.0363184Z [1m[92m   Compiling[0m rand_core v0.6.4
+2026-01-31T09:36:17.3288757Z [1m[92m   Compiling[0m rand_chacha v0.3.1
+2026-01-31T09:36:17.8467669Z [1m[92m   Compiling[0m zerofrom-derive v0.1.6
+2026-01-31T09:36:18.0897883Z [1m[92m   Compiling[0m yoke-derive v0.8.1
+2026-01-31T09:36:20.0753669Z [1m[92m   Compiling[0m zerovec-derive v0.11.2
+2026-01-31T09:36:20.1985742Z [1m[92m   Compiling[0m serde_derive v1.0.228
+2026-01-31T09:36:21.8534358Z [1m[92m   Compiling[0m displaydoc v0.2.5
+2026-01-31T09:36:22.8228892Z [1m[92m   Compiling[0m rand v0.8.5
+2026-01-31T09:36:23.9398181Z [1m[92m   Compiling[0m windows-link v0.2.1
+2026-01-31T09:36:24.0016422Z [1m[92m   Compiling[0m stable_deref_trait v1.2.1
+2026-01-31T09:36:24.0757388Z [1m[92m   Compiling[0m autocfg v1.5.0
+2026-01-31T09:36:24.7514757Z [1m[92m   Compiling[0m siphasher v1.0.1
+2026-01-31T09:36:25.0015863Z [1m[92m   Compiling[0m phf_shared v0.11.3
+2026-01-31T09:36:25.2519008Z [1m[92m   Compiling[0m zerofrom v0.1.6
+2026-01-31T09:36:25.3932588Z [1m[92m   Compiling[0m itoa v1.0.15
+2026-01-31T09:36:25.4505286Z [1m[92m   Compiling[0m serde v1.0.228
+2026-01-31T09:36:25.5553446Z [1m[92m   Compiling[0m yoke v0.8.1
+2026-01-31T09:36:25.8762530Z [1m[92m   Compiling[0m thiserror v2.0.17
+2026-01-31T09:36:26.2996673Z [1m[92m   Compiling[0m smallvec v1.15.1
+2026-01-31T09:36:26.5699475Z [1m[92m   Compiling[0m phf_generator v0.11.3
+2026-01-31T09:36:26.8529928Z [1m[92m   Compiling[0m memchr v2.7.6
+2026-01-31T09:36:27.2010308Z [1m[92m   Compiling[0m siphasher v0.3.11
+2026-01-31T09:36:27.4483102Z [1m[92m   Compiling[0m percent-encoding v2.3.2
+2026-01-31T09:36:27.9239835Z [1m[92m   Compiling[0m zerovec v0.11.5
+2026-01-31T09:36:28.7813051Z [1m[92m   Compiling[0m windows-sys v0.61.2
+2026-01-31T09:36:32.0382650Z [1m[92m   Compiling[0m thiserror-impl v2.0.17
+2026-01-31T09:36:34.5035355Z [1m[92m   Compiling[0m parking_lot_core v0.9.12
+2026-01-31T09:36:34.8297955Z [1m[92m   Compiling[0m byteorder v1.5.0
+2026-01-31T09:36:35.1791487Z [1m[92m   Compiling[0m getrandom v0.1.16
+2026-01-31T09:36:35.8049133Z [1m[92m   Compiling[0m jobserver v0.1.34
+2026-01-31T09:36:36.5216672Z [1m[92m   Compiling[0m find-msvc-tools v0.1.5
+2026-01-31T09:36:39.0254627Z [1m[92m   Compiling[0m libc v0.2.178
+2026-01-31T09:36:39.2591210Z [1m[92m   Compiling[0m typeid v1.0.3
+2026-01-31T09:36:39.6956396Z [1m[92m   Compiling[0m windows_x86_64_msvc v0.52.6
+2026-01-31T09:36:39.7081357Z [1m[92m   Compiling[0m shlex v1.3.0
+2026-01-31T09:36:39.9476358Z [1m[92m   Compiling[0m fnv v1.0.7
+2026-01-31T09:36:39.9854778Z [1m[92m   Compiling[0m cc v1.2.48
+2026-01-31T09:36:40.2734777Z [1m[92m   Compiling[0m log v0.4.29
+2026-01-31T09:36:40.5372691Z [1m[92m   Compiling[0m rand_core v0.5.1
+2026-01-31T09:36:40.7839269Z [1m[92m   Compiling[0m tinystr v0.8.2
+2026-01-31T09:36:41.2810027Z [1m[92m   Compiling[0m thiserror v1.0.69
+2026-01-31T09:36:41.6574126Z [1m[92m   Compiling[0m utf-8 v0.7.6
+2026-01-31T09:36:41.8402606Z [1m[92m   Compiling[0m litemap v0.8.1
+2026-01-31T09:36:42.0915000Z [1m[92m   Compiling[0m ident_case v1.0.1
+2026-01-31T09:36:42.2037758Z [1m[92m   Compiling[0m erased-serde v0.4.9
+2026-01-31T09:36:42.5391073Z [1m[92m   Compiling[0m syn v1.0.109
+2026-01-31T09:36:42.8802743Z [1m[92m   Compiling[0m strsim v0.11.1
+2026-01-31T09:36:42.9086559Z [1m[92m   Compiling[0m writeable v0.6.2
+2026-01-31T09:36:43.1861781Z [1m[92m   Compiling[0m icu_locale_core v2.1.1
+2026-01-31T09:36:43.3345970Z [1m[92m   Compiling[0m darling_core v0.21.3
+2026-01-31T09:36:45.0367189Z [1m[92m   Compiling[0m potential_utf v0.1.4
+2026-01-31T09:36:45.2166023Z [1m[92m   Compiling[0m phf_macros v0.11.3
+2026-01-31T09:36:46.3331083Z [1m[92m   Compiling[0m zerotrie v0.2.3
+2026-01-31T09:36:46.7888005Z [1m[92m   Compiling[0m glob v0.3.3
+2026-01-31T09:36:47.3305129Z [1m[92m   Compiling[0m icu_provider v2.1.1
+2026-01-31T09:36:47.8286194Z [1m[92m   Compiling[0m icu_collections v2.1.1
+2026-01-31T09:36:48.2264162Z [1m[92m   Compiling[0m darling_macro v0.21.3
+2026-01-31T09:36:48.7634486Z [1m[92m   Compiling[0m rand_pcg v0.2.1
+2026-01-31T09:36:48.9086401Z [1m[92m   Compiling[0m rand_chacha v0.2.2
+2026-01-31T09:36:49.5391500Z [1m[92m   Compiling[0m aho-corasick v1.1.4
+2026-01-31T09:36:52.5793059Z [1m[92m   Compiling[0m phf_shared v0.8.0
+2026-01-31T09:36:52.7676221Z [1m[92m   Compiling[0m thiserror-impl v1.0.69
+2026-01-31T09:36:58.6534605Z [1m[92m   Compiling[0m semver v1.0.27
+2026-01-31T09:36:58.6535457Z [1m[92m   Compiling[0m proc-macro-hack v0.5.20+deprecated
+2026-01-31T09:36:58.6536197Z [1m[92m   Compiling[0m regex-syntax v0.8.8
+2026-01-31T09:36:58.6536831Z [1m[92m   Compiling[0m anyhow v1.0.100
+2026-01-31T09:36:58.6537416Z [1m[92m   Compiling[0m bytes v1.11.0
+2026-01-31T09:36:58.6538014Z [1m[92m   Compiling[0m http v1.4.0
+2026-01-31T09:36:59.9003537Z [1m[92m   Compiling[0m regex-automata v0.4.13
+2026-01-31T09:37:00.5308470Z [1m[92m   Compiling[0m rand v0.7.3
+2026-01-31T09:37:05.4080186Z [1m[92m   Compiling[0m darling v0.21.3
+2026-01-31T09:37:05.4080884Z [1m[92m   Compiling[0m phf_shared v0.10.0
+2026-01-31T09:37:05.4081582Z [1m[92m   Compiling[0m new_debug_unreachable v1.0.6
+2026-01-31T09:37:05.4083767Z [1m[92m   Compiling[0m scopeguard v1.2.0
+2026-01-31T09:37:05.4084421Z [1m[92m   Compiling[0m serde_json v1.0.145
+2026-01-31T09:37:05.4084973Z [1m[92m   Compiling[0m lock_api v0.4.14
+2026-01-31T09:37:05.4085546Z [1m[92m   Compiling[0m phf_generator v0.10.0
+2026-01-31T09:37:05.4086053Z [1m[92m   Compiling[0m regex v1.12.2
+2026-01-31T09:37:05.4086602Z [1m[92m   Compiling[0m serde_with_macros v3.16.1
+2026-01-31T09:37:05.4087184Z [1m[92m   Compiling[0m phf_generator v0.8.0
+2026-01-31T09:37:05.4087761Z [1m[92m   Compiling[0m icu_normalizer v2.1.1
+2026-01-31T09:37:09.6791147Z [1m[92m   Compiling[0m icu_properties v2.1.1
+2026-01-31T09:37:09.6791863Z [1m[92m   Compiling[0m phf_codegen v0.11.3
+2026-01-31T09:37:09.6792574Z [1m[92m   Compiling[0m string_cache_codegen v0.5.4
+2026-01-31T09:37:09.6793219Z [1m[92m   Compiling[0m dunce v1.0.5
+2026-01-31T09:37:09.6793808Z [1m[92m   Compiling[0m winnow v0.7.14
+2026-01-31T09:37:09.6794497Z [1m[92m   Compiling[0m precomputed-hash v0.1.1
+2026-01-31T09:37:09.6795176Z [1m[92m   Compiling[0m mac v0.1.1
+2026-01-31T09:37:09.6795705Z [1m[92m   Compiling[0m ryu v1.0.20
+2026-01-31T09:37:10.2434454Z [1m[92m   Compiling[0m futf v0.1.5
+2026-01-31T09:37:10.3670693Z [1m[92m   Compiling[0m markup5ever v0.14.1
+2026-01-31T09:37:10.5555121Z [1m[92m   Compiling[0m toml_parser v1.0.4
+2026-01-31T09:37:11.0220482Z [1m[92m   Compiling[0m idna_adapter v1.2.1
+2026-01-31T09:37:11.1557110Z [1m[92m   Compiling[0m phf_macros v0.10.0
+2026-01-31T09:37:11.6288319Z [1m[92m   Compiling[0m phf_codegen v0.8.0
+2026-01-31T09:37:11.7486182Z [1m[92m   Compiling[0m parking_lot v0.12.5
+2026-01-31T09:37:12.3396146Z [1m[92m   Compiling[0m cssparser v0.29.6
+2026-01-31T09:37:12.5148907Z [1m[92m   Compiling[0m serde_spanned v1.0.3
+2026-01-31T09:37:12.6658046Z [1m[92m   Compiling[0m toml_datetime v0.7.3
+2026-01-31T09:37:13.2719820Z [1m[92m   Compiling[0m dtoa v1.0.10
+2026-01-31T09:37:13.4529111Z [1m[92m   Compiling[0m toml_writer v1.0.4
+2026-01-31T09:37:13.7277966Z [1m[92m   Compiling[0m bitflags v1.3.2
+2026-01-31T09:37:13.7994054Z [1m[92m   Compiling[0m utf8_iter v1.0.4
+2026-01-31T09:37:13.9586062Z [1m[92m   Compiling[0m idna v1.1.0
+2026-01-31T09:37:14.9643287Z [1m[92m   Compiling[0m toml v0.9.8
+2026-01-31T09:37:15.1588099Z [1m[92m   Compiling[0m dtoa-short v0.3.5
+2026-01-31T09:37:15.5486685Z [1m[92m   Compiling[0m phf v0.10.1
+2026-01-31T09:37:15.7370327Z [1m[92m   Compiling[0m string_cache v0.8.9
+2026-01-31T09:37:16.0007805Z [1m[92m   Compiling[0m selectors v0.24.0
+2026-01-31T09:37:17.0604364Z [1m[92m   Compiling[0m tendril v0.4.3
+2026-01-31T09:37:17.1491944Z [1m[92m   Compiling[0m phf v0.11.3
+2026-01-31T09:37:17.4333199Z [1m[92m   Compiling[0m form_urlencoded v1.2.2
+2026-01-31T09:37:17.6125563Z [1m[92m   Compiling[0m indexmap v1.9.3
+2026-01-31T09:37:18.1336762Z [1m[92m   Compiling[0m ctor v0.2.9
+2026-01-31T09:37:18.9534688Z [1m[92m   Compiling[0m cssparser-macros v0.6.1
+2026-01-31T09:37:19.7949634Z [1m[92m   Compiling[0m uuid v1.19.0
+2026-01-31T09:37:20.5241245Z [1m[92m   Compiling[0m camino v1.2.1
+2026-01-31T09:37:21.2799052Z [1m[92m   Compiling[0m convert_case v0.4.0
+2026-01-31T09:37:22.0571776Z [1m[92m   Compiling[0m unic-char-range v0.9.0
+2026-01-31T09:37:22.4936094Z [1m[92m   Compiling[0m nodrop v0.1.14
+2026-01-31T09:37:22.5822814Z [1m[92m   Compiling[0m matches v0.1.10
+2026-01-31T09:37:22.6446897Z [1m[92m   Compiling[0m unic-common v0.9.0
+2026-01-31T09:37:22.7402106Z [1m[92m   Compiling[0m alloc-no-stdlib v2.0.4
+2026-01-31T09:37:22.8551712Z [1m[92m   Compiling[0m alloc-stdlib v0.2.2
+2026-01-31T09:37:22.9720582Z [1m[92m   Compiling[0m unic-ucd-version v0.9.0
+2026-01-31T09:37:24.2643436Z [1m[92m   Compiling[0m servo_arc v0.2.0
+2026-01-31T09:37:24.5031314Z [1m[92m   Compiling[0m unic-char-property v0.9.0
+2026-01-31T09:37:24.5223620Z [1m[92m   Compiling[0m derive_more v0.99.20
+2026-01-31T09:37:24.7961648Z [1m[92m   Compiling[0m url v2.5.7
+2026-01-31T09:37:27.9119663Z [1m[92m   Compiling[0m phf v0.8.0
+2026-01-31T09:37:28.2553325Z [1m[92m   Compiling[0m winapi-util v0.1.11
+2026-01-31T09:37:28.6067557Z [1m[92m   Compiling[0m fxhash v0.2.1
+2026-01-31T09:37:28.7320477Z [1m[92m   Compiling[0m match_token v0.1.0
+2026-01-31T09:37:28.9448290Z [1m[92m   Compiling[0m serde_derive_internals v0.29.1
+2026-01-31T09:37:29.3736515Z [1m[92m   Compiling[0m schemars v0.8.22
+2026-01-31T09:37:29.6243180Z [1m[92m   Compiling[0m hashbrown v0.16.1
+2026-01-31T09:37:30.6022855Z [1m[92m   Compiling[0m hashbrown v0.12.3
+2026-01-31T09:37:30.6098580Z [1m[92m   Compiling[0m equivalent v1.0.2
+2026-01-31T09:37:30.6790068Z [1m[92m   Compiling[0m indexmap v2.12.1
+2026-01-31T09:37:31.7764135Z [1m[92m   Compiling[0m schemars_derive v0.8.22
+2026-01-31T09:37:31.9907237Z [1m[92m   Compiling[0m html5ever v0.29.1
+2026-01-31T09:37:33.7081826Z [1m[92m   Compiling[0m same-file v1.0.6
+2026-01-31T09:37:34.7945043Z [1m[92m   Compiling[0m unic-ucd-ident v0.9.0
+2026-01-31T09:37:34.9396435Z [1m[92m   Compiling[0m brotli-decompressor v5.0.0
+2026-01-31T09:37:35.1035727Z [1m[92m   Compiling[0m cfb v0.7.3
+2026-01-31T09:37:36.5937407Z [1m[92m   Compiling[0m jsonptr v0.6.3
+2026-01-31T09:37:37.1860208Z [1m[92m   Compiling[0m cargo-platform v0.1.9
+2026-01-31T09:37:37.5080072Z [1m[92m   Compiling[0m dyn-clone v1.0.20
+2026-01-31T09:37:37.6363149Z [1m[92m   Compiling[0m windows_x86_64_msvc v0.53.1
+2026-01-31T09:37:38.0841941Z [1m[92m   Compiling[0m cargo_metadata v0.19.2
+2026-01-31T09:37:40.5850868Z [1m[92m   Compiling[0m json-patch v3.0.1
+2026-01-31T09:37:40.8936171Z [1m[92m   Compiling[0m brotli v8.0.2
+2026-01-31T09:37:41.2781838Z [1m[92m   Compiling[0m infer v0.19.0
+2026-01-31T09:37:41.8547119Z [1m[92m   Compiling[0m urlpattern v0.3.0
+2026-01-31T09:37:43.6548840Z [1m[92m   Compiling[0m serde-untagged v0.1.9
+2026-01-31T09:37:44.2062805Z [1m[92m   Compiling[0m kuchikiki v0.8.8-speedreader
+2026-01-31T09:37:45.0384286Z [1m[92m   Compiling[0m walkdir v2.5.0
+2026-01-31T09:37:45.6213635Z [1m[92m   Compiling[0m serde_with v3.16.1
+2026-01-31T09:37:46.2522501Z [1m[92m   Compiling[0m version_check v0.9.5
+2026-01-31T09:37:48.6295560Z [1m[92m   Compiling[0m tauri-utils v2.8.1
+2026-01-31T09:37:48.9985638Z [1m[92m   Compiling[0m windows-targets v0.53.5
+2026-01-31T09:37:49.6434079Z [1m[92m   Compiling[0m once_cell v1.21.3
+2026-01-31T09:37:53.3479388Z [1m[92m   Compiling[0m windows-sys v0.60.2
+2026-01-31T09:38:01.5210621Z [1m[92m   Compiling[0m vswhom-sys v0.1.3
+2026-01-31T09:38:02.1409111Z [1m[92m   Compiling[0m pin-project-lite v0.2.16
+2026-01-31T09:38:02.2440163Z [1m[92m   Compiling[0m windows-link v0.1.3
+2026-01-31T09:38:07.3783513Z [1m[92m   Compiling[0m windows-targets v0.52.6
+2026-01-31T09:38:09.5398185Z [1m[92m   Compiling[0m windows-sys v0.59.0
+2026-01-31T09:38:15.9564048Z [1m[92m   Compiling[0m vswhom v0.1.0
+2026-01-31T09:38:16.0897775Z [1m[92m   Compiling[0m winreg v0.55.0
+2026-01-31T09:38:18.1247879Z [1m[92m   Compiling[0m windows-strings v0.4.2
+2026-01-31T09:38:18.8715887Z [1m[92m   Compiling[0m windows-result v0.3.4
+2026-01-31T09:38:23.0429453Z [1m[92m   Compiling[0m rustc_version v0.4.1
+2026-01-31T09:38:27.2072640Z [1m[92m   Compiling[0m windows-implement v0.60.2
+2026-01-31T09:38:27.2073629Z [1m[92m   Compiling[0m windows-interface v0.59.3
+2026-01-31T09:38:27.2074463Z [1m[92m   Compiling[0m option-ext v0.2.0
+2026-01-31T09:38:27.2075221Z [1m[92m   Compiling[0m dirs-sys v0.5.0
+2026-01-31T09:38:27.2075969Z [1m[92m   Compiling[0m windows-core v0.61.2
+2026-01-31T09:38:27.2076717Z [1m[92m   Compiling[0m embed-resource v3.0.6
+2026-01-31T09:38:27.2077476Z [1m[92m   Compiling[0m socket2 v0.6.1
+2026-01-31T09:38:27.2078141Z [1m[92m   Compiling[0m mio v1.1.1
+2026-01-31T09:38:27.2078762Z [1m[92m   Compiling[0m tokio-macros v2.6.0
+2026-01-31T09:38:27.2079966Z [1m[92m   Compiling[0m heck v0.5.0
+2026-01-31T09:38:27.2080937Z [1m[92m   Compiling[0m tokio v1.48.0
+2026-01-31T09:38:27.2081763Z [1m[92m   Compiling[0m tauri-winres v0.3.5
+2026-01-31T09:38:27.4236991Z [1m[92m   Compiling[0m dirs v6.0.0
+2026-01-31T09:38:27.8085757Z [1m[92m   Compiling[0m cargo_toml v0.22.3
+2026-01-31T09:38:33.4510873Z [1m[92m   Compiling[0m typenum v1.19.0
+2026-01-31T09:38:33.9557309Z [1m[92m   Compiling[0m tauri-build v2.5.3
+2026-01-31T09:38:38.2952663Z [1m[92m   Compiling[0m windows-threading v0.1.0
+2026-01-31T09:38:38.4293145Z [1m[92m   Compiling[0m tauri-plugin v2.5.2
+2026-01-31T09:38:39.0723812Z [1m[92m   Compiling[0m generic-array v0.14.7
+2026-01-31T09:38:39.3595939Z [1m[92m   Compiling[0m futures-core v0.3.31
+2026-01-31T09:38:39.5135432Z [1m[92m   Compiling[0m num-conv v0.1.0
+2026-01-31T09:38:39.6931389Z [1m[92m   Compiling[0m powerfmt v0.2.0
+2026-01-31T09:38:39.8601838Z [1m[92m   Compiling[0m base64 v0.22.1
+2026-01-31T09:38:40.2301799Z [1m[92m   Compiling[0m time-core v0.1.6
+2026-01-31T09:38:40.3142605Z [1m[92m   Compiling[0m deranged v0.5.5
+2026-01-31T09:38:40.4040919Z [1m[92m   Compiling[0m time-macros v0.2.24
+2026-01-31T09:38:42.3946320Z [1m[92m   Compiling[0m windows-future v0.2.1
+2026-01-31T09:38:43.5464141Z [1m[92m   Compiling[0m windows-collections v0.2.0
+2026-01-31T09:38:43.8826451Z [1m[92m   Compiling[0m windows-numerics v0.2.0
+2026-01-31T09:38:44.1407660Z [1m[92m   Compiling[0m cookie v0.18.1
+2026-01-31T09:38:44.4370550Z [1m[92m   Compiling[0m raw-window-handle v0.6.2
+2026-01-31T09:38:45.1378279Z [1m[92m   Compiling[0m simd-adler32 v0.3.7
+2026-01-31T09:38:45.4178235Z [1m[92m   Compiling[0m crc32fast v1.5.0
+2026-01-31T09:38:45.7239260Z [1m[92m   Compiling[0m time v0.3.44
+2026-01-31T09:38:45.9752785Z [1m[92m   Compiling[0m windows v0.61.3
+2026-01-31T09:38:51.2614830Z [1m[92m   Compiling[0m tauri v2.9.4
+2026-01-31T09:39:00.2744810Z [1m[92m   Compiling[0m webview2-com-sys v0.38.0
+2026-01-31T09:39:00.7565635Z [1m[92m   Compiling[0m bitflags v2.10.0
+2026-01-31T09:39:01.4551580Z [1m[92m   Compiling[0m adler2 v2.0.1
+2026-01-31T09:39:11.6191766Z [1m[92m   Compiling[0m crossbeam-utils v0.8.21
+2026-01-31T09:39:26.7817980Z [1m[92m   Compiling[0m miniz_oxide v0.8.9
+2026-01-31T09:39:35.2157138Z [1m[92m   Compiling[0m dpi v0.1.2
+2026-01-31T09:39:45.6583405Z [1m[92m   Compiling[0m flate2 v1.1.7
+2026-01-31T09:39:51.2378854Z [1m[92m   Compiling[0m block-buffer v0.10.4
+2026-01-31T09:39:51.4046263Z [1m[92m   Compiling[0m crypto-common v0.1.7
+2026-01-31T09:39:51.5237765Z [1m[92m   Compiling[0m fdeflate v0.3.7
+2026-01-31T09:39:52.2478095Z [1m[92m   Compiling[0m ring v0.17.14
+2026-01-31T09:39:53.3930424Z [1m[92m   Compiling[0m windows-version v0.1.7
+2026-01-31T09:39:53.5163183Z [1m[92m   Compiling[0m num-traits v0.2.19
+2026-01-31T09:39:53.6274613Z [1m[92m   Compiling[0m webview2-com-macros v0.8.0
+2026-01-31T09:39:54.1558566Z [1m[92m   Compiling[0m unicode-segmentation v1.12.0
+2026-01-31T09:39:54.4283614Z [1m[92m   Compiling[0m cfg_aliases v0.2.1
+2026-01-31T09:39:54.4935753Z [1m[92m   Compiling[0m softbuffer v0.4.6
+2026-01-31T09:39:54.9716795Z [1m[92m   Compiling[0m webview2-com v0.38.0
+2026-01-31T09:40:06.0311939Z [1m[92m   Compiling[0m png v0.17.16
+2026-01-31T09:40:06.9393687Z [1m[92m   Compiling[0m digest v0.10.7
+2026-01-31T09:40:07.1837644Z [1m[92m   Compiling[0m crossbeam-channel v0.5.15
+2026-01-31T09:40:15.0530681Z [1m[92m   Compiling[0m tracing-core v0.1.35
+2026-01-31T09:40:17.7843645Z [1m[92m   Compiling[0m wry v0.53.5
+2026-01-31T09:40:18.9606018Z [1m[92m   Compiling[0m cpufeatures v0.2.17
+2026-01-31T09:40:19.0256078Z [1m[92m   Compiling[0m tauri-runtime v2.9.2
+2026-01-31T09:40:19.2866755Z [1m[92m   Compiling[0m pin-utils v0.1.0
+2026-01-31T09:40:19.5826020Z [1m[92m   Compiling[0m winapi v0.3.9
+2026-01-31T09:40:20.2502882Z [1m[92m   Compiling[0m zeroize v1.8.2
+2026-01-31T09:40:20.4524794Z [1m[92m   Compiling[0m httparse v1.10.1
+2026-01-31T09:40:20.7844401Z [1m[92m   Compiling[0m rustls-pki-types v1.14.0
+2026-01-31T09:40:21.9307635Z [1m[92m   Compiling[0m sha2 v0.10.9
+2026-01-31T09:40:22.5246362Z [1m[92m   Compiling[0m tracing v0.1.43
+2026-01-31T09:40:22.9981376Z [1m[92m   Compiling[0m ico v0.4.0
+2026-01-31T09:40:26.4527199Z [1m[92m   Compiling[0m tauri-plugin-fs v2.4.5
+2026-01-31T09:40:29.5021760Z [1m[92m   Compiling[0m http-body v1.0.1
+2026-01-31T09:40:29.8243459Z [1m[92m   Compiling[0m clang-sys v1.8.1
+2026-01-31T09:40:30.7606600Z [1m[92m   Compiling[0m untrusted v0.9.0
+2026-01-31T09:40:30.8835522Z [1m[92m   Compiling[0m lazy_static v1.5.0
+2026-01-31T09:40:30.9760484Z [1m[92m   Compiling[0m futures-task v0.3.31
+2026-01-31T09:40:31.1647064Z [1m[92m   Compiling[0m tauri-runtime-wry v2.9.2
+2026-01-31T09:40:32.6001004Z [1m[92m   Compiling[0m futures-sink v0.3.31
+2026-01-31T09:40:32.7912001Z [1m[92m   Compiling[0m native-tls v0.2.14
+2026-01-31T09:40:33.7861680Z [1m[92m   Compiling[0m base64ct v1.8.3
+2026-01-31T09:40:34.1492243Z [1m[92m   Compiling[0m pem-rfc7468 v0.7.0
+2026-01-31T09:40:38.7678376Z [1m[92m   Compiling[0m tokio-util v0.7.17
+2026-01-31T09:40:38.7688897Z [1m[92m   Compiling[0m futures-util v0.3.31
+2026-01-31T09:40:40.7150321Z [1m[92m   Compiling[0m tao v0.34.5
+2026-01-31T09:40:55.8853792Z [1m[92m   Compiling[0m tauri-codegen v2.5.2
+2026-01-31T09:41:05.4087375Z [1m[92m   Compiling[0m keyboard-types v0.7.0
+2026-01-31T09:41:08.4653172Z [1m[92m   Compiling[0m schannel v0.1.28
+2026-01-31T09:41:09.2742099Z [1m[92m   Compiling[0m serialize-to-javascript-impl v0.1.2
+2026-01-31T09:41:09.8059306Z [1m[92m   Compiling[0m try-lock v0.2.5
+2026-01-31T09:41:09.9028492Z [1m[92m   Compiling[0m mime v0.3.17
+2026-01-31T09:41:10.4054872Z [1m[92m   Compiling[0m tower-service v0.3.3
+2026-01-31T09:41:10.4890221Z [1m[92m   Compiling[0m rustls v0.23.36
+2026-01-31T09:41:10.7256879Z [1m[92m   Compiling[0m atomic-waker v1.1.2
+2026-01-31T09:41:10.8311765Z [1m[92m   Compiling[0m slab v0.4.11
+2026-01-31T09:41:11.0670892Z [1m[92m   Compiling[0m h2 v0.4.13
+2026-01-31T09:41:18.7636890Z [1m[92m   Compiling[0m want v0.3.1
+2026-01-31T09:41:18.9202708Z [1m[92m   Compiling[0m serialize-to-javascript v0.1.2
+2026-01-31T09:41:19.1378249Z [1m[92m   Compiling[0m muda v0.17.1
+2026-01-31T09:41:19.3533430Z [1m[92m   Compiling[0m webpki-root-certs v1.0.5
+2026-01-31T09:41:19.4577411Z [1m[92m   Compiling[0m ureq-proto v0.5.3
+2026-01-31T09:41:20.5286353Z [1m[92m   Compiling[0m socks v0.3.4
+2026-01-31T09:41:23.3288303Z [1m[92m   Compiling[0m tauri-macros v2.5.2
+2026-01-31T09:41:25.2552299Z [1m[92m   Compiling[0m rustls-webpki v0.103.9
+2026-01-31T09:41:26.6807064Z [1m[92m   Compiling[0m der v0.7.10
+2026-01-31T09:41:28.9023905Z [1m[92m   Compiling[0m window-vibrancy v0.6.0
+2026-01-31T09:41:29.1149491Z [1m[92m   Compiling[0m futures-channel v0.3.31
+2026-01-31T09:41:29.2035099Z [1m[92m   Compiling[0m windows-result v0.4.1
+2026-01-31T09:41:29.4454956Z [1m[92m   Compiling[0m windows-strings v0.5.1
+2026-01-31T09:41:29.7227104Z [1m[92m   Compiling[0m matrixmultiply v0.3.10
+2026-01-31T09:41:30.0559681Z [1m[92m   Compiling[0m serde_repr v0.1.20
+2026-01-31T09:41:30.2759328Z [1m[92m   Compiling[0m subtle v2.6.1
+2026-01-31T09:41:51.9947206Z [1m[92m   Compiling[0m windows-registry v0.6.1
+2026-01-31T09:41:52.5982111Z [1m[92m   Compiling[0m hyper v1.8.1
+2026-01-31T09:41:55.5761601Z [1m[92m   Compiling[0m ureq v3.1.4
+2026-01-31T09:41:56.9982107Z [1m[92m   Compiling[0m clang v2.0.0
+2026-01-31T09:41:58.6202692Z [1m[92m   Compiling[0m sync_wrapper v1.0.2
+2026-01-31T09:41:58.7199512Z [1m[92m   Compiling[0m windows-result v0.2.0
+2026-01-31T09:41:59.1523591Z [1m[92m   Compiling[0m rawpointer v0.2.1
+2026-01-31T09:41:59.2473786Z [1m[92m   Compiling[0m tower-layer v0.3.3
+2026-01-31T09:41:59.3864529Z [1m[92m   Compiling[0m ipnet v2.11.0
+2026-01-31T09:41:59.5735929Z [1m[92m   Compiling[0m lzma-rust2 v0.15.7
+2026-01-31T09:42:00.7012467Z [1m[92m   Compiling[0m hmac-sha256 v1.1.13
+2026-01-31T09:42:00.7669406Z [1m[92m   Compiling[0m litrs v1.0.0
+2026-01-31T09:42:00.9069549Z [1m[92m   Compiling[0m psl-types v2.0.11
+2026-01-31T09:42:01.3143238Z [1m[92m   Compiling[0m opencv-binding-generator v0.90.2
+2026-01-31T09:42:01.5642229Z [1m[92m   Compiling[0m document-features v0.2.12
+2026-01-31T09:42:02.3862122Z [1m[92m   Compiling[0m publicsuffix v2.3.0
+2026-01-31T09:42:02.6099728Z [1m[92m   Compiling[0m ort-sys v2.0.0-rc.11
+2026-01-31T09:42:03.8167282Z [1m[92m   Compiling[0m hyper-util v0.1.19
+2026-01-31T09:42:07.6870540Z [1m[92m   Compiling[0m tower v0.5.2
+2026-01-31T09:42:09.6885637Z [1m[92m   Compiling[0m windows-strings v0.1.0
+2026-01-31T09:42:10.4041113Z [1m[92m   Compiling[0m tokio-rustls v0.26.4
+2026-01-31T09:42:10.8085935Z [1m[92m   Compiling[0m num-complex v0.4.6
+2026-01-31T09:42:11.4656761Z [1m[92m   Compiling[0m num-integer v0.1.46
+2026-01-31T09:42:12.1326187Z [1m[92m   Compiling[0m webpki-roots v1.0.5
+2026-01-31T09:42:12.2774941Z [1m[92m   Compiling[0m tauri-plugin-shell v2.3.3
+2026-01-31T09:42:12.9913011Z [1m[92m   Compiling[0m tauri-plugin-dialog v2.6.0
+2026-01-31T09:42:13.5516746Z [1m[92m   Compiling[0m tauri-plugin-http v2.5.6
+2026-01-31T09:42:14.0369778Z [1m[92m   Compiling[0m encoding_rs v0.8.35
+2026-01-31T09:42:14.6227148Z [1m[92m   Compiling[0m windows-implement v0.58.0
+2026-01-31T09:42:15.6318887Z [1m[92m   Compiling[0m windows-interface v0.58.0
+2026-01-31T09:42:16.7738166Z [1m[92m   Compiling[0m vcpkg v0.2.15
+2026-01-31T09:42:17.8810843Z [1m[92m   Compiling[0m pkg-config v0.3.32
+2026-01-31T09:42:18.7052436Z [1m[92m   Compiling[0m iri-string v0.7.9
+2026-01-31T09:42:20.6502733Z [1m[92m   Compiling[0m rfd v0.16.0
+2026-01-31T09:42:20.9318829Z [1m[92m   Compiling[0m opencv v0.92.3
+2026-01-31T09:42:22.4377437Z [1m[92m   Compiling[0m tower-http v0.6.7
+2026-01-31T09:42:23.3212259Z [1m[92m   Compiling[0m windows-core v0.58.0
+2026-01-31T09:42:23.8936469Z [1m[92m   Compiling[0m hyper-rustls v0.27.7
+2026-01-31T09:42:24.6479140Z [1m[92m   Compiling[0m cookie_store v0.21.1
+2026-01-31T09:42:29.4396089Z [1m[92m   Compiling[0m http-body-util v0.1.3
+2026-01-31T09:42:29.8006676Z [1m[92m   Compiling[0m serde_urlencoded v0.7.1
+2026-01-31T09:42:30.1551264Z [1m[92m   Compiling[0m reqwest v0.12.24
+2026-01-31T09:42:34.7875589Z [1m[92m   Compiling[0m windows v0.58.0
+2026-01-31T09:42:49.2151795Z [1m[92m   Compiling[0m ndarray v0.17.2
+2026-01-31T09:42:56.5418262Z [1m[91merror[0m: failed to run custom build command for `opencv v0.92.3`
+2026-01-31T09:42:56.5423073Z
+2026-01-31T09:42:56.5423465Z Caused by:
+2026-01-31T09:42:56.5425024Z   process didn't exit successfully: `D:\a\SwishAI-desktop\SwishAI-desktop\src-tauri\target\release\build\opencv-7737de809ef33c61\build-script-build` (exit code: 1)
+2026-01-31T09:42:56.5426462Z   --- stdout
+2026-01-31T09:42:56.5427025Z   cargo:rerun-if-env-changed=OPENCV4_NO_PKG_CONFIG
+2026-01-31T09:42:56.5427893Z   cargo:rerun-if-env-changed=PKG_CONFIG_x86_64-pc-windows-msvc
+2026-01-31T09:42:56.5429529Z   cargo:rerun-if-env-changed=PKG_CONFIG_x86_64_pc_windows_msvc
+2026-01-31T09:42:56.5430378Z   cargo:rerun-if-env-changed=HOST_PKG_CONFIG
+2026-01-31T09:42:56.5432145Z   cargo:rerun-if-env-changed=PKG_CONFIG
+2026-01-31T09:42:56.5445782Z   cargo:rerun-if-env-changed=OPENCV4_STATIC
+2026-01-31T09:42:56.5449643Z   cargo:rerun-if-env-changed=OPENCV4_DYNAMIC
+2026-01-31T09:42:56.5452184Z   cargo:rerun-if-env-changed=PKG_CONFIG_ALL_STATIC
+2026-01-31T09:42:56.5456011Z   cargo:rerun-if-env-changed=PKG_CONFIG_ALL_DYNAMIC
+2026-01-31T09:42:56.5460494Z   cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64-pc-windows-msvc
+2026-01-31T09:42:56.5466042Z   cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64_pc_windows_msvc
+2026-01-31T09:42:56.5470490Z   cargo:rerun-if-env-changed=HOST_PKG_CONFIG_PATH
+2026-01-31T09:42:56.5476017Z   cargo:rerun-if-env-changed=PKG_CONFIG_PATH
+2026-01-31T09:42:56.5481766Z   cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64-pc-windows-msvc
+2026-01-31T09:42:56.5487471Z   cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64_pc_windows_msvc
+2026-01-31T09:42:56.5492142Z   cargo:rerun-if-env-changed=HOST_PKG_CONFIG_LIBDIR
+2026-01-31T09:42:56.5496036Z   cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR
+2026-01-31T09:42:56.5500959Z   cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64-pc-windows-msvc
+2026-01-31T09:42:56.5506749Z   cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64_pc_windows_msvc
+2026-01-31T09:42:56.5511236Z   cargo:rerun-if-env-changed=HOST_PKG_CONFIG_SYSROOT_DIR
+2026-01-31T09:42:56.5515261Z   cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR
+2026-01-31T09:42:56.5519457Z   cargo:rerun-if-env-changed=OPENCV_NO_PKG_CONFIG
+2026-01-31T09:42:56.5523882Z   cargo:rerun-if-env-changed=PKG_CONFIG_x86_64-pc-windows-msvc
+2026-01-31T09:42:56.5528481Z   cargo:rerun-if-env-changed=PKG_CONFIG_x86_64_pc_windows_msvc
+2026-01-31T09:42:56.5532531Z   cargo:rerun-if-env-changed=HOST_PKG_CONFIG
+2026-01-31T09:42:56.5535739Z   cargo:rerun-if-env-changed=PKG_CONFIG
+2026-01-31T09:42:56.5539414Z   cargo:rerun-if-env-changed=OPENCV_STATIC
+2026-01-31T09:42:56.5542627Z   cargo:rerun-if-env-changed=OPENCV_DYNAMIC
+2026-01-31T09:42:56.5546372Z   cargo:rerun-if-env-changed=PKG_CONFIG_ALL_STATIC
+2026-01-31T09:42:56.5550093Z   cargo:rerun-if-env-changed=PKG_CONFIG_ALL_DYNAMIC
+2026-01-31T09:42:56.5553752Z   cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64-pc-windows-msvc
+2026-01-31T09:42:56.5558865Z   cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64_pc_windows_msvc
+2026-01-31T09:42:56.5563276Z   cargo:rerun-if-env-changed=HOST_PKG_CONFIG_PATH
+2026-01-31T09:42:56.5566999Z   cargo:rerun-if-env-changed=PKG_CONFIG_PATH
+2026-01-31T09:42:56.5570696Z   cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64-pc-windows-msvc
+2026-01-31T09:42:56.5576153Z   cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64_pc_windows_msvc
+2026-01-31T09:42:56.5580595Z   cargo:rerun-if-env-changed=HOST_PKG_CONFIG_LIBDIR
+2026-01-31T09:42:56.5585483Z   cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR
+2026-01-31T09:42:56.5592226Z   cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64-pc-windows-msvc
+2026-01-31T09:42:56.5596522Z   cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64_pc_windows_msvc
+2026-01-31T09:42:56.5597521Z   cargo:rerun-if-env-changed=HOST_PKG_CONFIG_SYSROOT_DIR
+2026-01-31T09:42:56.5598305Z   cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR
+2026-01-31T09:42:56.5598829Z
+2026-01-31T09:42:56.5599094Z   --- stderr
+2026-01-31T09:42:56.5599581Z   === Crate version: Some("0.92.3")
+2026-01-31T09:42:56.5600187Z   === Environment configuration:
+2026-01-31T09:42:56.5600786Z   ===   OPENCV_PACKAGE_NAME = None
+2026-01-31T09:42:56.5601394Z   ===   OPENCV_PKGCONFIG_NAME = None
+2026-01-31T09:42:56.5601979Z   ===   OPENCV_CMAKE_NAME = None
+2026-01-31T09:42:56.5602524Z   ===   OPENCV_CMAKE_BIN = None
+2026-01-31T09:42:56.5603098Z   ===   OPENCV_VCPKG_NAME = None
+2026-01-31T09:42:56.5603664Z   ===   OPENCV_LINK_LIBS = None
+2026-01-31T09:42:56.5604195Z   ===   OPENCV_LINK_PATHS = None
+2026-01-31T09:42:56.5604756Z   ===   OPENCV_INCLUDE_PATHS = None
+2026-01-31T09:42:56.5605441Z   ===   OPENCV_DISABLE_PROBES = None
+2026-01-31T09:42:56.5606165Z   ===   OPENCV_MSVC_CRT = None
+2026-01-31T09:42:56.5606812Z   ===   CMAKE_PREFIX_PATH = None
+2026-01-31T09:42:56.5607512Z   ===   OpenCV_DIR = Some("C:\\tools\\opencv\\build")
+2026-01-31T09:42:56.5608295Z   ===   PKG_CONFIG_PATH = None
+2026-01-31T09:42:56.5608940Z   ===   VCPKG_ROOT = None
+2026-01-31T09:42:56.5609577Z   ===   VCPKGRS_DYNAMIC = None
+2026-01-31T09:42:56.5610232Z   ===   VCPKGRS_TRIPLET = None
+2026-01-31T09:42:56.5611237Z   ===   OCVRS_DOCS_GENERATE_DIR = None
+2026-01-31T09:42:56.5611908Z   ===   DOCS_RS = None
+2026-01-31T09:42:56.5639048Z   ===   PATH = Some("D:\\a\\SwishAI-desktop\\SwishAI-desktop\\src-tauri\\target\\release;D:\\a\\SwishAI-desktop\\SwishAI-desktop\\src-tauri\\target\\release\\deps;C:\\Users\\runneradmin\\.rustup\\toolchains\\stable-x86_64-pc-windows-msvc\\lib\\rustlib\\x86_64-pc-windows-msvc\\lib;D:\\a\\SwishAI-desktop\\SwishAI-desktop\\node_modules\\.bin;D:\\a\\SwishAI-desktop\\node_modules\\.bin;D:\\a\\node_modules\\.bin;D:\\node_modules\\.bin;C:\\hostedtoolcache\\windows\\node\\20.20.0\\x64\\node_modules\\npm\\node_modules\\@npmcli\\run-script\\lib\\node-gyp-bin;C:\\tools\\opencv\\build\\x64\\vc16\\bin;C:\\hostedtoolcache\\windows\\node\\20.20.0\\x64;C:\\Program Files\\MongoDB\\Server\\7.0\\bin;C:\\vcpkg;C:\\tools\\zstd;C:\\hostedtoolcache\\windows\\stack\\3.9.1\\x64;C:\\cabal\\bin;C:\\\\ghcup\\bin;C:\\mingw64\\bin;C:\\Program Files\\dotnet;C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin;C:\\Program Files\\R\\R-4.5.2\\bin\\x64;C:\\SeleniumWebDrivers\\GeckoDriver;C:\\SeleniumWebDrivers\\EdgeDriver\\;C:\\SeleniumWebDrivers\\ChromeDriver;C:\\Program Files (x86)\\sbt\\bin;C:\\Program Files (x86)\\GitHub CLI;C:\\Program Files\\Git\\bin;C:\\Program Files (x86)\\pipx_bin;C:\\npm\\prefix;C:\\hostedtoolcache\\windows\\go\\1.24.12\\x64\\bin;C:\\hostedtoolcache\\windows\\Python\\3.12.10\\x64\\Scripts;C:\\hostedtoolcache\\windows\\Python\\3.12.10\\x64;C:\\hostedtoolcache\\windows\\Ruby\\3.3.10\\x64\\bin;C:\\Program Files\\OpenSSL\\bin;C:\\tools\\kotlinc\\bin;C:\\hostedtoolcache\\windows\\Java_Temurin-Hotspot_jdk\\17.0.17-10\\x64\\bin;C:\\Program Files\\ImageMagick-7.1.2-Q16-HDRI;C:\\Program Files\\Microsoft SDKs\\Azure\\CLI2\\wbin;C:\\ProgramData\\kind;C:\\ProgramData\\Chocolatey\\bin;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files\\PowerShell\\7\\;C:\\Program Files\\Microsoft\\Web Platform Installer\\;C:\\Program Files\\Microsoft SQL Server\\Client SDK\\ODBC\\170\\Tools\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\150\\Tools\\Binn\\;C:\\Program Files\\dotnet\\;C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\;C:\\Program Files (x86)\\WiX Toolset v3.14\\bin;C:\\Program Files\\Microsoft SQL Server\\130\\DTS\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\140\\DTS\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\150\\DTS\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\160\\DTS\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\170\\DTS\\Binn\\;C:\\ProgramData\\chocolatey\\lib\\pulumi\\tools\\Pulumi\\bin;C:\\Program Files\\CMake\\bin;C:\\Strawberry\\c\\bin;C:\\Strawberry\\perl\\site\\bin;C:\\Strawberry\\perl\\bin;C:\\ProgramData\\chocolatey\\lib\\maven\\apache-maven-3.9.12\\bin;C:\\Program Files\\Microsoft Service Fabric\\bin\\Fabric\\Fabric.Code;C:\\Program Files\\Microsoft SDKs\\Service Fabric\\Tools\\ServiceFabricLocalClusterManager;C:\\Program Files\\nodejs\\;C:\\Program Files\\Git\\cmd;C:\\Program Files\\Git\\mingw64\\bin;C:\\Program Files\\Git\\usr\\bin;C:\\Program Files\\GitHub CLI\\;c:\\tools\\php;C:\\Program Files (x86)\\sbt\\bin;C:\\Program Files\\Amazon\\AWSCLIV2\\;C:\\Program Files\\Amazon\\SessionManagerPlugin\\bin\\;C:\\Program Files\\Amazon\\AWSSAMCLI\\bin\\;C:\\Program Files\\Microsoft SQL Server\\130\\Tools\\Binn\\;C:\\Program Files\\mongosh\\;C:\\Program Files\\LLVM\\bin;C:\\Program Files (x86)\\LLVM\\bin;C:\\Users\\runneradmin\\.dotnet\\tools;C:\\Users\\runneradmin\\.cargo\\bin;C:\\Users\\runneradmin\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\runneradmin\\.rustup\\toolchains\\stable-x86_64-pc-windows-msvc\\bin")
+2026-01-31T09:42:56.5659688Z   === Enabled features:
+2026-01-31T09:42:56.5660086Z   ===   HIGHGUI
+2026-01-31T09:42:56.5660456Z   ===   IMGPROC
+2026-01-31T09:42:56.5660818Z   ===   VIDEOIO
+2026-01-31T09:42:56.5661631Z   === Detected probe priority boost based on environment vars: pkg_config: false, cmake: true, vcpkg: false
+2026-01-31T09:42:56.5663009Z   === Probing the OpenCV library in the following order: environment, cmake, pkg_config, vcpkg_cmake, vcpkg
+2026-01-31T09:42:56.5664435Z   === Can't probe using: environment, continuing with other methods because: Some environment variables are missing
+2026-01-31T09:42:56.5665688Z   === Probing OpenCV library using cmake
+2026-01-31T09:42:56.5667586Z   === cmake ninja probe command: "cmake" "-S" "C:\\Users\\runneradmin\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\opencv-0.92.3\\cmake" "-DOCVRS_PACKAGE_NAME=OpenCV" "-DCMAKE_BUILD_TYPE=Release" "-G" "Ninja"
+2026-01-31T09:42:56.5669887Z   === Probing with cmake ninja generator failed, will try Makefile generator, error: cmake returned an error
+2026-01-31T09:42:56.5675094Z       stdout: "-- The C compiler identification is GNU 15.2.0\n-- The CXX compiler identification is GNU 15.2.0\n-- Detecting C compiler ABI info\n-- Detecting C compiler ABI info - done\n-- Check for working C compiler: C:/mingw64/bin/cc.exe - skipped\n-- Detecting C compile features\n-- Detecting C compile features - done\n-- Detecting CXX compiler ABI info\n-- Detecting CXX compiler ABI info - done\n-- Check for working CXX compiler: C:/mingw64/bin/c++.exe - skipped\n-- Detecting CXX compile features\n-- Detecting CXX compile features - done\n-- OpenCV ARCH: x64\n-- OpenCV RUNTIME: mingw\n-- OpenCV STATIC: OFF\n-- Configuring incomplete, errors occurred!\n"
+2026-01-31T09:42:56.5685181Z       stderr: "CMake Deprecation Warning at CMakeLists.txt:1 (cmake_minimum_required):\n  Compatibility with CMake < 3.10 will be removed from a future version of\n  CMake.\n\n  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax\n  to tell CMake that the project requires at least <min> but has been updated\n  to work with policies introduced by <max> or earlier.\n\n\nCMake Warning at C:/tools/opencv/build/OpenCVConfig.cmake:208 (message):\n  Found OpenCV Windows Pack but it has no binaries compatible with your\n  configuration.\n\n  You should manually point CMake variable OpenCV_DIR to your build of OpenCV\n  library.\nCall Stack (most recent call first):\n  CMakeLists.txt:5 (find_package)\n\n\nCMake Error at CMakeLists.txt:5 (find_package):\n  Found package configuration file:\n\n    C:/tools/opencv/build/OpenCVConfig.cmake\n\n  but it set OpenCV_FOUND to FALSE so package \"OpenCV\" is considered to be\n  NOT FOUND.\n\n\n"
+2026-01-31T09:42:56.5692610Z   === cmake makefiles probe command: "cmake" "-S" "C:\\Users\\runneradmin\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\opencv-0.92.3\\cmake" "-DOCVRS_PACKAGE_NAME=OpenCV" "-DCMAKE_BUILD_TYPE=Release" "-G" "Unix Makefiles"
+2026-01-31T09:42:56.5694824Z   === Probing with cmake Makefile generator failed, will try deprecated find_package, error: cmake returned an error
+2026-01-31T09:42:56.5699804Z       stdout: "-- The C compiler identification is GNU 15.2.0\n-- The CXX compiler identification is GNU 15.2.0\n-- Detecting C compiler ABI info\n-- Detecting C compiler ABI info - done\n-- Check for working C compiler: C:/mingw64/bin/cc.exe - skipped\n-- Detecting C compile features\n-- Detecting C compile features - done\n-- Detecting CXX compiler ABI info\n-- Detecting CXX compiler ABI info - done\n-- Check for working CXX compiler: C:/mingw64/bin/c++.exe - skipped\n-- Detecting CXX compile features\n-- Detecting CXX compile features - done\n-- OpenCV ARCH: x64\n-- OpenCV RUNTIME: mingw\n-- OpenCV STATIC: OFF\n-- Configuring incomplete, errors occurred!\n"
+2026-01-31T09:42:56.5711414Z       stderr: "CMake Deprecation Warning at CMakeLists.txt:1 (cmake_minimum_required):\n  Compatibility with CMake < 3.10 will be removed from a future version of\n  CMake.\n\n  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax\n  to tell CMake that the project requires at least <min> but has been updated\n  to work with policies introduced by <max> or earlier.\n\n\nCMake Warning at C:/tools/opencv/build/OpenCVConfig.cmake:208 (message):\n  Found OpenCV Windows Pack but it has no binaries compatible with your\n  configuration.\n\n  You should manually point CMake variable OpenCV_DIR to your build of OpenCV\n  library.\nCall Stack (most recent call first):\n  CMakeLists.txt:5 (find_package)\n\n\nCMake Error at CMakeLists.txt:5 (find_package):\n  Found package configuration file:\n\n    C:/tools/opencv/build/OpenCVConfig.cmake\n\n  but it set OpenCV_FOUND to FALSE so package \"OpenCV\" is considered to be\n  NOT FOUND.\n\n\n"
+2026-01-31T09:42:56.5719146Z   === cmake find-package compile probe command: "cmake" "-S" "C:\\Users\\runneradmin\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\opencv-0.92.3\\cmake" "-DOCVRS_PACKAGE_NAME=OpenCV" "-DCMAKE_BUILD_TYPE=Release" "--find-package" "-DCOMPILER_ID=GNU" "-DLANGUAGE=CXX" "-DMODE=COMPILE" "-DNAME=OpenCV"
+2026-01-31T09:42:56.5721582Z   === Can't probe using: cmake, continuing with other methods because: cmake returned an error
+2026-01-31T09:42:56.5722437Z       stdout: "OpenCV not found.\r\n"
+2026-01-31T09:42:56.5725097Z       stderr: "CMake Warning at C:/tools/opencv/build/OpenCVConfig.cmake:93 (message):\n  OpenCV: CMAKE_SIZEOF_VOID_P is not defined.  Perhaps CMake toolchain is\n  broken\nCall Stack (most recent call first):\n  C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeFindPackageMode.cmake:182 (find_package)\n\n\nCMake Error: Run 'cmake --help' for all supported options.\n"
+2026-01-31T09:42:56.5727635Z   === Probing OpenCV library using pkg_config
+2026-01-31T09:42:56.5728433Z   === Can't probe using: pkg_config, continuing with other methods because:
+2026-01-31T09:42:56.5729164Z   pkg-config exited with status code 1
+2026-01-31T09:42:56.5730501Z   > PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1 pkg-config --libs --cflags opencv4
+2026-01-31T09:42:56.5731246Z
+2026-01-31T09:42:56.5731644Z   The system library `opencv4` required by crate `opencv` was not found.
+2026-01-31T09:42:56.5732919Z   The file `opencv4.pc` needs to be installed and the PKG_CONFIG_PATH environment variable must contain its parent directory.
+2026-01-31T09:42:56.5734017Z   The PKG_CONFIG_PATH environment variable is not set.
+2026-01-31T09:42:56.5734450Z
+2026-01-31T09:42:56.5735062Z   HINT: if you have installed the library, try setting PKG_CONFIG_PATH to the directory containing `opencv4.pc`.
+2026-01-31T09:42:56.5735956Z   ,
+2026-01-31T09:42:56.5736322Z   pkg-config exited with status code 1
+2026-01-31T09:42:56.5737233Z   > PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1 pkg-config --libs --cflags opencv
+2026-01-31T09:42:56.5737900Z
+2026-01-31T09:42:56.5738322Z   The system library `opencv` required by crate `opencv` was not found.
+2026-01-31T09:42:56.5739511Z   The file `opencv.pc` needs to be installed and the PKG_CONFIG_PATH environment variable must contain its parent directory.
+2026-01-31T09:42:56.5740627Z   The PKG_CONFIG_PATH environment variable is not set.
+2026-01-31T09:42:56.5741025Z
+2026-01-31T09:42:56.5741694Z   HINT: if you have installed the library, try setting PKG_CONFIG_PATH to the directory containing `opencv.pc`.
+2026-01-31T09:42:56.5742440Z
+2026-01-31T09:42:56.5742676Z   === Probing OpenCV library using vcpkg_cmake
+2026-01-31T09:42:56.5744304Z   === Can't probe using: vcpkg_cmake, continuing with other methods because: Could not find Vcpkg tree: No vcpkg installation found. Set the VCPKG_ROOT environment variable or run 'vcpkg integrate install'
+2026-01-31T09:42:56.5745869Z   === Probing OpenCV library using vcpkg
+2026-01-31T09:42:56.5748258Z   === Can't probe using: vcpkg, continuing with other methods because: Could not find Vcpkg tree: No vcpkg installation found. Set the VCPKG_ROOT environment variable or run 'vcpkg integrate install', Could not find Vcpkg tree: No vcpkg installation found. Set the VCPKG_ROOT environment variable or run 'vcpkg integrate install'
+2026-01-31T09:42:56.5751823Z   Error: "Failed to find installed OpenCV package using probes: environment, cmake, pkg_config, vcpkg_cmake, vcpkg, refer to https://github.com/twistedfall/opencv-rust#getting-opencv for help"
+2026-01-31T09:42:56.5753759Z [1m[93mwarning[0m: build failed, waiting for other jobs to finish...
+2026-01-31T09:42:58.1433742Z failed to build app: failed to build app
+2026-01-31T09:42:58.1601978Z        Error failed to build app: failed to build app
+2026-01-31T09:42:58.4730509Z ##[error]Command "npm ["run","tauri","build"]" failed with exit code 1
+2026-01-31T09:42:58.6664857Z Post job cleanup.
+2026-01-31T09:42:59.3984910Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-01-31T09:42:59.4863259Z git version 2.52.0.windows.1
+2026-01-31T09:42:59.5010840Z Temporarily overriding HOME='D:\a\_temp\5ba43e31-e6fe-405e-bcd2-6b97791b2cfe' before making global git config changes
+2026-01-31T09:42:59.5012599Z Adding repository directory to the temporary git global config as a safe directory
+2026-01-31T09:42:59.5025495Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\SwishAI-desktop\SwishAI-desktop
+2026-01-31T09:42:59.5411942Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-01-31T09:42:59.5733945Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-01-31T09:43:00.2111912Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-01-31T09:43:00.2393527Z http.https://github.com/.extraheader
+2026-01-31T09:43:00.2486725Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+2026-01-31T09:43:00.2828562Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-01-31T09:43:00.8661592Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-01-31T09:43:00.8983812Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-01-31T09:43:01.5077925Z Cleaning up orphan processes
+2026-01-31T09:43:01.5681642Z Terminate orphan process: pid (6576) (vctip)
