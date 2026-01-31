@@ -159,7 +159,9 @@ jobs:
           echo "ORT_STRATEGY=system" >> $GITHUB_ENV
           echo "ORT_USE_SYSTEM_LIB=1" >> $GITHUB_ENV
           echo "ORT_LIB_LOCATION=$HOME/onnxruntime" >> $GITHUB_ENV
+          echo "ORT_DYLIB_PATH=$HOME/onnxruntime/lib" >> $GITHUB_ENV
           echo "DYLD_LIBRARY_PATH=$HOME/onnxruntime/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "LIBRARY_PATH=$HOME/onnxruntime/lib:$LIBRARY_PATH" >> $GITHUB_ENV
 
           # Add include path for headers
           echo "CPATH=$HOME/onnxruntime/include:$CPATH" >> $GITHUB_ENV
