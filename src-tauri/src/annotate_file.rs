@@ -230,7 +230,7 @@ fn preprocess_frame(frame: &Mat, input_size: i32) -> Result<(Array4<f32>, f32, i
 
     // Convert BGR to RGB
     let mut rgb = Mat::default();
-    imgproc::cvt_color(&padded, &mut rgb, imgproc::COLOR_BGR2RGB, 0)?;
+    imgproc::cvt_color(&padded, &mut rgb, imgproc::COLOR_BGR2RGB, 0, core::ALGO_HINT_DEFAULT)?;
 
     // Convert to ndarray and normalize (CHW, float32, [0,1])
     let (h, w) = (input_size as usize, input_size as usize);
