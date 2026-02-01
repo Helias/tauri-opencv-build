@@ -1,0 +1,136 @@
+name: Release Windows
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version (e.g., v1.0.0)"
+        required: true
+        type: string
+        default: "1.0.0"
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create or update Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Check if release already exists
+          if (gh release view "${{ github.event.inputs.version }}" --json isDraft 2>$null) {
+            Write-Host "Release ${{ github.event.inputs.version }} already exists, reusing it"
+          } else {
+            Write-Host "Creating new draft release ${{ github.event.inputs.version }}"
+            gh release create "${{ github.event.inputs.version }}" --draft --title "Release ${{ github.event.inputs.version }}" --notes "Release ${{ github.event.inputs.version }}"
+          }
+        shell: pwsh
+
+      - name: Install dependencies
+        run: |
+          choco install llvm ninja
+        shell: pwsh
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-pc-windows-msvc
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: "./src-tauri -> target"
+          cache-on-failure: true
+          key: windows-x86_64-pc-windows-msvc-${{ hashFiles('**/Cargo.lock', '**/Cargo.toml') }}
+
+      - name: Install frontend dependencies
+        run: npm install
+
+      - name: Cache vcpkg
+        uses: actions/cache@v4
+        with:
+          path: |
+            C:\vcpkg-opencv
+            ~\AppData\Local\vcpkg\archives
+          key: ${{ runner.os }}-vcpkg-opencv4-${{ hashFiles('.github/workflows/release-windows.yml') }}-v3
+          restore-keys: |
+            ${{ runner.os }}-vcpkg-opencv4-${{ hashFiles('.github/workflows/release-windows.yml') }}-
+            ${{ runner.os }}-vcpkg-opencv4-
+
+      - name: Setup vcpkg and install OpenCV
+        run: |
+          # Check if vcpkg is already cached and OpenCV is installed
+          if (Test-Path "C:\vcpkg-opencv\installed\x64-windows\bin\opencv_world4*.dll") {
+            Write-Host "vcpkg and OpenCV cache found, skipping build"
+          } else {
+            # Check if vcpkg repo exists but OpenCV not installed
+            if (-not (Test-Path "C:\vcpkg-opencv\vcpkg.exe")) {
+              Write-Host "Cloning vcpkg repository..."
+              git clone https://github.com/microsoft/vcpkg.git C:\vcpkg-opencv
+              # Bootstrap vcpkg
+              C:\vcpkg-opencv\bootstrap-vcpkg.bat
+            } else {
+              Write-Host "vcpkg repository found in cache"
+            }
+
+            Write-Host "Installing OpenCV via vcpkg..."
+            # Enable binary caching using GitHub Actions cache
+            $env:VCPKG_BINARY_SOURCES = "clear;x-gha,readwrite"
+            $env:ACTIONS_CACHE_URL = $env:ACTIONS_CACHE_URL
+            $env:ACTIONS_RUNTIME_TOKEN = $env:ACTIONS_RUNTIME_TOKEN
+
+            # Install OpenCV with vcpkg (binary caching should speed this up significantly)
+            C:\vcpkg-opencv\vcpkg install opencv4:x64-windows --recurse
+          }
+
+          # Verify installation
+          if (Test-Path "C:\vcpkg-opencv\installed\x64-windows\bin") {
+            Write-Host "Verifying OpenCV installation..."
+            dir C:\vcpkg-opencv\installed\x64-windows\bin\*.dll | Select-Object -First 5
+            Write-Host "OpenCV successfully installed!"
+          } else {
+            Write-Error "OpenCV installation not found at expected location!"
+            exit 1
+          }
+
+          # Set environment variables for the build
+          echo "VCPKG_ROOT=C:\vcpkg-opencv" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "CMAKE_TOOLCHAIN_FILE=C:\vcpkg-opencv\scripts\buildsystems\vcpkg.cmake" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "CMAKE_PREFIX_PATH=C:\vcpkg-opencv\installed\x64-windows" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "C:\vcpkg-opencv\installed\x64-windows\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+          # Find and set LIBCLANG_PATH
+          $llvmPath = "C:\Program Files\LLVM\bin"
+          if (Test-Path $llvmPath) {
+            echo "LIBCLANG_PATH=C:\Program Files\LLVM\bin" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          }
+
+          # Don't set OPENCV_* env vars - let opencv-rust use vcpkg_cmake probe instead
+          # The environment probe fails to detect OpenCV version from include paths
+        shell: pwsh
+        env:
+          ACTIONS_CACHE_URL: ${{ env.ACTIONS_CACHE_URL }}
+          ACTIONS_RUNTIME_TOKEN: ${{ env.ACTIONS_RUNTIME_TOKEN }}
+
+      - name: Build the app
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.event.inputs.version }}
+          releaseName: Release ${{ github.event.inputs.version }}
+          releaseBody: Release ${{ github.event.inputs.version }}
+          releaseDraft: true
+          prerelease: false
+          args: ""

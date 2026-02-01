@@ -1,0 +1,116 @@
+name: Release macOS ARM
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version (e.g., v1.0.0)"
+        required: true
+        type: string
+        default: "1.0.0"
+
+permissions:
+  contents: write
+
+jobs:
+  build-macos-arm:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create or update Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Check if release already exists
+          if gh release view "${{ github.event.inputs.version }}" --json isDraft 2>/dev/null; then
+            echo "Release ${{ github.event.inputs.version }} already exists, reusing it"
+          else
+            echo "Creating new draft release ${{ github.event.inputs.version }}"
+            gh release create "${{ github.event.inputs.version }}" \
+              --draft \
+              --title "Release ${{ github.event.inputs.version }}" \
+              --notes "Release ${{ github.event.inputs.version }}"
+          fi
+
+      - name: Cache Homebrew packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/Library/Caches/Homebrew
+            /opt/homebrew/Cellar/opencv
+            /opt/homebrew/Cellar/llvm
+            /opt/homebrew/Cellar/pkg-config
+            /opt/homebrew/Cellar/ninja
+            /opt/homebrew/Cellar/z3
+            /opt/homebrew/opt/opencv
+            /opt/homebrew/opt/llvm
+            /opt/homebrew/opt/pkg-config
+            /opt/homebrew/opt/ninja
+            /opt/homebrew/opt/z3
+          key: ${{ runner.os }}-${{ runner.arch }}-brew-${{ hashFiles('.github/workflows/release-macos-arm.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-brew-
+
+      - name: Install dependencies
+        run: |
+          # Only install packages that aren't already cached
+          for package in opencv llvm pkg-config ninja z3; do
+            if ! brew list $package &>/dev/null; then
+              echo "Installing $package..."
+              brew install $package
+            else
+              echo "$package already installed, skipping"
+            fi
+          done
+
+      - name: Set ONNX Runtime environment
+        run: |
+          # ARM64 has prebuilt binaries, use download strategy
+          echo "ORT_STRATEGY=download" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-darwin
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: "./src-tauri -> target"
+          cache-on-failure: true
+          key: macos-latest-aarch64-apple-darwin-${{ hashFiles('**/Cargo.lock', '**/Cargo.toml') }}
+
+      - name: Install frontend dependencies
+        run: npm install
+
+      - name: Set OpenCV environment variables
+        run: |
+          echo "PKG_CONFIG_PATH=$(brew --prefix opencv)/lib/pkgconfig:$PKG_CONFIG_PATH" >> $GITHUB_ENV
+          echo "DYLD_LIBRARY_PATH=$(brew --prefix opencv)/lib:$(brew --prefix llvm)/lib:$(brew --prefix z3)/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "LIBCLANG_PATH=$(brew --prefix llvm)/lib" >> $GITHUB_ENV
+          echo "$(brew --prefix llvm)/bin" >> $GITHUB_PATH
+
+          # Let opencv-rust use pkg-config to find OpenCV libraries
+          # Don't set OPENCV_LINK_LIBS manually as it causes linker issues
+          # pkg-config will provide the correct library names and paths
+        shell: bash
+
+      - name: Build the app
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.event.inputs.version }}
+          releaseName: Release ${{ github.event.inputs.version }}
+          releaseBody: Release ${{ github.event.inputs.version }}
+          releaseDraft: true
+          prerelease: false
+          args: "--target aarch64-apple-darwin"
