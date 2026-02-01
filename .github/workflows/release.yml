@@ -235,36 +235,44 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            C:\vcpkg-opencv\installed
-            C:\vcpkg-opencv\packages
-            C:\vcpkg-opencv\downloads
-            C:\vcpkg-opencv\buildtrees
-          key: ${{ runner.os }}-vcpkg-opencv4-v2
+            C:\vcpkg-opencv
+            ~\AppData\Local\vcpkg\archives
+          key: ${{ runner.os }}-vcpkg-opencv4-${{ hashFiles('.github/workflows/release.yml') }}-v3
           restore-keys: |
+            ${{ runner.os }}-vcpkg-opencv4-${{ hashFiles('.github/workflows/release.yml') }}-
             ${{ runner.os }}-vcpkg-opencv4-
       - name: Setup vcpkg and install OpenCV (Windows)
         if: matrix.platform == 'windows-latest'
         run: |
-          # Check if vcpkg is already cached
-          if (Test-Path "C:\vcpkg-opencv\installed\x64-windows") {
-            Write-Host "vcpkg cache found, skipping build"
+          # Check if vcpkg is already cached and OpenCV is installed
+          if (Test-Path "C:\vcpkg-opencv\installed\x64-windows\bin\opencv_world4*.dll") {
+            Write-Host "vcpkg and OpenCV cache found, skipping build"
           } else {
-            Write-Host "Building OpenCV from source via vcpkg..."
-            # Clone vcpkg
-            git clone https://github.com/microsoft/vcpkg.git C:\vcpkg-opencv
-            # Bootstrap vcpkg
-            C:\vcpkg-opencv\bootstrap-vcpkg.bat
-            # Enable binary caching for faster builds
+            # Check if vcpkg repo exists but OpenCV not installed
+            if (-not (Test-Path "C:\vcpkg-opencv\vcpkg.exe")) {
+              Write-Host "Cloning vcpkg repository..."
+              git clone https://github.com/microsoft/vcpkg.git C:\vcpkg-opencv
+              # Bootstrap vcpkg
+              C:\vcpkg-opencv\bootstrap-vcpkg.bat
+            } else {
+              Write-Host "vcpkg repository found in cache"
+            }
+
+            Write-Host "Installing OpenCV via vcpkg..."
+            # Enable binary caching using GitHub Actions cache
             $env:VCPKG_BINARY_SOURCES = "clear;x-gha,readwrite"
-            # Install OpenCV with vcpkg
+            $env:ACTIONS_CACHE_URL = $env:ACTIONS_CACHE_URL
+            $env:ACTIONS_RUNTIME_TOKEN = $env:ACTIONS_RUNTIME_TOKEN
+
+            # Install OpenCV with vcpkg (binary caching should speed this up significantly)
             C:\vcpkg-opencv\vcpkg install opencv4:x64-windows --recurse
           }
+
           # Verify installation
           if (Test-Path "C:\vcpkg-opencv\installed\x64-windows\bin") {
             Write-Host "Verifying OpenCV installation..."
-            dir C:\vcpkg-opencv\installed\x64-windows\bin
-            dir C:\vcpkg-opencv\installed\x64-windows\lib
-            dir C:\vcpkg-opencv\installed\x64-windows\include
+            dir C:\vcpkg-opencv\installed\x64-windows\bin\*.dll | Select-Object -First 5
+            Write-Host "OpenCV successfully installed!"
           } else {
             Write-Error "OpenCV installation not found at expected location!"
             exit 1
@@ -285,6 +293,9 @@ jobs:
           # Don't set OPENCV_* env vars - let opencv-rust use vcpkg_cmake probe instead
           # The environment probe fails to detect OpenCV version from include paths
         shell: pwsh
+        env:
+          ACTIONS_CACHE_URL: ${{ env.ACTIONS_CACHE_URL }}
+          ACTIONS_RUNTIME_TOKEN: ${{ env.ACTIONS_RUNTIME_TOKEN }}
 
       - name: Verify OpenCV installation (Ubuntu)
         if: matrix.platform == 'ubuntu-24.04'
