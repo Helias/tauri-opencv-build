@@ -155,10 +155,22 @@ jobs:
           # Install ONNX Runtime via Homebrew
           brew install onnxruntime
 
-          # Use system strategy to link against Homebrew ONNX Runtime
+          # Use system strategy with full paths
           echo "ORT_STRATEGY=system" >> $GITHUB_ENV
           echo "ORT_LIB_LOCATION=$(brew --prefix onnxruntime)/lib" >> $GITHUB_ENV
+          echo "ORT_INCLUDE_LOCATION=$(brew --prefix onnxruntime)/include" >> $GITHUB_ENV
           echo "DYLD_LIBRARY_PATH=$(brew --prefix onnxruntime)/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
+
+          # Debug: show what's in the lib directory
+          echo "Contents of $(brew --prefix onnxruntime)/lib:"
+          ls -la $(brew --prefix onnxruntime)/lib/
+        shell: bash
+
+      - name: Set ONNX Runtime environment (macOS ARM)
+        if: matrix.platform == 'macos-latest'
+        run: |
+          # ARM64 has prebuilt binaries, use download strategy
+          echo "ORT_STRATEGY=download" >> $GITHUB_ENV
         shell: bash
 
       - name: Install dependencies (Windows only)
