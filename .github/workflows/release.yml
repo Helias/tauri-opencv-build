@@ -83,8 +83,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Cache Homebrew packages (macOS only)
-        if: startsWith(matrix.platform, 'macos-')
+      - name: Cache Homebrew packages (macOS ARM)
+        if: matrix.platform == 'macos-latest'
         uses: actions/cache@v4
         with:
           path: |
@@ -93,18 +93,34 @@ jobs:
             /opt/homebrew/Cellar/llvm
             /opt/homebrew/Cellar/pkg-config
             /opt/homebrew/Cellar/ninja
+            /opt/homebrew/Cellar/z3
             /opt/homebrew/opt/opencv
             /opt/homebrew/opt/llvm
             /opt/homebrew/opt/pkg-config
             /opt/homebrew/opt/ninja
+            /opt/homebrew/opt/z3
+          key: ${{ runner.os }}-${{ runner.arch }}-brew-${{ hashFiles('.github/workflows/release.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-brew-
+
+      - name: Cache Homebrew packages (macOS Intel)
+        if: matrix.platform == 'macos-15-intel'
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/Library/Caches/Homebrew
             /usr/local/Cellar/opencv
             /usr/local/Cellar/llvm
             /usr/local/Cellar/pkg-config
             /usr/local/Cellar/ninja
+            /usr/local/Cellar/z3
+            /usr/local/Cellar/onnxruntime
             /usr/local/opt/opencv
             /usr/local/opt/llvm
             /usr/local/opt/pkg-config
             /usr/local/opt/ninja
+            /usr/local/opt/z3
+            /usr/local/opt/onnxruntime
           key: ${{ runner.os }}-${{ runner.arch }}-brew-${{ hashFiles('.github/workflows/release.yml') }}
           restore-keys: |
             ${{ runner.os }}-${{ runner.arch }}-brew-
@@ -118,6 +134,7 @@ jobs:
           key: ${{ runner.os }}-apt-${{ hashFiles('.github/workflows/release.yml') }}
           restore-keys: |
             ${{ runner.os }}-apt-
+
       - name: Install dependencies (Ubuntu only)
         if: matrix.platform == 'ubuntu-24.04'
         run: |
@@ -137,11 +154,25 @@ jobs:
             llvm-dev \
             pkg-config \
             ninja-build
-      - name: Install dependencies (macOS only)
-        if: startsWith(matrix.platform, 'macos-')
+
+      - name: Install dependencies (macOS ARM)
+        if: matrix.platform == 'macos-latest'
         run: |
           # Only install packages that aren't already cached
-          for package in opencv llvm pkg-config ninja; do
+          for package in opencv llvm pkg-config ninja z3; do
+            if ! brew list $package &>/dev/null; then
+              echo "Installing $package..."
+              brew install $package
+            else
+              echo "$package already installed, skipping"
+            fi
+          done
+
+      - name: Install dependencies (macOS Intel)
+        if: matrix.platform == 'macos-15-intel'
+        run: |
+          # Only install packages that aren't already cached
+          for package in opencv llvm pkg-config ninja z3; do
             if ! brew list $package &>/dev/null; then
               echo "Installing $package..."
               brew install $package
@@ -259,11 +290,25 @@ jobs:
           fi
           echo "Found libclang at: $LIBCLANG_PATH"
           echo "LIBCLANG_PATH=$LIBCLANG_PATH" >> $GITHUB_ENV
-      - name: Set OpenCV environment variables (macOS)
-        if: startsWith(matrix.platform, 'macos-')
+      - name: Set OpenCV environment variables (macOS ARM)
+        if: matrix.platform == 'macos-latest'
         run: |
           echo "PKG_CONFIG_PATH=$(brew --prefix opencv)/lib/pkgconfig:$PKG_CONFIG_PATH" >> $GITHUB_ENV
-          echo "DYLD_LIBRARY_PATH=$(brew --prefix opencv)/lib:$(brew --prefix llvm)/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "DYLD_LIBRARY_PATH=$(brew --prefix opencv)/lib:$(brew --prefix llvm)/lib:$(brew --prefix z3)/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "LIBCLANG_PATH=$(brew --prefix llvm)/lib" >> $GITHUB_ENV
+          echo "OPENCV_LINK_LIBS=opencv" >> $GITHUB_ENV
+          echo "OPENCV_LINK_PATHS=$(brew --prefix opencv)/lib" >> $GITHUB_ENV
+          echo "OPENCV_INCLUDE_PATHS=$(brew --prefix opencv)/include/opencv4" >> $GITHUB_ENV
+          echo "$(brew --prefix llvm)/bin" >> $GITHUB_PATH
+          # Force a clean build for opencv-rust
+          echo "OPENCV_VERSION=$(brew list --versions opencv | cut -d ' ' -f 2)" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Set OpenCV environment variables (macOS Intel)
+        if: matrix.platform == 'macos-15-intel'
+        run: |
+          echo "PKG_CONFIG_PATH=$(brew --prefix opencv)/lib/pkgconfig:$PKG_CONFIG_PATH" >> $GITHUB_ENV
+          echo "DYLD_LIBRARY_PATH=$(brew --prefix opencv)/lib:$(brew --prefix llvm)/lib:$(brew --prefix z3)/lib:$(brew --prefix onnxruntime)/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
           echo "LIBCLANG_PATH=$(brew --prefix llvm)/lib" >> $GITHUB_ENV
           echo "OPENCV_LINK_LIBS=opencv" >> $GITHUB_ENV
           echo "OPENCV_LINK_PATHS=$(brew --prefix opencv)/lib" >> $GITHUB_ENV
