@@ -89,25 +89,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Cache Homebrew packages (macOS Intel)
-        if: matrix.platform == 'macos-15-intel'
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/Library/Caches/Homebrew
-            /usr/local/Cellar/opencv
-            /usr/local/Cellar/llvm
-            /usr/local/Cellar/pkg-config
-            /usr/local/Cellar/ninja
-            /usr/local/Cellar/z3
-            /usr/local/opt/opencv
-            /usr/local/opt/llvm
-            /usr/local/opt/pkg-config
-            /usr/local/opt/ninja
-            /usr/local/opt/z3
-          key: ${{ runner.os }}-${{ runner.arch }}-brew-${{ hashFiles('.github/workflows/release.yml') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-brew-
+      # - name: Cache Homebrew packages (macOS Intel)
+      #   if: matrix.platform == 'macos-15-intel'
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: |
+      #       ~/Library/Caches/Homebrew
+      #       /usr/local/Cellar/opencv
+      #       /usr/local/Cellar/llvm
+      #       /usr/local/Cellar/pkg-config
+      #       /usr/local/Cellar/ninja
+      #       /usr/local/Cellar/z3
+      #       /usr/local/opt/opencv
+      #       /usr/local/opt/llvm
+      #       /usr/local/opt/pkg-config
+      #       /usr/local/opt/ninja
+      #       /usr/local/opt/z3
+      #     key: ${{ runner.os }}-${{ runner.arch }}-brew-${{ hashFiles('.github/workflows/release.yml') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-${{ runner.arch }}-brew-
+
       - name: Cache apt packages (Ubuntu only)
         if: matrix.platform == 'ubuntu-24.04'
         uses: actions/cache@v4
@@ -164,12 +165,14 @@ jobs:
               echo "$package already installed, skipping"
             fi
           done
+
       - name: Set ONNX Runtime environment (macOS Intel)
         if: matrix.platform == 'macos-15-intel'
         run: |
-          # Intel Macs don't have prebuilt ONNX Runtime binaries and system linking fails
-          # Use download strategy - it will gracefully skip if binaries aren't available
-          echo "ORT_STRATEGY=download" >> $GITHUB_ENV
+          # Intel Macs don't have prebuilt ONNX Runtime binaries
+          # Use compile strategy to build from source (this will take ~15-20 minutes)
+          echo "ORT_STRATEGY=compile" >> $GITHUB_ENV
+          echo "ORT_COMPILE_MINIMAL_BUILD=ON" >> $GITHUB_ENV
         shell: bash
 
       - name: Set ONNX Runtime environment (macOS ARM)
