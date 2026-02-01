@@ -224,8 +224,9 @@ jobs:
             # Enable binary caching for faster builds
             $env:VCPKG_BINARY_SOURCES = "clear;x-gha,readwrite"
 
-            # Install OpenCV with vcpkg - install all dependencies including TIFF
-            C:\vcpkg-opencv\vcpkg install opencv4[core,highgui,videoio,imgproc,imgcodecs]:x64-windows
+            # Install OpenCV with vcpkg
+            # Install base opencv4 with common features (modules like core, highgui, videoio, imgproc are included by default)
+            C:\vcpkg-opencv\vcpkg install opencv4[contrib,jpeg,png,tiff,webp]:x64-windows
           }
 
           # Verify installation
@@ -275,13 +276,11 @@ jobs:
           echo "PKG_CONFIG_PATH=$(brew --prefix opencv)/lib/pkgconfig:$PKG_CONFIG_PATH" >> $GITHUB_ENV
           echo "DYLD_LIBRARY_PATH=$(brew --prefix opencv)/lib:$(brew --prefix llvm)/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
           echo "LIBCLANG_PATH=$(brew --prefix llvm)/lib" >> $GITHUB_ENV
-          echo "OPENCV_LINK_LIBS=opencv" >> $GITHUB_ENV
-          echo "OPENCV_LINK_PATHS=$(brew --prefix opencv)/lib" >> $GITHUB_ENV
-          echo "OPENCV_INCLUDE_PATHS=$(brew --prefix opencv)/include/opencv4" >> $GITHUB_ENV
           echo "$(brew --prefix llvm)/bin" >> $GITHUB_PATH
 
-          # Force a clean build for opencv-rust
-          echo "OPENCV_VERSION=$(brew list --versions opencv | cut -d ' ' -f 2)" >> $GITHUB_ENV
+          # Let opencv-rust use pkg-config to find OpenCV libraries
+          # Don't set OPENCV_LINK_LIBS manually as it causes linker issues
+          # pkg-config will provide the correct library names and paths
         shell: bash
 
       - name: Build the app
