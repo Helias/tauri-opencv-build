@@ -120,13 +120,11 @@ jobs:
             /usr/local/Cellar/pkg-config
             /usr/local/Cellar/ninja
             /usr/local/Cellar/z3
-            /usr/local/Cellar/onnxruntime
             /usr/local/opt/opencv
             /usr/local/opt/llvm
             /usr/local/opt/pkg-config
             /usr/local/opt/ninja
             /usr/local/opt/z3
-            /usr/local/opt/onnxruntime
           key: ${{ runner.os }}-${{ runner.arch }}-brew-${{ hashFiles('.github/workflows/release.yml') }}
           restore-keys: |
             ${{ runner.os }}-${{ runner.arch }}-brew-
@@ -189,18 +187,9 @@ jobs:
       - name: Set ONNX Runtime environment (macOS Intel)
         if: matrix.platform == 'macos-15-intel'
         run: |
-          # Install ONNX Runtime via Homebrew
-          brew install onnxruntime
-
-          # Use system strategy with full paths
-          echo "ORT_STRATEGY=system" >> $GITHUB_ENV
-          echo "ORT_LIB_LOCATION=$(brew --prefix onnxruntime)/lib" >> $GITHUB_ENV
-          echo "ORT_INCLUDE_LOCATION=$(brew --prefix onnxruntime)/include" >> $GITHUB_ENV
-          echo "DYLD_LIBRARY_PATH=$(brew --prefix onnxruntime)/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
-
-          # Debug: show what's in the lib directory
-          echo "Contents of $(brew --prefix onnxruntime)/lib:"
-          ls -la $(brew --prefix onnxruntime)/lib/
+          # Intel Macs don't have prebuilt ONNX Runtime binaries and system linking fails
+          # Use download strategy - it will gracefully skip if binaries aren't available
+          echo "ORT_STRATEGY=download" >> $GITHUB_ENV
         shell: bash
 
       - name: Set ONNX Runtime environment (macOS ARM)
@@ -333,7 +322,7 @@ jobs:
         if: matrix.platform == 'macos-15-intel'
         run: |
           echo "PKG_CONFIG_PATH=$(brew --prefix opencv)/lib/pkgconfig:$PKG_CONFIG_PATH" >> $GITHUB_ENV
-          echo "DYLD_LIBRARY_PATH=$(brew --prefix opencv)/lib:$(brew --prefix llvm)/lib:$(brew --prefix z3)/lib:$(brew --prefix onnxruntime)/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "DYLD_LIBRARY_PATH=$(brew --prefix opencv)/lib:$(brew --prefix llvm)/lib:$(brew --prefix z3)/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
           echo "LIBCLANG_PATH=$(brew --prefix llvm)/lib" >> $GITHUB_ENV
           echo "$(brew --prefix llvm)/bin" >> $GITHUB_PATH
 
