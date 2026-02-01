@@ -39,14 +39,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Create Release
+      - name: Create or update Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "${{ github.event.inputs.version }}" \
-            --draft \
-            --title "Release ${{ github.event.inputs.version }}" \
-            --notes "Release ${{ github.event.inputs.version }}"
+          # Check if release already exists
+          if gh release view "${{ github.event.inputs.version }}" --json isDraft 2>/dev/null; then
+            echo "Release ${{ github.event.inputs.version }} already exists, reusing it"
+          else
+            echo "Creating new draft release ${{ github.event.inputs.version }}"
+            gh release create "${{ github.event.inputs.version }}" \
+              --draft \
+              --title "Release ${{ github.event.inputs.version }}" \
+              --notes "Release ${{ github.event.inputs.version }}"
+          fi
   select-platforms:
     needs: create-release
     runs-on: ubuntu-latest
