@@ -305,12 +305,11 @@ jobs:
           echo "PKG_CONFIG_PATH=$(brew --prefix opencv)/lib/pkgconfig:$PKG_CONFIG_PATH" >> $GITHUB_ENV
           echo "DYLD_LIBRARY_PATH=$(brew --prefix opencv)/lib:$(brew --prefix llvm)/lib:$(brew --prefix z3)/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
           echo "LIBCLANG_PATH=$(brew --prefix llvm)/lib" >> $GITHUB_ENV
-          echo "OPENCV_LINK_LIBS=opencv" >> $GITHUB_ENV
-          echo "OPENCV_LINK_PATHS=$(brew --prefix opencv)/lib" >> $GITHUB_ENV
-          echo "OPENCV_INCLUDE_PATHS=$(brew --prefix opencv)/include/opencv4" >> $GITHUB_ENV
           echo "$(brew --prefix llvm)/bin" >> $GITHUB_PATH
-          # Force a clean build for opencv-rust
-          echo "OPENCV_VERSION=$(brew list --versions opencv | cut -d ' ' -f 2)" >> $GITHUB_ENV
+
+          # Let opencv-rust use pkg-config to find OpenCV libraries
+          # Don't set OPENCV_LINK_LIBS manually as it causes linker issues
+          # pkg-config will provide the correct library names and paths
         shell: bash
 
       - name: Set OpenCV environment variables (macOS Intel)
@@ -319,12 +318,11 @@ jobs:
           echo "PKG_CONFIG_PATH=$(brew --prefix opencv)/lib/pkgconfig:$PKG_CONFIG_PATH" >> $GITHUB_ENV
           echo "DYLD_LIBRARY_PATH=$(brew --prefix opencv)/lib:$(brew --prefix llvm)/lib:$(brew --prefix z3)/lib:$(brew --prefix onnxruntime)/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
           echo "LIBCLANG_PATH=$(brew --prefix llvm)/lib" >> $GITHUB_ENV
-          echo "OPENCV_LINK_LIBS=opencv" >> $GITHUB_ENV
-          echo "OPENCV_LINK_PATHS=$(brew --prefix opencv)/lib" >> $GITHUB_ENV
-          echo "OPENCV_INCLUDE_PATHS=$(brew --prefix opencv)/include/opencv4" >> $GITHUB_ENV
           echo "$(brew --prefix llvm)/bin" >> $GITHUB_PATH
-          # Force a clean build for opencv-rust
-          echo "OPENCV_VERSION=$(brew list --versions opencv | cut -d ' ' -f 2)" >> $GITHUB_ENV
+
+          # Let opencv-rust use pkg-config to find OpenCV libraries
+          # Don't set OPENCV_LINK_LIBS manually as it causes linker issues
+          # pkg-config will provide the correct library names and paths
         shell: bash
 
       - name: Build the app
