@@ -89,26 +89,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Cache Homebrew packages (macOS ARM)
-        if: matrix.platform == 'macos-latest'
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/Library/Caches/Homebrew
-            /opt/homebrew/Cellar/opencv
-            /opt/homebrew/Cellar/llvm
-            /opt/homebrew/Cellar/pkg-config
-            /opt/homebrew/Cellar/ninja
-            /opt/homebrew/Cellar/z3
-            /opt/homebrew/opt/opencv
-            /opt/homebrew/opt/llvm
-            /opt/homebrew/opt/pkg-config
-            /opt/homebrew/opt/ninja
-            /opt/homebrew/opt/z3
-          key: ${{ runner.os }}-${{ runner.arch }}-brew-${{ hashFiles('.github/workflows/release.yml') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-brew-
-
       - name: Cache Homebrew packages (macOS Intel)
         if: matrix.platform == 'macos-15-intel'
         uses: actions/cache@v4
