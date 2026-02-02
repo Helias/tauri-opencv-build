@@ -65,15 +65,6 @@ jobs:
             fi
           done
 
-      - name: Download and setup ONNX Runtime
-        run: |
-          curl -L https://github.com/microsoft/onnxruntime/releases/download/v1.17.1/onnxruntime-osx-x86_64-1.17.1.tgz -o ort.tgz
-          tar -xzf ort.tgz
-          # Move it to a consistent location
-          mkdir -p $HOME/libort
-          mv onnxruntime-osx-x86_64-1.17.1/* $HOME/libort/
-        shell: bash
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -93,24 +84,6 @@ jobs:
 
       - name: Install frontend dependencies
         run: npm install
-
-      - name: Verify ONNX Runtime setup
-        run: |
-          echo "=== ONNX Runtime Environment Variables ==="
-          echo "ORT_STRATEGY: $ORT_STRATEGY"
-          echo "ORT_USE_SYSTEM_PROVIDED_DYLIB: $ORT_USE_SYSTEM_PROVIDED_DYLIB"
-          echo "ORT_DYLIB_PATH: $ORT_DYLIB_PATH"
-          echo "ORT_LIB_LOCATION: $ORT_LIB_LOCATION"
-          echo "=== Checking ORT_LIB_LOCATION structure ==="
-          ls -la "$ORT_LIB_LOCATION" || echo "Directory not found!"
-          ls -la "$ORT_LIB_LOCATION/lib/" || echo "lib/ not found!"
-          ls -la "$ORT_LIB_LOCATION/include/" || echo "include/ not found!"
-          echo "=== Checking if ONNX Runtime dylib exists ==="
-          ls -la "$ORT_DYLIB_PATH" || echo "File not found!"
-          echo "=== Verifying dylib architecture ==="
-          file "$ORT_DYLIB_PATH" || echo "Cannot check file type"
-          lipo -info "$ORT_DYLIB_PATH" 2>/dev/null || echo "Cannot check architectures"
-        shell: bash
 
       - name: Set OpenCV environment variables
         run: |
