@@ -67,57 +67,11 @@ jobs:
 
       - name: Download and setup ONNX Runtime
         run: |
-          # Download ONNX Runtime prebuilt binaries for macOS Intel
-          mkdir -p $HOME/onnxruntime
-          cd $HOME/onnxruntime
-
-          # Download version 1.17.1 (compatible with ort 2.0.0-rc.11)
-          curl -L https://github.com/microsoft/onnxruntime/releases/download/v1.17.1/onnxruntime-osx-x86_64-1.17.1.tgz -o onnxruntime.tgz
-          tar -xzf onnxruntime.tgz
-
-          # Check the extracted directory structure
-          echo "=== Extracted directory structure ==="
-          ls -la
-          ls -la onnxruntime-osx-x86_64-1.17.1/
-
-          # The extracted folder should have lib/ and include/ directories
-          # Set ORT_LIB_LOCATION to point to the extracted folder (not nested onnxruntime)
-          ORT_ROOT="$HOME/onnxruntime/onnxruntime-osx-x86_64-1.17.1"
-
-          echo "=== Library contents ==="
-          ls -la "$ORT_ROOT/lib/"
-          echo "=== Include contents ==="
-          ls -la "$ORT_ROOT/include/"
-
-          # Set environment variables for ort to find the library
-          # Use system strategy to link against the downloaded library
-          echo "ORT_STRATEGY=system" >> $GITHUB_ENV
-          echo "ORT_LIB_LOCATION=$ORT_ROOT" >> $GITHUB_ENV
-
-          # Find the actual dylib - look for the symlink first, then the versioned file
-          if [ -f "$ORT_ROOT/lib/libonnxruntime.dylib" ]; then
-            DYLIB_PATH="$ORT_ROOT/lib/libonnxruntime.dylib"
-          else
-            DYLIB_PATH=$(find "$ORT_ROOT/lib" -name "libonnxruntime.*.dylib" -type f | head -n 1)
-          fi
-          echo "Found dylib: $DYLIB_PATH"
-          echo "ORT_DYLIB_PATH=$DYLIB_PATH" >> $GITHUB_ENV
-
-          # Verify the header file exists
-          if [ -f "$ORT_ROOT/include/onnxruntime_c_api.h" ]; then
-            echo "✓ Found onnxruntime_c_api.h"
-          else
-            echo "✗ Missing onnxruntime_c_api.h in include directory"
-            ls -la "$ORT_ROOT/include/" || true
-          fi
-
-          # Set library and include paths for build system
-          echo "DYLD_FALLBACK_LIBRARY_PATH=$ORT_ROOT/lib:$DYLD_FALLBACK_LIBRARY_PATH" >> $GITHUB_ENV
-          echo "LIBRARY_PATH=$ORT_ROOT/lib:$LIBRARY_PATH" >> $GITHUB_ENV
-          echo "CPATH=$ORT_ROOT/include:$CPATH" >> $GITHUB_ENV
-
-          # Set explicit linker flags for ort-sys
-          echo "RUSTFLAGS=-L $ORT_ROOT/lib -l onnxruntime" >> $GITHUB_ENV
+          curl -L https://github.com/microsoft/onnxruntime/releases/download/v1.17.1/onnxruntime-osx-x86_64-1.17.1.tgz -o ort.tgz
+          tar -xzf ort.tgz
+          # Move it to a consistent location
+          mkdir -p $HOME/libort
+          mv onnxruntime-osx-x86_64-1.17.1/* $HOME/libort/
         shell: bash
 
       - name: Setup Node.js
@@ -175,10 +129,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ORT_STRATEGY: system
-          ORT_LIB_LOCATION: ${{ env.ORT_LIB_LOCATION }}
+          ORT_LIB_LOCATION: ${{ github.workspace }}/../libort/lib
           ORT_DYLIB_PATH: ${{ env.ORT_DYLIB_PATH }}
           ORT_USE_SYSTEM_PROVIDED_DYLIB: 1
-          RUSTFLAGS: "-L ${{ env.ORT_LIB_LOCATION }} -l onnxruntime -C link-arg=-Wl,-rpath,@loader_path"
+          RUSTFLAGS: "-L ${{ github.workspace }}/../libort/lib -l onnxruntime -C link-arg=-Wl,-rpath,@loader_path"
         with:
           tagName: ${{ github.event.inputs.version }}
           releaseName: Release ${{ github.event.inputs.version }}
