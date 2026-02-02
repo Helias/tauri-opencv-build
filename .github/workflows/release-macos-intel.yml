@@ -76,10 +76,20 @@ jobs:
           tar -xzf onnxruntime.tgz
           mv onnxruntime-osx-x86_64-1.17.1 onnxruntime
 
+          # Verify the library exists
+          ls -la $HOME/onnxruntime/onnxruntime/lib/
+          echo "ONNX Runtime dylib path: $HOME/onnxruntime/onnxruntime/lib/libonnxruntime.1.17.1.dylib"
+
           # Set environment variables for ort to find the library
+          # Use system strategy to link against the downloaded library
           echo "ORT_STRATEGY=system" >> $GITHUB_ENV
+          echo "ORT_USE_SYSTEM_PROVIDED_DYLIB=1" >> $GITHUB_ENV
           echo "ORT_DYLIB_PATH=$HOME/onnxruntime/onnxruntime/lib/libonnxruntime.1.17.1.dylib" >> $GITHUB_ENV
+          echo "ORT_LIB_LOCATION=$HOME/onnxruntime/onnxruntime" >> $GITHUB_ENV
+
+          # Also set library paths for runtime
           echo "DYLD_FALLBACK_LIBRARY_PATH=$HOME/onnxruntime/onnxruntime/lib:$DYLD_FALLBACK_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "LIBRARY_PATH=$HOME/onnxruntime/onnxruntime/lib:$LIBRARY_PATH" >> $GITHUB_ENV
         shell: bash
 
       - name: Setup Node.js
@@ -101,6 +111,19 @@ jobs:
 
       - name: Install frontend dependencies
         run: npm install
+
+      - name: Verify ONNX Runtime setup
+        run: |
+          echo "=== ONNX Runtime Environment Variables ==="
+          echo "ORT_STRATEGY: $ORT_STRATEGY"
+          echo "ORT_USE_SYSTEM_PROVIDED_DYLIB: $ORT_USE_SYSTEM_PROVIDED_DYLIB"
+          echo "ORT_DYLIB_PATH: $ORT_DYLIB_PATH"
+          echo "ORT_LIB_LOCATION: $ORT_LIB_LOCATION"
+          echo "=== Checking if ONNX Runtime dylib exists ==="
+          ls -la $ORT_DYLIB_PATH || echo "File not found!"
+          echo "=== Verifying dylib architecture ==="
+          file $ORT_DYLIB_PATH || echo "Cannot check file type"
+        shell: bash
 
       - name: Set OpenCV environment variables
         run: |
