@@ -34,24 +34,24 @@ jobs:
               --notes "Release ${{ github.event.inputs.version }}"
           fi
 
-      - name: Cache Homebrew packages
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/Library/Caches/Homebrew
-            /usr/local/Cellar/opencv
-            /usr/local/Cellar/llvm
-            /usr/local/Cellar/pkg-config
-            /usr/local/Cellar/ninja
-            /usr/local/Cellar/z3
-            /usr/local/opt/opencv
-            /usr/local/opt/llvm
-            /usr/local/opt/pkg-config
-            /usr/local/opt/ninja
-            /usr/local/opt/z3
-          key: ${{ runner.os }}-${{ runner.arch }}-brew-${{ hashFiles('.github/workflows/release-macos-intel.yml') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-brew-
+      # - name: Cache Homebrew packages
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: |
+      #       ~/Library/Caches/Homebrew
+      #       /usr/local/Cellar/opencv
+      #       /usr/local/Cellar/llvm
+      #       /usr/local/Cellar/pkg-config
+      #       /usr/local/Cellar/ninja
+      #       /usr/local/Cellar/z3
+      #       /usr/local/opt/opencv
+      #       /usr/local/opt/llvm
+      #       /usr/local/opt/pkg-config
+      #       /usr/local/opt/ninja
+      #       /usr/local/opt/z3
+      #     key: ${{ runner.os }}-${{ runner.arch }}-brew-${{ hashFiles('.github/workflows/release-macos-intel.yml') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-${{ runner.arch }}-brew-
 
       - name: Install dependencies
         run: |
@@ -81,7 +81,6 @@ jobs:
           ls -la onnxruntime-osx-x86_64-1.17.1/
 
           # The extracted folder should have lib/ and include/ directories
-          # Set ORT_LIB_LOCATION to point to the extracted folder (not nested onnxruntime)
           ORT_ROOT="$HOME/onnxruntime/onnxruntime-osx-x86_64-1.17.1"
 
           echo "=== Library contents ==="
@@ -89,50 +88,28 @@ jobs:
           echo "=== Include contents ==="
           ls -la "$ORT_ROOT/include/"
 
+          # For ort-sys 2.0.0-rc.11 with system strategy, we need to create a proper structure
+          # Copy to a standard location that ort-sys can find
+          sudo mkdir -p /usr/local/include/onnxruntime
+          sudo mkdir -p /usr/local/lib
+          sudo cp -r "$ORT_ROOT/include/"* /usr/local/include/onnxruntime/
+          sudo cp "$ORT_ROOT/lib/libonnxruntime."* /usr/local/lib/
+
+          echo "=== Installed to /usr/local ==="
+          ls -la /usr/local/lib/libonnxruntime* || true
+          ls -la /usr/local/include/onnxruntime/ || true
+
           # Set environment variables for ort to find the library
-          # Use system strategy to link against the downloaded library
           echo "ORT_STRATEGY=system" >> $GITHUB_ENV
           echo "ORT_USE_SYSTEM_PROVIDED_DYLIB=1" >> $GITHUB_ENV
-          echo "ORT_LIB_LOCATION=$ORT_ROOT" >> $GITHUB_ENV
-
-          # Find the actual dylib - look for the symlink first, then the versioned file
-          if [ -f "$ORT_ROOT/lib/libonnxruntime.dylib" ]; then
-            DYLIB_PATH="$ORT_ROOT/lib/libonnxruntime.dylib"
-          else
-            DYLIB_PATH=$(find "$ORT_ROOT/lib" -name "libonnxruntime.*.dylib" -type f | head -n 1)
-          fi
-          echo "Found dylib: $DYLIB_PATH"
-          echo "ORT_DYLIB_PATH=$DYLIB_PATH" >> $GITHUB_ENV
-
-          # Verify the header file exists
-          if [ -f "$ORT_ROOT/include/onnxruntime_c_api.h" ]; then
-            echo "✓ Found onnxruntime_c_api.h"
-          else
-            echo "✗ Missing onnxruntime_c_api.h in include directory"
-            ls -la "$ORT_ROOT/include/" || true
-          fi
+          echo "ORT_LIB_LOCATION=/usr/local" >> $GITHUB_ENV
+          echo "ORT_DYLIB_PATH=/usr/local/lib/libonnxruntime.dylib" >> $GITHUB_ENV
 
           # Also set library and include paths
-          echo "DYLD_FALLBACK_LIBRARY_PATH=$ORT_ROOT/lib:$DYLD_FALLBACK_LIBRARY_PATH" >> $GITHUB_ENV
-          echo "LIBRARY_PATH=$ORT_ROOT/lib:$LIBRARY_PATH" >> $GITHUB_ENV
-          echo "CPATH=$ORT_ROOT/include:$CPATH" >> $GITHUB_ENV
-        shell: bash
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - name: Install Rust stable
-        uses: dtolnay/rust-toolchain@stable
-        with:
-          targets: x86_64-apple-darwin
-
-      - name: Rust cache
-        uses: swatinem/rust-cache@v2
-        with:
-          workspaces: "./src-tauri -> target"
-          cache-on-failure: true
+          echo "DYLD_FALLBACK_LIBRARY_PATH=/usr/local/lib:$DYLD_FALLBACK_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH" >> $GITHUB_ENV
+          echo "CPATH=/usr/local/include:$CPATH" >> $GITHUB_ENV
+          cache-on-failure: false
           key: macos-15-intel-x86_64-apple-darwin-${{ hashFiles('**/Cargo.lock', '**/Cargo.toml') }}
 
       - name: Install frontend dependencies
@@ -145,10 +122,9 @@ jobs:
           echo "ORT_USE_SYSTEM_PROVIDED_DYLIB: $ORT_USE_SYSTEM_PROVIDED_DYLIB"
           echo "ORT_DYLIB_PATH: $ORT_DYLIB_PATH"
           echo "ORT_LIB_LOCATION: $ORT_LIB_LOCATION"
-          echo "=== Checking ORT_LIB_LOCATION structure ==="
-          ls -la "$ORT_LIB_LOCATION" || echo "Directory not found!"
-          ls -la "$ORT_LIB_LOCATION/lib/" || echo "lib/ not found!"
-          ls -la "$ORT_LIB_LOCATION/include/" || echo "include/ not found!"
+          echo "=== Checking installed files ==="
+          ls -la /usr/local/lib/libonnxruntime* || echo "lib files not found!"
+          ls -la /usr/local/include/onnxruntime/ || echo "include dir not found!"
           echo "=== Checking if ONNX Runtime dylib exists ==="
           ls -la "$ORT_DYLIB_PATH" || echo "File not found!"
           echo "=== Verifying dylib architecture ==="
