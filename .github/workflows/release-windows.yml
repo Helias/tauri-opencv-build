@@ -127,6 +127,10 @@ jobs:
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VCPKG_ROOT: C:\vcpkg-opencv
+          CMAKE_TOOLCHAIN_FILE: C:\vcpkg-opencv\scripts\buildsystems\vcpkg.cmake
+          CMAKE_PREFIX_PATH: C:\vcpkg-opencv\installed\x64-windows
+          LIBCLANG_PATH: C:\Program Files\LLVM\bin
         with:
           tagName: ${{ github.event.inputs.version }}
           releaseName: Release ${{ github.event.inputs.version }}

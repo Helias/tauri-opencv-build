@@ -52,7 +52,15 @@
     "windows": {
       "certificateThumbprint": null,
       "digestAlgorithm": "sha256",
-      "timestampUrl": ""
+      "timestampUrl": "",
+      "webviewInstallMode": {
+        "type": "embedBootstrapper"
+      },
+      "allowDowngrades": false,
+      "nsis": {
+        "installerIcon": null,
+        "installMode": "both"
+      }
     }
   }
 }
