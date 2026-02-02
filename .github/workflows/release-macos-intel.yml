@@ -92,7 +92,6 @@ jobs:
           # Set environment variables for ort to find the library
           # Use system strategy to link against the downloaded library
           echo "ORT_STRATEGY=system" >> $GITHUB_ENV
-          echo "ORT_USE_SYSTEM_PROVIDED_DYLIB=1" >> $GITHUB_ENV
           echo "ORT_LIB_LOCATION=$ORT_ROOT" >> $GITHUB_ENV
 
           # Find the actual dylib - look for the symlink first, then the versioned file
@@ -112,10 +111,13 @@ jobs:
             ls -la "$ORT_ROOT/include/" || true
           fi
 
-          # Also set library and include paths
+          # Set library and include paths for build system
           echo "DYLD_FALLBACK_LIBRARY_PATH=$ORT_ROOT/lib:$DYLD_FALLBACK_LIBRARY_PATH" >> $GITHUB_ENV
           echo "LIBRARY_PATH=$ORT_ROOT/lib:$LIBRARY_PATH" >> $GITHUB_ENV
           echo "CPATH=$ORT_ROOT/include:$CPATH" >> $GITHUB_ENV
+
+          # Set explicit linker flags for ort-sys
+          echo "RUSTFLAGS=-L $ORT_ROOT/lib -l onnxruntime" >> $GITHUB_ENV
         shell: bash
 
       - name: Setup Node.js
@@ -172,6 +174,11 @@ jobs:
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ORT_STRATEGY: system
+          ORT_LIB_LOCATION: ${{ env.ORT_LIB_LOCATION }}
+          ORT_DYLIB_PATH: ${{ env.ORT_DYLIB_PATH }}
+          ORT_USE_SYSTEM_PROVIDED_DYLIB: 1
+          RUSTFLAGS: "-L ${{ env.ORT_LIB_LOCATION }} -l onnxruntime -C link-arg=-Wl,-rpath,@loader_path"
         with:
           tagName: ${{ github.event.inputs.version }}
           releaseName: Release ${{ github.event.inputs.version }}
