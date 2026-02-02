@@ -65,12 +65,21 @@ jobs:
             fi
           done
 
-      - name: Set ONNX Runtime environment
+      - name: Download and setup ONNX Runtime
         run: |
-          # Intel Macs don't have prebuilt ONNX Runtime binaries
-          # Use compile strategy to build from source (this will take ~15-20 minutes)
-          echo "ORT_STRATEGY=compile" >> $GITHUB_ENV
-          echo "ORT_COMPILE_MINIMAL_BUILD=ON" >> $GITHUB_ENV
+          # Download ONNX Runtime prebuilt binaries for macOS Intel
+          mkdir -p $HOME/onnxruntime
+          cd $HOME/onnxruntime
+
+          # Download version 1.17.1 (compatible with ort 2.0.0-rc.11)
+          curl -L https://github.com/microsoft/onnxruntime/releases/download/v1.17.1/onnxruntime-osx-x86_64-1.17.1.tgz -o onnxruntime.tgz
+          tar -xzf onnxruntime.tgz
+          mv onnxruntime-osx-x86_64-1.17.1 onnxruntime
+
+          # Set environment variables for ort to find the library
+          echo "ORT_STRATEGY=system" >> $GITHUB_ENV
+          echo "ORT_DYLIB_PATH=$HOME/onnxruntime/onnxruntime/lib/libonnxruntime.1.17.1.dylib" >> $GITHUB_ENV
+          echo "DYLD_FALLBACK_LIBRARY_PATH=$HOME/onnxruntime/onnxruntime/lib:$DYLD_FALLBACK_LIBRARY_PATH" >> $GITHUB_ENV
         shell: bash
 
       - name: Setup Node.js
@@ -96,7 +105,7 @@ jobs:
       - name: Set OpenCV environment variables
         run: |
           echo "PKG_CONFIG_PATH=$(brew --prefix opencv)/lib/pkgconfig:$PKG_CONFIG_PATH" >> $GITHUB_ENV
-          echo "DYLD_LIBRARY_PATH=$(brew --prefix opencv)/lib:$(brew --prefix llvm)/lib:$(brew --prefix z3)/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "DYLD_LIBRARY_PATH=$(brew --prefix opencv)/lib:$(brew --prefix llvm)/lib:$(brew --prefix z3)/lib:$HOME/onnxruntime/onnxruntime/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
           echo "LIBCLANG_PATH=$(brew --prefix llvm)/lib" >> $GITHUB_ENV
           echo "$(brew --prefix llvm)/bin" >> $GITHUB_PATH
 
