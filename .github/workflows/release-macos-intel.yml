@@ -93,7 +93,9 @@ jobs:
           sudo mkdir -p /usr/local/include/onnxruntime
           sudo mkdir -p /usr/local/lib
           sudo cp -r "$ORT_ROOT/include/"* /usr/local/include/onnxruntime/
-          sudo cp "$ORT_ROOT/lib/libonnxruntime."* /usr/local/lib/
+
+          # Copy only .dylib files, not .dSYM directories
+          find "$ORT_ROOT/lib" -name "*.dylib" -exec sudo cp {} /usr/local/lib/ \;
 
           echo "=== Installed to /usr/local ==="
           ls -la /usr/local/lib/libonnxruntime* || true
@@ -109,8 +111,18 @@ jobs:
           echo "DYLD_FALLBACK_LIBRARY_PATH=/usr/local/lib:$DYLD_FALLBACK_LIBRARY_PATH" >> $GITHUB_ENV
           echo "LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH" >> $GITHUB_ENV
           echo "CPATH=/usr/local/include:$CPATH" >> $GITHUB_ENV
-          cache-on-failure: false
-          key: macos-15-intel-x86_64-apple-darwin-${{ hashFiles('**/Cargo.lock', '**/Cargo.toml') }}
+
+      - name: Setup Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-apple-darwin
+
+      # - name: Rust cache
+      #   uses: swatinem/rust-cache@v2
+      #   with:
+      #     workspaces: "./src-tauri -> target"
+      #     cache-on-failure: false
+      #     key: macos-15-intel-x86_64-apple-darwin-${{ hashFiles('**/Cargo.lock', '**/Cargo.toml') }}
 
       - name: Install frontend dependencies
         run: npm install
