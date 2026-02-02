@@ -34,15 +34,15 @@ jobs:
               --notes "Release ${{ github.event.inputs.version }}"
           fi
 
-      - name: Cache apt packages
-        uses: actions/cache@v4
-        with:
-          path: |
-            /var/cache/apt/archives
-            /var/lib/apt/lists
-          key: ${{ runner.os }}-apt-${{ hashFiles('.github/workflows/release-ubuntu.yml') }}
-          restore-keys: |
-            ${{ runner.os }}-apt-
+      # - name: Cache apt packages
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: |
+      #       /var/cache/apt/archives
+      #       /var/lib/apt/lists
+      #     key: ${{ runner.os }}-apt-${{ hashFiles('.github/workflows/release-ubuntu.yml') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-apt-
 
       - name: Install dependencies
         run: |
@@ -73,12 +73,12 @@ jobs:
         with:
           targets: x86_64-unknown-linux-gnu
 
-      - name: Rust cache
-        uses: swatinem/rust-cache@v2
-        with:
-          workspaces: "./src-tauri -> target"
-          cache-on-failure: true
-          key: ubuntu-x86_64-unknown-linux-gnu-${{ hashFiles('**/Cargo.lock', '**/Cargo.toml') }}
+      # - name: Rust cache
+      #   uses: swatinem/rust-cache@v2
+      #   with:
+      #     workspaces: "./src-tauri -> target"
+      #     cache-on-failure: true
+      #     key: ubuntu-x86_64-unknown-linux-gnu-${{ hashFiles('**/Cargo.lock', '**/Cargo.toml') }}
 
       - name: Install frontend dependencies
         run: npm install
