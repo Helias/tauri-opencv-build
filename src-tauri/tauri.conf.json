@@ -35,7 +35,7 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ],
-    "resources": ["../models/yolo11n-detect.onnx"],
+    "resources": ["../models/yolo11n-detect.onnx", "libs/*.dll"],
     "externalBin": [],
     "copyright": "",
     "category": "DeveloperTool",

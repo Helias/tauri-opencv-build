@@ -2,3 +2,6 @@
 # will have compiled files and executables
 /target/
 WixTools
+
+# Ignore the libs directory containing DLLs (generated during build)
+libs/
