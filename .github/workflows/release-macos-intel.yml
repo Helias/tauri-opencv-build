@@ -67,27 +67,28 @@ jobs:
 
       - name: Download and setup ONNX Runtime
         run: |
-          # For x86_64 macOS, we need to compile ONNX Runtime from source
-          # as prebuilt binaries don't work with ort-sys 2.0.0-rc.11
+          # Download prebuilt ONNX Runtime and use the download strategy
+          # This avoids compilation time while working around x86_64 issues
 
-          echo "=== Setting up ONNX Runtime build from source ==="
+          echo "=== Downloading ONNX Runtime prebuilt binaries ==="
 
-          # Set environment variables for ort compile strategy
-          echo "ORT_STRATEGY=compile" >> $GITHUB_ENV
-          echo "ORT_COMPILE_TARGET=x86_64-apple-darwin" >> $GITHUB_ENV
+          mkdir -p $HOME/.cache/ort
+          cd $HOME/.cache/ort
 
-          # Use minimal build for faster compilation
-          echo "ORT_COMPILE_MINIMAL_BUILD=ON" >> $GITHUB_ENV
+          # Download version 1.17.1
+          curl -L https://github.com/microsoft/onnxruntime/releases/download/v1.17.1/onnxruntime-osx-x86_64-1.17.1.tgz -o onnxruntime.tgz
+          tar -xzf onnxruntime.tgz
 
-          # Disable unnecessary providers to speed up build
-          echo "ORT_COMPILE_DISABLE_NNAPI=ON" >> $GITHUB_ENV
-          echo "ORT_COMPILE_DISABLE_RKNPU=ON" >> $GITHUB_ENV
+          # Set up for download strategy - point to extracted archive
+          ARCHIVE_PATH="$HOME/.cache/ort/onnxruntime.tgz"
 
-          # Set version
-          echo "ORT_COMPILE_VERSION=1.17.1" >> $GITHUB_ENV
+          # Set environment variables for ort download strategy
+          echo "ORT_STRATEGY=download" >> $GITHUB_ENV
+          echo "ORT_USE_SYSTEM_PROVIDED_ARCHIVE=1" >> $GITHUB_ENV
+          echo "ORT_ARCHIVE_PATH=$ARCHIVE_PATH" >> $GITHUB_ENV
 
-          echo "ORT_STRATEGY=compile configured - ONNX Runtime will be built from source during cargo build"
-          echo "This will take approximately 15-20 minutes..."
+          echo "ONNX Runtime download strategy configured"
+          echo "Archive: $ARCHIVE_PATH"
         shell: bash
 
       - name: Setup Rust stable
@@ -109,12 +110,10 @@ jobs:
         run: |
           echo "=== ONNX Runtime Environment Variables ==="
           echo "ORT_STRATEGY: $ORT_STRATEGY"
-          echo "ORT_COMPILE_TARGET: $ORT_COMPILE_TARGET"
-          echo "ORT_COMPILE_VERSION: $ORT_COMPILE_VERSION"
-          echo "ORT_COMPILE_MINIMAL_BUILD: $ORT_COMPILE_MINIMAL_BUILD"
+          echo "ORT_USE_SYSTEM_PROVIDED_ARCHIVE: $ORT_USE_SYSTEM_PROVIDED_ARCHIVE"
+          echo "ORT_ARCHIVE_PATH: $ORT_ARCHIVE_PATH"
           echo ""
-          echo "ONNX Runtime will be compiled from source during the build process."
-          echo "This may take 15-20 minutes. Compilation will happen when cargo builds ort-sys."
+          echo "ort-sys will use the downloaded archive during build."
         shell: bash
 
       - name: Set OpenCV environment variables
