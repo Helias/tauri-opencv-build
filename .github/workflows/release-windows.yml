@@ -123,6 +123,55 @@ jobs:
           ACTIONS_CACHE_URL: ${{ env.ACTIONS_CACHE_URL }}
           ACTIONS_RUNTIME_TOKEN: ${{ env.ACTIONS_RUNTIME_TOKEN }}
 
+      - name: Copy required DLLs to src-tauri
+        run: |
+          Write-Host "Copying required DLLs for bundling..."
+
+          # Create a directory for DLLs in src-tauri
+          New-Item -ItemType Directory -Force -Path "src-tauri\libs"
+
+          # Copy OpenCV DLLs
+          $opencvBinPath = "C:\vcpkg-opencv\installed\x64-windows\bin"
+          Copy-Item "$opencvBinPath\opencv_core4*.dll" "src-tauri\libs\" -Force
+          Copy-Item "$opencvBinPath\opencv_imgproc4*.dll" "src-tauri\libs\" -Force
+          Copy-Item "$opencvBinPath\opencv_videoio4*.dll" "src-tauri\libs\" -Force
+          Copy-Item "$opencvBinPath\opencv_highgui4*.dll" "src-tauri\libs\" -Force -ErrorAction SilentlyContinue
+
+          # Copy ONNX Runtime DLL (if exists)
+          if (Test-Path "$opencvBinPath\onnxruntime*.dll") {
+            Copy-Item "$opencvBinPath\onnxruntime*.dll" "src-tauri\libs\" -Force
+          }
+
+          # Copy DirectML DLL from Windows Kits
+          $directMLPaths = @(
+            "C:\Program Files (x86)\Windows Kits\10\bin\*\x64\DirectML.dll",
+            "C:\Windows\System32\DirectML.dll"
+          )
+
+          $directMLFound = $false
+          foreach ($path in $directMLPaths) {
+            $resolved = Get-Item $path -ErrorAction SilentlyContinue | Select-Object -First 1
+            if ($resolved) {
+              Copy-Item $resolved.FullName "src-tauri\libs\" -Force
+              $directMLFound = $true
+              Write-Host "Found and copied DirectML.dll from $($resolved.FullName)"
+              break
+            }
+          }
+
+          if (-not $directMLFound) {
+            Write-Host "Warning: DirectML.dll not found, downloading from NuGet..."
+            # Download DirectML from NuGet package
+            Invoke-WebRequest -Uri "https://www.nuget.org/api/v2/package/Microsoft.AI.DirectML/1.13.0" -OutFile "directml.zip"
+            Expand-Archive -Path "directml.zip" -DestinationPath "directml-pkg" -Force
+            Copy-Item "directml-pkg\bin\x64-win\DirectML.dll" "src-tauri\libs\" -Force
+            Remove-Item "directml.zip", "directml-pkg" -Recurse -Force
+          }
+
+          Write-Host "DLLs copied successfully:"
+          Get-ChildItem "src-tauri\libs\*.dll" | ForEach-Object { Write-Host "  - $($_.Name)" }
+        shell: pwsh
+
       - name: Build the app
         uses: tauri-apps/tauri-action@v0
         env:
