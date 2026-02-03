@@ -172,6 +172,29 @@ jobs:
           Get-ChildItem "src-tauri\libs\*.dll" | ForEach-Object { Write-Host "  - $($_.Name)" }
         shell: pwsh
 
+      - name: Pre-copy DLLs to target directory
+        run: |
+          Write-Host "Pre-copying DLLs to target/release for bundling..."
+
+          # Create target/release if it doesn't exist
+          New-Item -ItemType Directory -Force -Path "src-tauri\target\release" | Out-Null
+
+          # Copy vcpkg DLLs
+          $vcpkgBin = "C:\vcpkg-opencv\installed\x64-windows\bin"
+          $targetDir = "src-tauri\target\release"
+
+          Write-Host "Copying OpenCV DLLs..."
+          Copy-Item "$vcpkgBin\opencv*.dll" $targetDir -Force -ErrorAction SilentlyContinue
+          Copy-Item "$vcpkgBin\tbb*.dll" $targetDir -Force -ErrorAction SilentlyContinue
+
+          # Copy DirectML and ONNX Runtime from libs folder
+          Write-Host "Copying additional DLLs from libs..."
+          Copy-Item "src-tauri\libs\*.dll" $targetDir -Force -ErrorAction SilentlyContinue
+
+          Write-Host "DLLs pre-copied to target directory:"
+          Get-ChildItem "$targetDir\*.dll" -ErrorAction SilentlyContinue | Select-Object Name
+        shell: pwsh
+
       - name: Build the app
         uses: tauri-apps/tauri-action@v0
         env:
