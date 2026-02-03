@@ -73,18 +73,10 @@ jobs:
           echo "=== Setting up ONNX Runtime compilation ==="
 
           # Install CMake and build dependencies
-          brew install cmake python@3.11
+          brew install cmake
 
-          # Force overwrite existing Python 3.11 symlinks if they conflict
-          brew link --overwrite python@3.11 || true
-
-          # Set environment variables for ort compile strategy
-          echo "ORT_STRATEGY=compile" >> $GITHUB_ENV
-          echo "ORT_COMPILE_TARGET=x86_64-apple-darwin" >> $GITHUB_ENV
-          echo "ORT_COMPILE_VERSION=1.17.1" >> $GITHUB_ENV
-
-          # Minimal build configuration for faster compilation
-          echo "ORT_COMPILE_MINIMAL_BUILD=ON" >> $GITHUB_ENV
+          # Install Python 3.11, handling potential symlink conflicts
+          brew install python@3.11 || brew link --overwrite python@3.11
           echo "ORT_COMPILE_EXTENDED_MINIMAL_BUILD=OFF" >> $GITHUB_ENV
 
           # Disable unnecessary features
