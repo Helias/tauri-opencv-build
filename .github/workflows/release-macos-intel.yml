@@ -146,6 +146,15 @@ jobs:
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ORT_STRATEGY: compile
+          ORT_COMPILE_TARGET: x86_64-apple-darwin
+          ORT_COMPILE_VERSION: 1.17.1
+          ORT_COMPILE_MINIMAL_BUILD: "ON"
+          ORT_COMPILE_EXTENDED_MINIMAL_BUILD: "OFF"
+          ORT_COMPILE_DISABLE_NNAPI: "ON"
+          ORT_COMPILE_DISABLE_RKNPU: "ON"
+          ORT_COMPILE_DISABLE_XNNPACK: "ON"
+          ORT_COMPILE_CMAKE_EXTRA_DEFINES: CMAKE_OSX_ARCHITECTURES=x86_64
         with:
           tagName: ${{ github.event.inputs.version }}
           releaseName: Release ${{ github.event.inputs.version }}
