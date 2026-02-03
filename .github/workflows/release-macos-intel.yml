@@ -67,28 +67,34 @@ jobs:
 
       - name: Download and setup ONNX Runtime
         run: |
-          # Download prebuilt ONNX Runtime and use the download strategy
-          # This avoids compilation time while working around x86_64 issues
+          # Compile ONNX Runtime from source for x86_64 macOS
+          # This is the most reliable approach for Intel Macs
 
-          echo "=== Downloading ONNX Runtime prebuilt binaries ==="
+          echo "=== Setting up ONNX Runtime compilation ==="
 
-          mkdir -p $HOME/.cache/ort
-          cd $HOME/.cache/ort
+          # Install CMake and build dependencies
+          brew install cmake python@3.11
 
-          # Download version 1.17.1
-          curl -L https://github.com/microsoft/onnxruntime/releases/download/v1.17.1/onnxruntime-osx-x86_64-1.17.1.tgz -o onnxruntime.tgz
-          tar -xzf onnxruntime.tgz
+          # Set environment variables for ort compile strategy
+          echo "ORT_STRATEGY=compile" >> $GITHUB_ENV
+          echo "ORT_COMPILE_TARGET=x86_64-apple-darwin" >> $GITHUB_ENV
+          echo "ORT_COMPILE_VERSION=1.17.1" >> $GITHUB_ENV
 
-          # Set up for download strategy - point to extracted archive
-          ARCHIVE_PATH="$HOME/.cache/ort/onnxruntime.tgz"
+          # Minimal build configuration for faster compilation
+          echo "ORT_COMPILE_MINIMAL_BUILD=ON" >> $GITHUB_ENV
+          echo "ORT_COMPILE_EXTENDED_MINIMAL_BUILD=OFF" >> $GITHUB_ENV
 
-          # Set environment variables for ort download strategy
-          echo "ORT_STRATEGY=download" >> $GITHUB_ENV
-          echo "ORT_USE_SYSTEM_PROVIDED_ARCHIVE=1" >> $GITHUB_ENV
-          echo "ORT_ARCHIVE_PATH=$ARCHIVE_PATH" >> $GITHUB_ENV
+          # Disable unnecessary features
+          echo "ORT_COMPILE_DISABLE_NNAPI=ON" >> $GITHUB_ENV
+          echo "ORT_COMPILE_DISABLE_RKNPU=ON" >> $GITHUB_ENV
+          echo "ORT_COMPILE_DISABLE_XNNPACK=ON" >> $GITHUB_ENV
 
-          echo "ONNX Runtime download strategy configured"
-          echo "Archive: $ARCHIVE_PATH"
+          # Use Ninja for faster builds if available
+          if command -v ninja &> /dev/null; then
+            echo "ORT_COMPILE_CMAKE_GENERATOR=Ninja" >> $GITHUB_ENV
+          fi
+
+          echo "ONNX Runtime will be compiled from source (~15-20 minutes)"
         shell: bash
 
       - name: Setup Rust stable
@@ -110,10 +116,12 @@ jobs:
         run: |
           echo "=== ONNX Runtime Environment Variables ==="
           echo "ORT_STRATEGY: $ORT_STRATEGY"
-          echo "ORT_USE_SYSTEM_PROVIDED_ARCHIVE: $ORT_USE_SYSTEM_PROVIDED_ARCHIVE"
-          echo "ORT_ARCHIVE_PATH: $ORT_ARCHIVE_PATH"
+          echo "ORT_COMPILE_TARGET: $ORT_COMPILE_TARGET"
+          echo "ORT_COMPILE_VERSION: $ORT_COMPILE_VERSION"
+          echo "ORT_COMPILE_MINIMAL_BUILD: $ORT_COMPILE_MINIMAL_BUILD"
           echo ""
-          echo "ort-sys will use the downloaded archive during build."
+          echo "ONNX Runtime will be compiled from source during cargo build"
+          echo "This may take 15-20 minutes - please be patient"
         shell: bash
 
       - name: Set OpenCV environment variables
