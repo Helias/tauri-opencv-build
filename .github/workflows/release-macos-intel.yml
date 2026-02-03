@@ -75,6 +75,9 @@ jobs:
           # Install CMake and build dependencies
           brew install cmake python@3.11
 
+          # Force overwrite existing Python 3.11 symlinks if they conflict
+          brew link --overwrite python@3.11 || true
+
           # Set environment variables for ort compile strategy
           echo "ORT_STRATEGY=compile" >> $GITHUB_ENV
           echo "ORT_COMPILE_TARGET=x86_64-apple-darwin" >> $GITHUB_ENV
