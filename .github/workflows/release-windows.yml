@@ -130,12 +130,14 @@ jobs:
           # Create a directory for DLLs in src-tauri
           New-Item -ItemType Directory -Force -Path "src-tauri\libs"
 
-          # Copy OpenCV DLLs
+          # Copy ALL OpenCV DLLs (not just specific ones)
           $opencvBinPath = "C:\vcpkg-opencv\installed\x64-windows\bin"
-          Copy-Item "$opencvBinPath\opencv_core4*.dll" "src-tauri\libs\" -Force
-          Copy-Item "$opencvBinPath\opencv_imgproc4*.dll" "src-tauri\libs\" -Force
-          Copy-Item "$opencvBinPath\opencv_videoio4*.dll" "src-tauri\libs\" -Force
-          Copy-Item "$opencvBinPath\opencv_highgui4*.dll" "src-tauri\libs\" -Force -ErrorAction SilentlyContinue
+          Copy-Item "$opencvBinPath\opencv*.dll" "src-tauri\libs\" -Force
+          Copy-Item "$opencvBinPath\tbb*.dll" "src-tauri\libs\" -Force -ErrorAction SilentlyContinue
+          Copy-Item "$opencvBinPath\*jpeg*.dll" "src-tauri\libs\" -Force -ErrorAction SilentlyContinue
+          Copy-Item "$opencvBinPath\*png*.dll" "src-tauri\libs\" -Force -ErrorAction SilentlyContinue
+          Copy-Item "$opencvBinPath\*webp*.dll" "src-tauri\libs\" -Force -ErrorAction SilentlyContinue
+          Copy-Item "$opencvBinPath\zlib*.dll" "src-tauri\libs\" -Force -ErrorAction SilentlyContinue
 
           # Copy ONNX Runtime DLL (if exists)
           if (Test-Path "$opencvBinPath\onnxruntime*.dll") {

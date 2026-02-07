@@ -52,6 +52,7 @@
       "certificateThumbprint": null,
       "digestAlgorithm": "sha256",
       "timestampUrl": "",
+      "resources": ["libs/*.dll"],
       "webviewInstallMode": {
         "type": "embedBootstrapper"
       },
