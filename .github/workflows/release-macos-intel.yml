@@ -56,7 +56,7 @@ jobs:
       - name: Install dependencies
         run: |
           # Only install packages that aren't already cached
-          for package in opencv llvm pkg-config ninja z3 cmake python@3.11; do
+          for package in opencv llvm pkg-config ninja z3 cmake; do
             if ! brew list $package &>/dev/null; then
               echo "Installing $package..."
               brew install $package
@@ -69,6 +69,28 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
         with:
           targets: x86_64-apple-darwin
+
+      - name: Download and setup ONNX Runtime
+        run: |
+          ORT_VERSION="1.23.2"
+          ORT_FILE="onnxruntime-osx-x86_64-$ORT_VERSION.tgz"
+          ORT_URL="https://github.com/microsoft/onnxruntime/releases/download/v$ORT_VERSION/$ORT_FILE"
+
+          echo "Downloading ONNX Runtime $ORT_VERSION..."
+          curl -L -O "$ORT_URL"
+
+          echo "Extracting..."
+          tar xzf "$ORT_FILE"
+
+          ORT_DIR="$(pwd)/onnxruntime-osx-x86_64-$ORT_VERSION"
+
+          echo "ORT_STRATEGY=system" >> $GITHUB_ENV
+          echo "ORT_LIB_LOCATION=$ORT_DIR" >> $GITHUB_ENV
+          echo "DYLD_LIBRARY_PATH=$ORT_DIR/lib:\$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
+
+          echo "ONNX Runtime $ORT_VERSION setup complete at $ORT_DIR"
+          ls -la "$ORT_DIR"
+        shell: bash
 
       # - name: Rust cache
       #   uses: swatinem/rust-cache@v2
@@ -104,30 +126,21 @@ jobs:
           # pkg-config will provide the correct library names and paths
         shell: bash
 
-      - name: Verify all environment variables before build
+      - name: Verify environment variables
         run: |
           echo "=== Environment Check ==="
           echo "ORT_STRATEGY: $ORT_STRATEGY"
-          echo "ORT_COMPILE_TARGET: $ORT_COMPILE_TARGET"
-          echo "ORT_COMPILE_VERSION: $ORT_COMPILE_VERSION"
-          echo "ORT_COMPILE_MINIMAL_BUILD: $ORT_COMPILE_MINIMAL_BUILD"
-          echo "ORT_COMPILE_CMAKE_EXTRA_DEFINES: $ORT_COMPILE_CMAKE_EXTRA_DEFINES"
+          echo "ORT_LIB_LOCATION: $ORT_LIB_LOCATION"
+          echo "DYLD_LIBRARY_PATH: $DYLD_LIBRARY_PATH"
         shell: bash
-        env:
-          ORT_STRATEGY: compile
-          ORT_COMPILE_TARGET: x86_64-apple-darwin
-          ORT_COMPILE_VERSION: 1.17.1
-          ORT_COMPILE_MINIMAL_BUILD: "ON"
-          ORT_COMPILE_EXTENDED_MINIMAL_BUILD: "OFF"
-          ORT_COMPILE_DISABLE_NNAPI: "ON"
-          ORT_COMPILE_DISABLE_RKNPU: "ON"
-          ORT_COMPILE_DISABLE_XNNPACK: "ON"
-          ORT_COMPILE_CMAKE_EXTRA_DEFINES: CMAKE_OSX_ARCHITECTURES=x86_64
 
       - name: Build the app
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ORT_STRATEGY: ${{ env.ORT_STRATEGY }}
+          ORT_LIB_LOCATION: ${{ env.ORT_LIB_LOCATION }}
+          DYLD_LIBRARY_PATH: ${{ env.DYLD_LIBRARY_PATH }}
         with:
           tagName: ${{ github.event.inputs.version }}
           releaseName: Release ${{ github.event.inputs.version }}
