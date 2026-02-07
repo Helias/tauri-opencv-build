@@ -67,18 +67,27 @@ jobs:
 
       - name: Download and setup ONNX Runtime
         run: |
-          # Use system ONNX Runtime from Homebrew for x86_64 macOS
-          # This avoids compilation issues and missing prebuilt binaries
+          # Manually download compiled ONNX Runtime provided by Microsoft
+          # Since ort crate doesn't have prebuilt binaries for x86_64 macOS in this version
 
-          echo "=== Setting up ONNX Runtime via Homebrew ==="
-          brew install onnxruntime
+          ORT_VERSION="1.17.3"
+          ORT_FILE="onnxruntime-osx-x86_64-$ORT_VERSION.tgz"
+          ORT_URL="https://github.com/microsoft/onnxruntime/releases/download/v$ORT_VERSION/$ORT_FILE"
 
-          # Set environment variables for ort system strategy
+          echo "Downloading ONNX Runtime from $ORT_URL..."
+          curl -L -O "$ORT_URL"
+
+          echo "Extracting..."
+          tar xzf "$ORT_FILE"
+
+          # The extraction creates a directory like onnxruntime-osx-x86_64-1.17.3
+          ORT_DIR="$(pwd)/onnxruntime-osx-x86_64-$ORT_VERSION"
+
           echo "ORT_STRATEGY=system" >> $GITHUB_ENV
-          echo "ORT_LIB_LOCATION=$(brew --prefix onnxruntime)/lib" >> $GITHUB_ENV
-          echo "DYLD_LIBRARY_PATH=$(brew --prefix onnxruntime)/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "ORT_LIB_LOCATION=$ORT_DIR/lib" >> $GITHUB_ENV
+          echo "DYLD_LIBRARY_PATH=$ORT_DIR/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
 
-          echo "ONNX Runtime will be compiled from source (~15-20 minutes)"
+          echo "ONNX Runtime setup complete at $ORT_DIR"
         shell: bash
 
       - name: Setup Rust stable
