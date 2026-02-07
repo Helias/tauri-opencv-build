@@ -83,12 +83,21 @@ jobs:
           # The extraction creates a directory like onnxruntime-osx-x86_64-1.19.2
           ORT_DIR="$(pwd)/onnxruntime-osx-x86_64-$ORT_VERSION"
 
+          echo "ONNX Runtime directory structure:"
+          ls -la "$ORT_DIR"
+          ls -la "$ORT_DIR/lib"
+
+          # Check if include directory exists
+          if [ -d "$ORT_DIR/include" ]; then
+            ls -la "$ORT_DIR/include"
+          fi
+
           echo "ORT_STRATEGY=system" >> $GITHUB_ENV
           echo "ORT_LIB_LOCATION=$ORT_DIR" >> $GITHUB_ENV
+          echo "ORT_DYLIB_PATH=$ORT_DIR/lib" >> $GITHUB_ENV
           echo "DYLD_LIBRARY_PATH=$ORT_DIR/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
 
           echo "ONNX Runtime setup complete at $ORT_DIR"
-          ls -la "$ORT_DIR/lib"
         shell: bash
 
       - name: Setup Rust stable
@@ -156,6 +165,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ORT_STRATEGY: system
           ORT_LIB_LOCATION: ${{ env.ORT_LIB_LOCATION }}
+          ORT_DYLIB_PATH: ${{ env.ORT_DYLIB_PATH }}
           DYLD_LIBRARY_PATH: ${{ env.DYLD_LIBRARY_PATH }}
         with:
           tagName: ${{ github.event.inputs.version }}
