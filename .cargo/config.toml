@@ -1,17 +1,15 @@
 [env]
-ORT_STRATEGY = "compile"
-ORT_COMPILE_VERSION = "1.17.1"
-ORT_COMPILE_MINIMAL_BUILD = "ON"
-ORT_COMPILE_EXTENDED_MINIMAL_BUILD = "OFF"
-ORT_COMPILE_DISABLE_NNAPI = "ON"
-ORT_COMPILE_DISABLE_RKNPU = "ON"
-ORT_COMPILE_DISABLE_XNNPACK = "ON"
-ORT_COMPILE_CMAKE_GENERATOR = "Unix Makefiles"
+ORT_STRATEGY = "download"
+ORT_DYLIB_PATH = "onnxruntime-osx-x86_64-1.17.3/lib"
+
+[target.x86_64-apple-darwin]
+rustflags = ["-C", "link-arg=-Wl,-rpath,@loader_path"]
 
 [target.x86_64-apple-darwin.env]
-ORT_COMPILE_TARGET = "x86_64-apple-darwin"
-ORT_COMPILE_CMAKE_EXTRA_DEFINES = "CMAKE_OSX_ARCHITECTURES=x86_64"
+ORT_LIB_LOCATION = "onnxruntime-osx-x86_64-1.17.3"
+
+[target.aarch64-apple-darwin]
+rustflags = ["-C", "link-arg=-Wl,-rpath,@loader_path"]
 
 [target.aarch64-apple-darwin.env]
-ORT_COMPILE_TARGET = "aarch64-apple-darwin"
-ORT_COMPILE_CMAKE_EXTRA_DEFINES = "CMAKE_OSX_ARCHITECTURES=arm64"
+ORT_LIB_LOCATION = "onnxruntime-osx-arm64-1.17.3"
