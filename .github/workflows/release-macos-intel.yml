@@ -64,6 +64,9 @@ jobs:
               echo "$package already installed, skipping"
             fi
           done
+
+      - name: Setup Rust stable
+        uses: dtolnay/rust-toolchain@stable
         with:
           targets: x86_64-apple-darwin
 
