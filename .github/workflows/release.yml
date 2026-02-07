@@ -172,7 +172,8 @@ jobs:
           # Intel Macs don't have prebuilt ONNX Runtime binaries
           # Use compile strategy to build from source (this will take ~15-20 minutes)
           echo "ORT_STRATEGY=compile" >> $GITHUB_ENV
-          echo "ORT_COMPILE_MINIMAL_BUILD=ON" >> $GITHUB_ENV
+          echo "ORT_COMPILE_TARGET=x86_64-apple-darwin" >> $GITHUB_ENV
+          echo "ORT_COMPILE_VERSION=1.19.2" >> $GITHUB_ENV
         shell: bash
 
       - name: Set ONNX Runtime environment (macOS ARM)
