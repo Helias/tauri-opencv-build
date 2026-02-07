@@ -67,38 +67,16 @@ jobs:
 
       - name: Download and setup ONNX Runtime
         run: |
-          # Compile ONNX Runtime from source for x86_64 macOS
-          # This is the most reliable approach for Intel Macs
+          # Use system ONNX Runtime from Homebrew for x86_64 macOS
+          # This avoids compilation issues and missing prebuilt binaries
 
-          echo "=== Setting up ONNX Runtime compilation ==="
+          echo "=== Setting up ONNX Runtime via Homebrew ==="
+          brew install onnxruntime
 
-          # Install CMake and build dependencies
-          brew install cmake
-
-          # Install Python 3.11, handling potential symlink conflicts
-          brew install python@3.11 || brew link --overwrite python@3.11
-
-          # Set environment variables for ort compile strategy
-          echo "ORT_STRATEGY=compile" >> $GITHUB_ENV
-          echo "ORT_COMPILE_TARGET=x86_64-apple-darwin" >> $GITHUB_ENV
-          echo "ORT_COMPILE_VERSION=1.17.1" >> $GITHUB_ENV
-
-          # Minimal build configuration for faster compilation
-          echo "ORT_COMPILE_MINIMAL_BUILD=ON" >> $GITHUB_ENV
-          echo "ORT_COMPILE_EXTENDED_MINIMAL_BUILD=OFF" >> $GITHUB_ENV
-
-          # Disable unnecessary features
-          echo "ORT_COMPILE_DISABLE_NNAPI=ON" >> $GITHUB_ENV
-          echo "ORT_COMPILE_DISABLE_RKNPU=ON" >> $GITHUB_ENV
-          echo "ORT_COMPILE_DISABLE_XNNPACK=ON" >> $GITHUB_ENV
-
-          # Set target architecture for x86_64 Intel Macs
-          echo "ORT_COMPILE_CMAKE_EXTRA_DEFINES=CMAKE_OSX_ARCHITECTURES=x86_64" >> $GITHUB_ENV
-
-          # Use Ninja for faster builds if available
-          if command -v ninja &> /dev/null; then
-            echo "ORT_COMPILE_CMAKE_GENERATOR=Ninja" >> $GITHUB_ENV
-          fi
+          # Set environment variables for ort system strategy
+          echo "ORT_STRATEGY=system" >> $GITHUB_ENV
+          echo "ORT_LIB_LOCATION=$(brew --prefix onnxruntime)/lib" >> $GITHUB_ENV
+          echo "DYLD_LIBRARY_PATH=$(brew --prefix onnxruntime)/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
 
           echo "ONNX Runtime will be compiled from source (~15-20 minutes)"
         shell: bash
