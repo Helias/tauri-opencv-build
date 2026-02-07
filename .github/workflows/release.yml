@@ -319,6 +319,9 @@ jobs:
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ORT_STRATEGY: ${{ env.ORT_STRATEGY }}
+          ORT_COMPILE_TARGET: ${{ env.ORT_COMPILE_TARGET }}
+          ORT_COMPILE_VERSION: ${{ env.ORT_COMPILE_VERSION }}
         with:
           tagName: ${{ github.event.inputs.version }}
           releaseName: Release ${{ github.event.inputs.version }}
