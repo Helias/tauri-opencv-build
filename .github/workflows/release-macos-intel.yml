@@ -70,26 +70,13 @@ jobs:
         with:
           targets: x86_64-apple-darwin
 
-      - name: Download and setup ONNX Runtime
+      - name: Setup ONNX Runtime compile strategy
         run: |
-          ORT_VERSION="1.23.2"
-          ORT_FILE="onnxruntime-osx-x86_64-$ORT_VERSION.tgz"
-          ORT_URL="https://github.com/microsoft/onnxruntime/releases/download/v$ORT_VERSION/$ORT_FILE"
-
-          echo "Downloading ONNX Runtime $ORT_VERSION..."
-          curl -L -O "$ORT_URL"
-
-          echo "Extracting..."
-          tar xzf "$ORT_FILE"
-
-          ORT_DIR="$(pwd)/onnxruntime-osx-x86_64-$ORT_VERSION"
-
-          echo "ORT_STRATEGY=system" >> $GITHUB_ENV
-          echo "ORT_LIB_LOCATION=$ORT_DIR" >> $GITHUB_ENV
-          echo "DYLD_LIBRARY_PATH=$ORT_DIR/lib:\$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
-
-          echo "ONNX Runtime $ORT_VERSION setup complete at $ORT_DIR"
-          ls -la "$ORT_DIR"
+          echo "ORT_STRATEGY=compile" >> $GITHUB_ENV
+          echo "ORT_COMPILE_TARGET=x86_64-apple-darwin" >> $GITHUB_ENV
+          echo "ORT_COMPILE_VERSION=1.19.2" >> $GITHUB_ENV
+          echo "CMAKE_OSX_ARCHITECTURES=x86_64" >> $GITHUB_ENV
+          echo "Setting up ONNX Runtime to compile from source (this will take ~15-20 minutes)..."
         shell: bash
 
       # - name: Rust cache
@@ -126,21 +113,14 @@ jobs:
           # pkg-config will provide the correct library names and paths
         shell: bash
 
-      - name: Verify environment variables
-        run: |
-          echo "=== Environment Check ==="
-          echo "ORT_STRATEGY: $ORT_STRATEGY"
-          echo "ORT_LIB_LOCATION: $ORT_LIB_LOCATION"
-          echo "DYLD_LIBRARY_PATH: $DYLD_LIBRARY_PATH"
-        shell: bash
-
       - name: Build the app
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ORT_STRATEGY: ${{ env.ORT_STRATEGY }}
-          ORT_LIB_LOCATION: ${{ env.ORT_LIB_LOCATION }}
-          DYLD_LIBRARY_PATH: ${{ env.DYLD_LIBRARY_PATH }}
+          ORT_COMPILE_TARGET: ${{ env.ORT_COMPILE_TARGET }}
+          ORT_COMPILE_VERSION: ${{ env.ORT_COMPILE_VERSION }}
+          CMAKE_OSX_ARCHITECTURES: ${{ env.CMAKE_OSX_ARCHITECTURES }}
         with:
           tagName: ${{ github.event.inputs.version }}
           releaseName: Release ${{ github.event.inputs.version }}
