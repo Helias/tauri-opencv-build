@@ -135,6 +135,10 @@ jobs:
           Copy-Item "$opencvBinPath\*jpeg*.dll" "src-tauri\" -Force -ErrorAction SilentlyContinue
           Copy-Item "$opencvBinPath\*png*.dll" "src-tauri\" -Force -ErrorAction SilentlyContinue
           Copy-Item "$opencvBinPath\*webp*.dll" "src-tauri\" -Force -ErrorAction SilentlyContinue
+          Copy-Item "$opencvBinPath\*sharpyuv*.dll" "src-tauri\" -Force -ErrorAction SilentlyContinue
+          Copy-Item "$opencvBinPath\*tiff*.dll" "src-tauri\" -Force -ErrorAction SilentlyContinue
+          Copy-Item "$opencvBinPath\*openjpeg*.dll" "src-tauri\" -Force -ErrorAction SilentlyContinue
+          Copy-Item "$opencvBinPath\*jasper*.dll" "src-tauri\" -Force -ErrorAction SilentlyContinue
           Copy-Item "$opencvBinPath\zlib*.dll" "src-tauri\" -Force -ErrorAction SilentlyContinue
 
           # Copy ONNX Runtime DLL (if exists)
