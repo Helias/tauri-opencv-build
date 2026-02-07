@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2.0.0",
-  "productName": "angular-tauri",
+  "productName": "SwishAI",
   "version": "1.0.0",
-  "identifier": "com.angular.tauri.dev",
+  "identifier": "com.swishai.app",
   "build": {
     "frontendDist": "../dist/browser",
     "devUrl": "http://localhost:4200",
@@ -13,7 +13,7 @@
     "withGlobalTauri": true,
     "windows": [
       {
-        "title": "Angular Tauri",
+        "title": "SwishAI",
         "width": 800,
         "height": 600,
         "resizable": true,
@@ -29,11 +29,10 @@
     "active": true,
     "targets": "all",
     "icon": [
-      "icons/32x32.png",
-      "icons/128x128.png",
-      "icons/128x128@2x.png",
-      "icons/icon.icns",
-      "icons/icon.ico"
+      "../src/assets/logo-32x32.png",
+      "../src/assets/logo-128x128.png",
+      "../src/assets/logo.png",
+      "../src/assets/logo.ico"
     ],
     "resources": ["../models/yolo11n-detect.onnx"],
     "externalBin": [],
