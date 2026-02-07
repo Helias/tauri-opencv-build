@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2.0.0",
   "bundle": {
-    "resources": ["../models/yolo11n-detect.onnx", "libs/*.dll"]
+    "resources": ["../models/yolo11n-detect.onnx", "*.dll"]
   }
 }
