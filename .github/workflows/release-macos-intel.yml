@@ -108,6 +108,9 @@ jobs:
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ORT_STRATEGY: compile
+          ORT_COMPILE_TARGET: x86_64-apple-darwin
+          ORT_COMPILE_VERSION: 1.19.2
         with:
           tagName: ${{ github.event.inputs.version }}
           releaseName: Release ${{ github.event.inputs.version }}
