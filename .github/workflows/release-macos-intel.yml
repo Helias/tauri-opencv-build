@@ -15,6 +15,10 @@ permissions:
 jobs:
   build-macos-intel:
     runs-on: macos-15-intel
+    env:
+      ORT_STRATEGY: compile
+      ORT_COMPILE_TARGET: x86_64-apple-darwin
+      ORT_COMPILE_VERSION: 1.19.2
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
