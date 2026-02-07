@@ -1,15 +1,9 @@
-[env]
-ORT_STRATEGY = "download"
-ORT_DYLIB_PATH = "onnxruntime-osx-x86_64-1.17.3/lib"
+# ONNX Runtime configuration is handled by platform-specific workflows
+# See .github/workflows for ORT_STRATEGY and other environment variables
 
 [target.x86_64-apple-darwin]
 rustflags = ["-C", "link-arg=-Wl,-rpath,@loader_path"]
 
-[target.x86_64-apple-darwin.env]
-ORT_LIB_LOCATION = "onnxruntime-osx-x86_64-1.17.3"
-
 [target.aarch64-apple-darwin]
 rustflags = ["-C", "link-arg=-Wl,-rpath,@loader_path"]
 
-[target.aarch64-apple-darwin.env]
-ORT_LIB_LOCATION = "onnxruntime-osx-arm64-1.17.3"

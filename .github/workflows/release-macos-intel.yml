@@ -70,7 +70,7 @@ jobs:
           # Manually download compiled ONNX Runtime provided by Microsoft
           # Since ort crate doesn't have prebuilt binaries for x86_64 macOS in this version
 
-          ORT_VERSION="1.17.3"
+          ORT_VERSION="1.19.2"
           ORT_FILE="onnxruntime-osx-x86_64-$ORT_VERSION.tgz"
           ORT_URL="https://github.com/microsoft/onnxruntime/releases/download/v$ORT_VERSION/$ORT_FILE"
 
@@ -80,14 +80,15 @@ jobs:
           echo "Extracting..."
           tar xzf "$ORT_FILE"
 
-          # The extraction creates a directory like onnxruntime-osx-x86_64-1.17.3
+          # The extraction creates a directory like onnxruntime-osx-x86_64-1.19.2
           ORT_DIR="$(pwd)/onnxruntime-osx-x86_64-$ORT_VERSION"
 
           echo "ORT_STRATEGY=system" >> $GITHUB_ENV
-          echo "ORT_LIB_LOCATION=$ORT_DIR/lib" >> $GITHUB_ENV
+          echo "ORT_LIB_LOCATION=$ORT_DIR" >> $GITHUB_ENV
           echo "DYLD_LIBRARY_PATH=$ORT_DIR/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
 
           echo "ONNX Runtime setup complete at $ORT_DIR"
+          ls -la "$ORT_DIR/lib"
         shell: bash
 
       - name: Setup Rust stable
@@ -153,17 +154,9 @@ jobs:
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ORT_STRATEGY: compile
-          ORT_COMPILE_TARGET: x86_64-apple-darwin
-          ORT_COMPILE_VERSION: 1.17.1
-          ORT_COMPILE_MINIMAL_BUILD: "ON"
-          ORT_COMPILE_EXTENDED_MINIMAL_BUILD: "OFF"
-          ORT_COMPILE_DISABLE_NNAPI: "ON"
-          ORT_COMPILE_DISABLE_RKNPU: "ON"
-          ORT_COMPILE_DISABLE_XNNPACK: "ON"
-          ORT_COMPILE_CMAKE_EXTRA_DEFINES: CMAKE_OSX_ARCHITECTURES=x86_64
-          ORT_COMPILE_CMAKE_GENERATOR: Unix Makefiles
-          PYTHON: /usr/local/opt/python@3.11/bin/python3.11
+          ORT_STRATEGY: system
+          ORT_LIB_LOCATION: ${{ env.ORT_LIB_LOCATION }}
+          DYLD_LIBRARY_PATH: ${{ env.DYLD_LIBRARY_PATH }}
         with:
           tagName: ${{ github.event.inputs.version }}
           releaseName: Release ${{ github.event.inputs.version }}
