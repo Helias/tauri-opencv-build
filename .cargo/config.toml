@@ -1,6 +1,12 @@
 # ONNX Runtime configuration
-# macOS: Downloads prebuilt binaries via workflow
-# Other platforms: Compile from source
+# macOS Intel: Compile from source (prebuilt binaries fail with xcframework)
+# Other platforms: System binaries
+
+[env]
+ORT_STRATEGY = "compile"
+ORT_COMPILE_TARGET = "x86_64-apple-darwin"
+ORT_COMPILE_VERSION = "1.19.2"
+CMAKE_OSX_ARCHITECTURES = "x86_64"
 
 [target.x86_64-apple-darwin]
 rustflags = ["-C", "link-arg=-Wl,-rpath,@loader_path"]

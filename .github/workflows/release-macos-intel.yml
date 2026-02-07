@@ -70,15 +70,6 @@ jobs:
         with:
           targets: x86_64-apple-darwin
 
-      - name: Setup ONNX Runtime compile strategy
-        run: |
-          echo "ORT_STRATEGY=compile" >> $GITHUB_ENV
-          echo "ORT_COMPILE_TARGET=x86_64-apple-darwin" >> $GITHUB_ENV
-          echo "ORT_COMPILE_VERSION=1.19.2" >> $GITHUB_ENV
-          echo "CMAKE_OSX_ARCHITECTURES=x86_64" >> $GITHUB_ENV
-          echo "Setting up ONNX Runtime to compile from source (this will take ~15-20 minutes)..."
-        shell: bash
-
       # - name: Rust cache
       #   uses: swatinem/rust-cache@v2
       #   with:
@@ -117,10 +108,6 @@ jobs:
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ORT_STRATEGY: ${{ env.ORT_STRATEGY }}
-          ORT_COMPILE_TARGET: ${{ env.ORT_COMPILE_TARGET }}
-          ORT_COMPILE_VERSION: ${{ env.ORT_COMPILE_VERSION }}
-          CMAKE_OSX_ARCHITECTURES: ${{ env.CMAKE_OSX_ARCHITECTURES }}
         with:
           tagName: ${{ github.event.inputs.version }}
           releaseName: Release ${{ github.event.inputs.version }}
