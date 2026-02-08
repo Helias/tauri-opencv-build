@@ -5,6 +5,17 @@ on:
     branches: ["main"]
   pull_request:
     branches: ["main"]
+    paths-ignore:
+      - ".github/workflows/*.yml"
+      - "src/**"
+      - "assets/**"
+      - "docs/**"
+      - "**/*.md"
+    paths:
+      - "src-tauri/**"
+      - "package.json"
+      - "Cargo.toml"
+      - "Cargo.lock"
 
 jobs:
   build-ubuntu:
