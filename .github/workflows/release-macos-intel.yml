@@ -77,19 +77,30 @@ jobs:
       #     cache-on-failure: false
       #     key: macos-15-intel-x86_64-apple-darwin-${{ hashFiles('**/Cargo.lock', '**/Cargo.toml') }}
 
+      - name: Download and setup ONNX Runtime
+        run: |
+          echo "=== Downloading ONNX Runtime v1.19.2 for macOS x86_64 ==="
+          mkdir -p $HOME/onnxruntime
+          cd $HOME/onnxruntime
+          
+          # Download ONNX Runtime binaries
+          curl -L -o onnxruntime.tgz https://github.com/microsoft/onnxruntime/releases/download/v1.19.2/onnxruntime-osx-x86_64-1.19.2.tgz
+          tar -xzf onnxruntime.tgz
+          mv onnxruntime-osx-x86_64-1.19.2 onnxruntime-1.19.2
+          
+          echo "ONNX Runtime downloaded to: $HOME/onnxruntime/onnxruntime-1.19.2"
+          ls -la $HOME/onnxruntime/onnxruntime-1.19.2/lib/
+
       - name: Install frontend dependencies
         run: npm install
 
-      - name: Create Cargo config with ORT environment variables
+      - name: Create Cargo config with ORT library location
         shell: bash
         run: |
           mkdir -p .cargo
-          cat > .cargo/config.toml << 'EOF'
+          cat > .cargo/config.toml << EOF
           [env]
-          ORT_STRATEGY = "compile"
-          ORT_COMPILE_TARGET = "x86_64-apple-darwin"
-          ORT_COMPILE_VERSION = "1.19.2"
-          ORT_USE_SYSTEM_LIBSTDCXX = "0"
+          ORT_LIB_LOCATION = "$HOME/onnxruntime/onnxruntime-1.19.2"
           EOF
 
           echo "Created .cargo/config.toml"
@@ -97,13 +108,11 @@ jobs:
 
       - name: Verify ONNX Runtime configuration
         run: |
-          echo "=== ONNX Runtime Build Configuration ==="
-          echo "Strategy: compile from source"
-          echo "Target: x86_64-apple-darwin"
-          echo "Version: 1.19.2"
+          echo "=== ONNX Runtime Configuration ==="
+          echo "Using pre-downloaded binaries from: $HOME/onnxruntime/onnxruntime-1.19.2"
+          echo "Library path will be set via ORT_LIB_LOCATION"
           echo ""
-          echo "ONNX Runtime will be compiled from source during cargo build"
-          echo "This may take 15-20 minutes - please be patient"
+          ls -la $HOME/onnxruntime/onnxruntime-1.19.2/lib/
         shell: bash
 
       - name: Set OpenCV environment variables
@@ -118,18 +127,14 @@ jobs:
           # pkg-config will provide the correct library names and paths
         shell: bash
 
-      - name: Build Tauri app with explicit environment variables
+      - name: Build Tauri app with ONNX Runtime library
         run: |
-          echo "=== Building with ORT environment variables ==="
-          echo "ORT_STRATEGY=compile"
-          echo "ORT_COMPILE_TARGET=x86_64-apple-darwin"
-          echo "ORT_COMPILE_VERSION=1.19.2"
+          echo "=== Building with ORT library location ==="
+          echo "ORT_LIB_LOCATION=$HOME/onnxruntime/onnxruntime-1.19.2"
           echo ""
           echo "Running Tauri build..."
-          ORT_STRATEGY=compile \
-          ORT_COMPILE_TARGET=x86_64-apple-darwin \
-          ORT_COMPILE_VERSION=1.19.2 \
-          ORT_USE_SYSTEM_LIBSTDCXX=0 \
+          ORT_LIB_LOCATION="$HOME/onnxruntime/onnxruntime-1.19.2" \
+          DYLD_LIBRARY_PATH="$HOME/onnxruntime/onnxruntime-1.19.2/lib:$DYLD_LIBRARY_PATH" \
           npm run tauri build -- --target x86_64-apple-darwin
 
       - name: Upload artifacts to release
