@@ -82,12 +82,12 @@ jobs:
           echo "=== Downloading ONNX Runtime v1.19.2 for macOS x86_64 ==="
           mkdir -p $HOME/onnxruntime
           cd $HOME/onnxruntime
-          
+
           # Download ONNX Runtime binaries
           curl -L -o onnxruntime.tgz https://github.com/microsoft/onnxruntime/releases/download/v1.19.2/onnxruntime-osx-x86_64-1.19.2.tgz
           tar -xzf onnxruntime.tgz
           mv onnxruntime-osx-x86_64-1.19.2 onnxruntime-1.19.2
-          
+
           echo "ONNX Runtime downloaded to: $HOME/onnxruntime/onnxruntime-1.19.2"
           ls -la $HOME/onnxruntime/onnxruntime-1.19.2/lib/
 
