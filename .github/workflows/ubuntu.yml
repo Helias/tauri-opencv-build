@@ -1,0 +1,99 @@
+name: Reusable Ubuntu Build
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: "Release version (e.g., v1.0.0)"
+        required: false
+        type: string
+        default: ""
+      release:
+        description: "Whether to create a release"
+        required: false
+        type: boolean
+        default: false
+    secrets:
+      token:
+        description: "GITHUB_TOKEN"
+        required: true
+
+jobs:
+  build-ubuntu:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create or update Release
+        if: ${{ inputs.release }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.token }}
+        run: |
+          # Check if release already exists
+          if gh release view "${{ inputs.version }}" --json isDraft 2>/dev/null; then
+            echo "Release ${{ inputs.version }} already exists, reusing it"
+          else
+            echo "Creating new draft release ${{ inputs.version }}"
+            gh release create "${{ inputs.version }}" \
+              --draft \
+              --title "Release ${{ inputs.version }}" \
+              --notes "Release ${{ inputs.version }}"
+          fi
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libopencv-dev \
+            libopencv-core-dev \
+            libopencv-imgproc-dev \
+            libopencv-videoio-dev \
+            libopencv-imgcodecs-dev \
+            libwebkit2gtk-4.1-dev \
+            libappindicator3-dev \
+            librsvg2-dev \
+            patchelf \
+            clang \
+            libclang-dev \
+            llvm-dev \
+            pkg-config \
+            ninja-build
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-unknown-linux-gnu
+
+      - name: Install frontend dependencies
+        run: npm install
+
+      - name: Verify OpenCV installation
+        run: |
+          pkg-config --modversion opencv4 || pkg-config --modversion opencv
+          pkg-config --cflags opencv4 || pkg-config --cflags opencv
+          pkg-config --libs opencv4 || pkg-config --libs opencv
+          # Find libclang.so location
+          LIBCLANG_PATH=$(find /usr/lib -name "libclang.so*" 2>/dev/null | head -n1 | xargs dirname)
+          if [ -z "$LIBCLANG_PATH" ]; then
+            LIBCLANG_PATH=$(find /usr/lib/llvm-* -name "libclang.so*" 2>/dev/null | head -n1 | xargs dirname)
+          fi
+          echo "Found libclang at: $LIBCLANG_PATH"
+          echo "LIBCLANG_PATH=$LIBCLANG_PATH" >> $GITHUB_ENV
+
+      - name: Build the app
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.token }}
+        with:
+          tagName: ${{ inputs.release && inputs.version || '' }}
+          releaseName: ${{ inputs.release && format('Release {0}', inputs.version) || '' }}
+          releaseBody: ${{ inputs.release && format('Release {0}', inputs.version) || '' }}
+          releaseDraft: true
+          prerelease: false
+          args: ""

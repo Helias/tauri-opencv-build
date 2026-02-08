@@ -1,0 +1,15 @@
+name: Build
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build-ubuntu:
+    uses: ./.github/workflows/ubuntu.yml
+    with:
+      release: false
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
