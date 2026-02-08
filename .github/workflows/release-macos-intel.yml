@@ -15,10 +15,6 @@ permissions:
 jobs:
   build-macos-intel:
     runs-on: macos-15-intel
-    env:
-      ORT_STRATEGY: compile
-      ORT_COMPILE_TARGET: x86_64-apple-darwin
-      ORT_COMPILE_VERSION: 1.19.2
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -99,12 +95,12 @@ jobs:
           echo "Created .cargo/config.toml"
           cat .cargo/config.toml
 
-      - name: Verify ONNX Runtime environment variables
+      - name: Verify ONNX Runtime configuration
         run: |
-          echo "=== ONNX Runtime Environment Variables ==="
-          echo "ORT_STRATEGY: $ORT_STRATEGY"
-          echo "ORT_COMPILE_TARGET: $ORT_COMPILE_TARGET"
-          echo "ORT_COMPILE_VERSION: $ORT_COMPILE_VERSION"
+          echo "=== ONNX Runtime Build Configuration ==="
+          echo "Strategy: compile from source"
+          echo "Target: x86_64-apple-darwin"
+          echo "Version: 1.19.2"
           echo ""
           echo "ONNX Runtime will be compiled from source during cargo build"
           echo "This may take 15-20 minutes - please be patient"
@@ -123,17 +119,17 @@ jobs:
         shell: bash
 
       - name: Build Tauri app with explicit environment variables
-        env:
-          ORT_STRATEGY: compile
-          ORT_COMPILE_TARGET: x86_64-apple-darwin
-          ORT_COMPILE_VERSION: 1.19.2
         run: |
           echo "=== Building with ORT environment variables ==="
-          echo "ORT_STRATEGY=$ORT_STRATEGY"
-          echo "ORT_COMPILE_TARGET=$ORT_COMPILE_TARGET"
-          echo "ORT_COMPILE_VERSION=$ORT_COMPILE_VERSION"
+          echo "ORT_STRATEGY=compile"
+          echo "ORT_COMPILE_TARGET=x86_64-apple-darwin"
+          echo "ORT_COMPILE_VERSION=1.19.2"
           echo ""
           echo "Running Tauri build..."
+          ORT_STRATEGY=compile \
+          ORT_COMPILE_TARGET=x86_64-apple-darwin \
+          ORT_COMPILE_VERSION=1.19.2 \
+          ORT_USE_SYSTEM_LIBSTDCXX=0 \
           npm run tauri build -- --target x86_64-apple-darwin
 
       - name: Upload artifacts to release
