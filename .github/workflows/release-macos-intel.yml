@@ -84,9 +84,10 @@ jobs:
       - name: Install frontend dependencies
         run: npm install
 
-      - name: Create Cargo config with ORT environment variables
+      - name: Create Cargo config with ORT environment variables (in workspace and src-tauri)
         shell: bash
         run: |
+          # Create in workspace root
           mkdir -p .cargo
           cat > .cargo/config.toml << 'EOF'
           [env]
@@ -94,20 +95,31 @@ jobs:
           ORT_COMPILE_TARGET = "x86_64-apple-darwin"
           ORT_COMPILE_VERSION = "1.19.2"
           EOF
-          echo "Created .cargo/config.toml with ORT environment variables:"
+          
+          # Also create in src-tauri directory (where Cargo.toml lives)
+          mkdir -p src-tauri/.cargo
+          cp .cargo/config.toml src-tauri/.cargo/config.toml
+          
+          echo "Created .cargo/config.toml in workspace root and src-tauri/"
           cat .cargo/config.toml
+          
+          # Also export as shell environment variables for good measure
+          export ORT_STRATEGY=compile
+          export ORT_COMPILE_TARGET=x86_64-apple-darwin
+          export ORT_COMPILE_VERSION=1.19.2
 
-      - name: Verify ONNX Runtime setup
+      - name: Verify ONNX Runtime environment variables
         run: |
-          echo "=== ONNX Runtime Environment Variables ==="
+          echo "=== ONNX Runtime Environment Variables (from job-level env) ==="
           echo "ORT_STRATEGY: $ORT_STRATEGY"
           echo "ORT_COMPILE_TARGET: $ORT_COMPILE_TARGET"
           echo "ORT_COMPILE_VERSION: $ORT_COMPILE_VERSION"
-          echo "ORT_COMPILE_MINIMAL_BUILD: $ORT_COMPILE_MINIMAL_BUILD"
           echo ""
-          echo ".cargo/config.toml contents:"
-          cat .cargo/config.toml
+          echo ".cargo/config.toml locations:"
+          echo "  - Workspace root: .cargo/config.toml"
+          echo "  - Tauri project: src-tauri/.cargo/config.toml"
           echo ""
+          echo "These will be passed directly to cargo build via environment"
           echo "ONNX Runtime will be compiled from source during cargo build"
           echo "This may take 15-20 minutes - please be patient"
         shell: bash
@@ -124,17 +136,28 @@ jobs:
           # pkg-config will provide the correct library names and paths
         shell: bash
 
-      - name: Build the app
-        uses: tauri-apps/tauri-action@v0
+      - name: Build Tauri app with explicit environment variables
+        run: |
+          # Make the build script executable
+          chmod +x build-macos-intel.sh
+          
+          # Run the build script which sets ORT variables and builds
+          ./build-macos-intel.sh
+        
+      - name: Upload artifacts to release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ORT_STRATEGY: compile
-          ORT_COMPILE_TARGET: x86_64-apple-darwin
-          ORT_COMPILE_VERSION: 1.19.2
-        with:
-          tagName: ${{ github.event.inputs.version }}
-          releaseName: Release ${{ github.event.inputs.version }}
-          releaseBody: Release ${{ github.event.inputs.version }}
-          releaseDraft: true
-          prerelease: false
-          args: "--target x86_64-apple-darwin"
+        run: |
+          # Find and upload the generated artifacts
+          for file in src-tauri/target/x86_64-apple-darwin/release/bundle/dmg/*.dmg; do
+            if [ -f "$file" ]; then
+              gh release upload "${{ github.event.inputs.version }}" "$file" --clobber
+            fi
+          done
+          
+          for file in src-tauri/target/x86_64-apple-darwin/release/bundle/macos/*.app.tar.gz; do
+            if [ -f "$file" ]; then
+              gh release upload "${{ github.event.inputs.version }}" "$file" --clobber
+            fi
+          done
+
