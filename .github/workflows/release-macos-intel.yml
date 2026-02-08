@@ -84,6 +84,19 @@ jobs:
       - name: Install frontend dependencies
         run: npm install
 
+      - name: Create Cargo config with ORT environment variables
+        shell: bash
+        run: |
+          mkdir -p .cargo
+          cat > .cargo/config.toml << 'EOF'
+          [env]
+          ORT_STRATEGY = "compile"
+          ORT_COMPILE_TARGET = "x86_64-apple-darwin"
+          ORT_COMPILE_VERSION = "1.19.2"
+          EOF
+          echo "Created .cargo/config.toml with ORT environment variables:"
+          cat .cargo/config.toml
+
       - name: Verify ONNX Runtime setup
         run: |
           echo "=== ONNX Runtime Environment Variables ==="
@@ -91,6 +104,9 @@ jobs:
           echo "ORT_COMPILE_TARGET: $ORT_COMPILE_TARGET"
           echo "ORT_COMPILE_VERSION: $ORT_COMPILE_VERSION"
           echo "ORT_COMPILE_MINIMAL_BUILD: $ORT_COMPILE_MINIMAL_BUILD"
+          echo ""
+          echo ".cargo/config.toml contents:"
+          cat .cargo/config.toml
           echo ""
           echo "ONNX Runtime will be compiled from source during cargo build"
           echo "This may take 15-20 minutes - please be patient"
