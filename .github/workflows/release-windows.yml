@@ -130,21 +130,12 @@ jobs:
           # Copy ALL OpenCV DLLs (not just specific ones) to src-tauri root
           # This ensures they are bundled at the root of the application (next to executable)
           $opencvBinPath = "C:\vcpkg-opencv\installed\x64-windows\bin"
-          Copy-Item "$opencvBinPath\opencv*.dll" "src-tauri\" -Force
-          Copy-Item "$opencvBinPath\tbb*.dll" "src-tauri\" -Force -ErrorAction SilentlyContinue
-          Copy-Item "$opencvBinPath\*jpeg*.dll" "src-tauri\" -Force -ErrorAction SilentlyContinue
-          Copy-Item "$opencvBinPath\*png*.dll" "src-tauri\" -Force -ErrorAction SilentlyContinue
-          Copy-Item "$opencvBinPath\*webp*.dll" "src-tauri\" -Force -ErrorAction SilentlyContinue
-          Copy-Item "$opencvBinPath\*sharpyuv*.dll" "src-tauri\" -Force -ErrorAction SilentlyContinue
-          Copy-Item "$opencvBinPath\*tiff*.dll" "src-tauri\" -Force -ErrorAction SilentlyContinue
-          Copy-Item "$opencvBinPath\*lzma*.dll" "src-tauri\" -Force -ErrorAction SilentlyContinue
-          Copy-Item "$opencvBinPath\*openjpeg*.dll" "src-tauri\" -Force -ErrorAction SilentlyContinue
-          Copy-Item "$opencvBinPath\*jasper*.dll" "src-tauri\" -Force -ErrorAction SilentlyContinue
-          Copy-Item "$opencvBinPath\zlib*.dll" "src-tauri\" -Force -ErrorAction SilentlyContinue
 
-          # Copy ONNX Runtime DLL (if exists)
-          if (Test-Path "$opencvBinPath\onnxruntime*.dll") {
-            Copy-Item "$opencvBinPath\onnxruntime*.dll" "src-tauri\" -Force
+          # Copy ALL DLLs from vcpkg bin to ensure no dependency is missed
+          # This fixes complex dependency chains like OpenEXR, IlmImf, LZMA, etc.
+          Get-ChildItem -Path $opencvBinPath -Filter "*.dll" | ForEach-Object {
+            Write-Host "Copying $($_.Name)..."
+            Copy-Item $_.FullName "src-tauri\" -Force
           }
 
           # Copy DirectML DLL from Windows Kits
@@ -188,9 +179,10 @@ jobs:
           $vcpkgBin = "C:\vcpkg-opencv\installed\x64-windows\bin"
           $targetDir = "src-tauri\target\release"
 
-          Write-Host "Copying OpenCV DLLs..."
-          Copy-Item "$vcpkgBin\opencv*.dll" $targetDir -Force -ErrorAction SilentlyContinue
-          Copy-Item "$vcpkgBin\tbb*.dll" $targetDir -Force -ErrorAction SilentlyContinue
+          Write-Host "Copying all dependencies from vcpkg to target/release..."
+          Get-ChildItem -Path $vcpkgBin -Filter "*.dll" | ForEach-Object {
+            Copy-Item $_.FullName $targetDir -Force
+          }
 
           # Copy additional DLLs from src-tauri root
           Write-Host "Copying additional DLLs from src-tauri root..."
