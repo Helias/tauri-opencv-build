@@ -34,25 +34,6 @@ jobs:
               --notes "Release ${{ github.event.inputs.version }}"
           fi
 
-      # - name: Cache Homebrew packages
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: |
-      #       ~/Library/Caches/Homebrew
-      #       /opt/homebrew/Cellar/opencv
-      #       /opt/homebrew/Cellar/llvm
-      #       /opt/homebrew/Cellar/pkg-config
-      #       /opt/homebrew/Cellar/ninja
-      #       /opt/homebrew/Cellar/z3
-      #       /opt/homebrew/opt/opencv
-      #       /opt/homebrew/opt/llvm
-      #       /opt/homebrew/opt/pkg-config
-      #       /opt/homebrew/opt/ninja
-      #       /opt/homebrew/opt/z3
-      #     key: ${{ runner.os }}-${{ runner.arch }}-brew-${{ hashFiles('.github/workflows/release-macos-arm.yml') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-${{ runner.arch }}-brew-
-
       - name: Install dependencies
         run: |
           # Only install packages that aren't already cached
@@ -80,13 +61,6 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
         with:
           targets: aarch64-apple-darwin
-
-      # - name: Rust cache
-      #   uses: swatinem/rust-cache@v2
-      #   with:
-      #     workspaces: "./src-tauri -> target"
-      #     cache-on-failure: true
-      #     key: macos-latest-aarch64-apple-darwin-${{ hashFiles('**/Cargo.lock', '**/Cargo.toml') }}
 
       - name: Install frontend dependencies
         run: npm install

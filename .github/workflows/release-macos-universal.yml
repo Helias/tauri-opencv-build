@@ -1,4 +1,4 @@
-name: Release macOS Universal
+name: Release macOS Intel
 
 on:
   workflow_dispatch:
@@ -13,8 +13,8 @@ permissions:
   contents: write
 
 jobs:
-  build-macos-arm:
-    runs-on: macos-latest
+  build-macos-intel:
+    runs-on: macos-15-intel
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -34,29 +34,10 @@ jobs:
               --notes "Release ${{ github.event.inputs.version }}"
           fi
 
-      # - name: Cache Homebrew packages
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: |
-      #       ~/Library/Caches/Homebrew
-      #       /opt/homebrew/Cellar/opencv
-      #       /opt/homebrew/Cellar/llvm
-      #       /opt/homebrew/Cellar/pkg-config
-      #       /opt/homebrew/Cellar/ninja
-      #       /opt/homebrew/Cellar/z3
-      #       /opt/homebrew/opt/opencv
-      #       /opt/homebrew/opt/llvm
-      #       /opt/homebrew/opt/pkg-config
-      #       /opt/homebrew/opt/ninja
-      #       /opt/homebrew/opt/z3
-      #     key: ${{ runner.os }}-${{ runner.arch }}-brew-${{ hashFiles('.github/workflows/release-macos-arm.yml') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-${{ runner.arch }}-brew-
-
       - name: Install dependencies
         run: |
           # Only install packages that aren't already cached
-          for package in opencv llvm pkg-config ninja z3; do
+          for package in opencv llvm pkg-config ninja z3 cmake; do
             if ! brew list $package &>/dev/null; then
               echo "Installing $package..."
               brew install $package
@@ -65,31 +46,56 @@ jobs:
             fi
           done
 
-      - name: Set ONNX Runtime environment
-        run: |
-          # ARM64 has prebuilt binaries, use download strategy
-          echo "ORT_STRATEGY=download" >> $GITHUB_ENV
-        shell: bash
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - name: Install Rust stable
+      - name: Setup Rust stable
         uses: dtolnay/rust-toolchain@stable
         with:
           targets: aarch64-apple-darwin, x86_64-apple-darwin
 
-      # - name: Rust cache
-      #   uses: swatinem/rust-cache@v2
-      #   with:
-      #     workspaces: "./src-tauri -> target"
-      #     cache-on-failure: true
-      #     key: macos-latest-aarch64-apple-darwin-${{ hashFiles('**/Cargo.lock', '**/Cargo.toml') }}
+      - name: Download and setup ONNX Runtime
+        run: |
+          echo "=== Downloading ONNX Runtime v1.19.2 for macOS x86_64 ==="
+          mkdir -p $HOME/onnxruntime
+          cd $HOME/onnxruntime
+
+          # Download ONNX Runtime binaries
+          curl -L -o onnxruntime.tgz https://github.com/microsoft/onnxruntime/releases/download/v1.19.2/onnxruntime-osx-x86_64-1.19.2.tgz
+          tar -xzf onnxruntime.tgz
+          mv onnxruntime-osx-x86_64-1.19.2 onnxruntime-1.19.2
+
+          echo "ONNX Runtime downloaded to: $HOME/onnxruntime/onnxruntime-1.19.2"
+          echo "Directory structure:"
+          ls -la $HOME/onnxruntime/onnxruntime-1.19.2/
+          echo ""
+          echo "lib/ contents:"
+          ls -la $HOME/onnxruntime/onnxruntime-1.19.2/lib/
+          echo ""
+          echo "include/ contents:"
+          ls -la $HOME/onnxruntime/onnxruntime-1.19.2/include/ || echo "No include directory found"
 
       - name: Install frontend dependencies
         run: npm install
+
+      - name: Create Cargo config with ORT library location
+        shell: bash
+        run: |
+          mkdir -p .cargo
+          cat > .cargo/config.toml << 'EOF'
+          [env]
+          ORT_DYLIB_PATH = { value = "/Users/runner/onnxruntime/onnxruntime-1.19.2/lib/libonnxruntime.1.19.2.dylib", force = true }
+          EOF
+
+          echo "Created .cargo/config.toml"
+          cat .cargo/config.toml
+
+      - name: Verify ONNX Runtime configuration
+        run: |
+          echo "=== ONNX Runtime Configuration ==="
+          echo "Using pre-downloaded binaries from: $HOME/onnxruntime/onnxruntime-1.19.2"
+          echo "Strategy: load-dynamic"
+          echo "DYLIB location: $HOME/onnxruntime/onnxruntime-1.19.2/lib/libonnxruntime.1.19.2.dylib"
+          echo ""
+          ls -la $HOME/onnxruntime/onnxruntime-1.19.2/lib/
+        shell: bash
 
       - name: Set OpenCV environment variables
         run: |
@@ -103,14 +109,34 @@ jobs:
           # pkg-config will provide the correct library names and paths
         shell: bash
 
-      - name: Build the app
-        uses: tauri-apps/tauri-action@v0
+      - name: Build Tauri app with ONNX Runtime library
+        run: |
+          echo "=== Building with load-dynamic strategy ==="
+          echo "ORT_DYLIB_PATH=/Users/runner/onnxruntime/onnxruntime-1.19.2/lib/libonnxruntime.1.19.2.dylib"
+          echo ""
+          echo "Running Tauri build..."
+          ORT_DYLIB_PATH="/Users/runner/onnxruntime/onnxruntime-1.19.2/lib/libonnxruntime.1.19.2.dylib" \
+          DYLD_LIBRARY_PATH="/Users/runner/onnxruntime/onnxruntime-1.19.2/lib:$DYLD_LIBRARY_PATH" \
+          npm run tauri build -- --target universal-apple-darwin
+
+          # Copy ONNX Runtime dylib to the bundle
+          echo "Copying ONNX Runtime library to bundle..."
+          cp /Users/runner/onnxruntime/onnxruntime-1.19.2/lib/libonnxruntime.1.19.2.dylib \
+             src-tauri/target/x86_64-apple-darwin/release/bundle/macos/*.app/Contents/MacOS/ || true
+
+      - name: Upload artifacts to release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tagName: ${{ github.event.inputs.version }}
-          releaseName: Release ${{ github.event.inputs.version }}
-          releaseBody: Release ${{ github.event.inputs.version }}
-          releaseDraft: true
-          prerelease: false
-          args: "--target universal-apple-darwin"
+        run: |
+          # Find and upload the generated artifacts
+          for file in src-tauri/target/x86_64-apple-darwin/release/bundle/dmg/*.dmg; do
+            if [ -f "$file" ]; then
+              gh release upload "${{ github.event.inputs.version }}" "$file" --clobber
+            fi
+          done
+
+          for file in src-tauri/target/x86_64-apple-darwin/release/bundle/macos/*.app.tar.gz; do
+            if [ -f "$file" ]; then
+              gh release upload "${{ github.event.inputs.version }}" "$file" --clobber
+            fi
+          done

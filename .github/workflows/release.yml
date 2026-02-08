@@ -53,75 +53,16 @@ jobs:
               --title "Release ${{ github.event.inputs.version }}" \
               --notes "Release ${{ github.event.inputs.version }}"
           fi
-  select-platforms:
-    needs: create-release
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-    steps:
-      - name: Set matrix based on inputs
-        id: set-matrix
-        run: |
-          platforms='[]'
-          if [[ "${{ github.event.inputs.build_ubuntu }}" == "true" ]]; then
-            platforms=$(echo $platforms | jq -c '. += [{"platform": "ubuntu-24.04", "args": "", "target": "x86_64-unknown-linux-gnu", "vcpkg_triplet": "x64-linux"}]')
-          fi
-          if [[ "${{ github.event.inputs.build_windows }}" == "true" ]]; then
-            platforms=$(echo $platforms | jq -c '. += [{"platform": "windows-latest", "args": "", "target": "x86_64-pc-windows-msvc", "vcpkg_triplet": "x64-windows"}]')
-          fi
-          if [[ "${{ github.event.inputs.build_macos_arm }}" == "true" ]]; then
-            platforms=$(echo $platforms | jq -c '. += [{"platform": "macos-latest", "args": "--target aarch64-apple-darwin", "target": "aarch64-apple-darwin", "vcpkg_triplet": "arm64-osx"}]')
-          fi
-          if [[ "${{ github.event.inputs.build_macos_intel }}" == "true" ]]; then
-            platforms=$(echo $platforms | jq -c '. += [{"platform": "macos-15-intel", "args": "--target x86_64-apple-darwin", "target": "x86_64-apple-darwin", "vcpkg_triplet": "x64-osx"}]')
-          fi
-          echo "matrix={\"include\":$platforms}" >> $GITHUB_OUTPUT
-          echo "Selected platforms: $platforms"
-  build-tauri:
-    needs: select-platforms
-    if: needs.select-platforms.outputs.matrix != '{"include":[]}'
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJson(needs.select-platforms.outputs.matrix) }}
 
-    runs-on: ${{ matrix.platform }}
+  build-ubuntu:
+    needs: create-release
+    if: ${{ github.event.inputs.build_ubuntu == 'true' }}
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # - name: Cache Homebrew packages (macOS Intel)
-      #   if: matrix.platform == 'macos-15-intel'
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: |
-      #       ~/Library/Caches/Homebrew
-      #       /usr/local/Cellar/opencv
-      #       /usr/local/Cellar/llvm
-      #       /usr/local/Cellar/pkg-config
-      #       /usr/local/Cellar/ninja
-      #       /usr/local/Cellar/z3
-      #       /usr/local/opt/opencv
-      #       /usr/local/opt/llvm
-      #       /usr/local/opt/pkg-config
-      #       /usr/local/opt/ninja
-      #       /usr/local/opt/z3
-      #     key: ${{ runner.os }}-${{ runner.arch }}-brew-${{ hashFiles('.github/workflows/release.yml') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-${{ runner.arch }}-brew-
-
-      - name: Cache apt packages (Ubuntu only)
-        if: matrix.platform == 'ubuntu-24.04'
-        uses: actions/cache@v4
-        with:
-          path: |
-            /var/cache/apt/archives
-            /var/lib/apt/lists
-          key: ${{ runner.os }}-apt-${{ hashFiles('.github/workflows/release.yml') }}
-          restore-keys: |
-            ${{ runner.os }}-apt-
-
-      - name: Install dependencies (Ubuntu only)
-        if: matrix.platform == 'ubuntu-24.04'
+      - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y \
@@ -140,51 +81,53 @@ jobs:
             pkg-config \
             ninja-build
 
-      - name: Install dependencies (macOS ARM)
-        if: matrix.platform == 'macos-latest'
-        run: |
-          # Only install packages that aren't already cached
-          for package in opencv llvm pkg-config ninja z3; do
-            if ! brew list $package &>/dev/null; then
-              echo "Installing $package..."
-              brew install $package
-            else
-              echo "$package already installed, skipping"
-            fi
-          done
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
 
-      - name: Install dependencies (macOS Intel)
-        if: matrix.platform == 'macos-15-intel'
-        run: |
-          # Only install packages that aren't already cached
-          for package in opencv llvm pkg-config ninja z3; do
-            if ! brew list $package &>/dev/null; then
-              echo "Installing $package..."
-              brew install $package
-            else
-              echo "$package already installed, skipping"
-            fi
-          done
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-unknown-linux-gnu
 
-      - name: Set ONNX Runtime environment (macOS Intel)
-        if: matrix.platform == 'macos-15-intel'
-        run: |
-          # Intel Macs don't have prebuilt ONNX Runtime binaries
-          # Use compile strategy to build from source (this will take ~15-20 minutes)
-          echo "ORT_STRATEGY=compile" >> $GITHUB_ENV
-          echo "ORT_COMPILE_TARGET=x86_64-apple-darwin" >> $GITHUB_ENV
-          echo "ORT_COMPILE_VERSION=1.19.2" >> $GITHUB_ENV
-        shell: bash
+      - name: Install frontend dependencies
+        run: npm install
 
-      - name: Set ONNX Runtime environment (macOS ARM)
-        if: matrix.platform == 'macos-latest'
+      - name: Verify OpenCV installation
         run: |
-          # ARM64 has prebuilt binaries, use download strategy
-          echo "ORT_STRATEGY=download" >> $GITHUB_ENV
-        shell: bash
+          pkg-config --modversion opencv4 || pkg-config --modversion opencv
+          pkg-config --cflags opencv4 || pkg-config --cflags opencv
+          pkg-config --libs opencv4 || pkg-config --libs opencv
+          # Find libclang.so location
+          LIBCLANG_PATH=$(find /usr/lib -name "libclang.so*" 2>/dev/null | head -n1 | xargs dirname)
+          if [ -z "$LIBCLANG_PATH" ]; then
+            LIBCLANG_PATH=$(find /usr/lib/llvm-* -name "libclang.so*" 2>/dev/null | head -n1 | xargs dirname)
+          fi
+          echo "Found libclang at: $LIBCLANG_PATH"
+          echo "LIBCLANG_PATH=$LIBCLANG_PATH" >> $GITHUB_ENV
 
-      - name: Install dependencies (Windows only)
-        if: matrix.platform == 'windows-latest'
+      - name: Build the app
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.event.inputs.version }}
+          releaseName: Release ${{ github.event.inputs.version }}
+          releaseBody: Release ${{ github.event.inputs.version }}
+          releaseDraft: true
+          prerelease: false
+          args: ""
+
+  build-windows:
+    needs: create-release
+    if: ${{ github.event.inputs.build_windows == 'true' }}
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
         run: |
           choco install llvm ninja
         shell: pwsh
@@ -197,31 +140,30 @@ jobs:
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: ${{ matrix.target }}
+          targets: x86_64-pc-windows-msvc
 
       - name: Rust cache
         uses: swatinem/rust-cache@v2
         with:
           workspaces: "./src-tauri -> target"
           cache-on-failure: true
-          key: ${{ matrix.platform }}-${{ matrix.target }}-${{ hashFiles('**/Cargo.lock', '**/Cargo.toml') }}
+          key: windows-x86_64-pc-windows-msvc-${{ hashFiles('**/Cargo.lock', '**/Cargo.toml') }}
 
       - name: Install frontend dependencies
         run: npm install
 
-      - name: Cache vcpkg (Windows only)
-        if: matrix.platform == 'windows-latest'
+      - name: Cache vcpkg
         uses: actions/cache@v4
         with:
           path: |
             C:\vcpkg-opencv
             ~\AppData\Local\vcpkg\archives
-          key: ${{ runner.os }}-vcpkg-opencv4-${{ hashFiles('.github/workflows/release.yml') }}-v3
+          key: ${{ runner.os }}-vcpkg-opencv4-${{ hashFiles('.github/workflows/release-windows.yml') }}-v3
           restore-keys: |
-            ${{ runner.os }}-vcpkg-opencv4-${{ hashFiles('.github/workflows/release.yml') }}-
+            ${{ runner.os }}-vcpkg-opencv4-${{ hashFiles('.github/workflows/release-windows.yml') }}-
             ${{ runner.os }}-vcpkg-opencv4-
-      - name: Setup vcpkg and install OpenCV (Windows)
-        if: matrix.platform == 'windows-latest'
+
+      - name: Setup vcpkg and install OpenCV
         run: |
           # Check if vcpkg is already cached and OpenCV is installed
           if (Test-Path "C:\vcpkg-opencv\installed\x64-windows\bin\opencv_world4*.dll") {
@@ -276,34 +218,146 @@ jobs:
           ACTIONS_CACHE_URL: ${{ env.ACTIONS_CACHE_URL }}
           ACTIONS_RUNTIME_TOKEN: ${{ env.ACTIONS_RUNTIME_TOKEN }}
 
-      - name: Verify OpenCV installation (Ubuntu)
-        if: matrix.platform == 'ubuntu-24.04'
+      - name: Copy required DLLs to src-tauri
         run: |
-          pkg-config --modversion opencv4 || pkg-config --modversion opencv
-          pkg-config --cflags opencv4 || pkg-config --cflags opencv
-          pkg-config --libs opencv4 || pkg-config --libs opencv
-          # Find libclang.so location
-          LIBCLANG_PATH=$(find /usr/lib -name "libclang.so*" 2>/dev/null | head -n1 | xargs dirname)
-          if [ -z "$LIBCLANG_PATH" ]; then
-            LIBCLANG_PATH=$(find /usr/lib/llvm-* -name "libclang.so*" 2>/dev/null | head -n1 | xargs dirname)
-          fi
-          echo "Found libclang at: $LIBCLANG_PATH"
-          echo "LIBCLANG_PATH=$LIBCLANG_PATH" >> $GITHUB_ENV
-      - name: Set OpenCV environment variables (macOS ARM)
-        if: matrix.platform == 'macos-latest'
-        run: |
-          echo "PKG_CONFIG_PATH=$(brew --prefix opencv)/lib/pkgconfig:$PKG_CONFIG_PATH" >> $GITHUB_ENV
-          echo "DYLD_LIBRARY_PATH=$(brew --prefix opencv)/lib:$(brew --prefix llvm)/lib:$(brew --prefix z3)/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
-          echo "LIBCLANG_PATH=$(brew --prefix llvm)/lib" >> $GITHUB_ENV
-          echo "$(brew --prefix llvm)/bin" >> $GITHUB_PATH
+          Write-Host "Copying required DLLs for bundling..."
 
-          # Let opencv-rust use pkg-config to find OpenCV libraries
-          # Don't set OPENCV_LINK_LIBS manually as it causes linker issues
-          # pkg-config will provide the correct library names and paths
+          # Copy ALL OpenCV DLLs (not just specific ones) to src-tauri root
+          # This ensures they are bundled at the root of the application (next to executable)
+          $opencvBinPath = "C:\vcpkg-opencv\installed\x64-windows\bin"
+
+          # Copy ALL DLLs from vcpkg bin to ensure no dependency is missed
+          # This fixes complex dependency chains like OpenEXR, IlmImf, LZMA, etc.
+          Get-ChildItem -Path $opencvBinPath -Filter "*.dll" | ForEach-Object {
+            Write-Host "Copying $($_.Name)..."
+            Copy-Item $_.FullName "src-tauri\" -Force
+          }
+
+          # Copy DirectML DLL from Windows Kits
+          $directMLPaths = @(
+            "C:\Program Files (x86)\Windows Kits\10\bin\*\x64\DirectML.dll",
+            "C:\Windows\System32\DirectML.dll"
+          )
+
+          $directMLFound = $false
+          foreach ($path in $directMLPaths) {
+            $resolved = Get-Item $path -ErrorAction SilentlyContinue | Select-Object -First 1
+            if ($resolved) {
+              Copy-Item $resolved.FullName "src-tauri\" -Force
+              $directMLFound = $true
+              Write-Host "Found and copied DirectML.dll from $($resolved.FullName)"
+              break
+            }
+          }
+
+          if (-not $directMLFound) {
+            Write-Host "Warning: DirectML.dll not found, downloading from NuGet..."
+            # Download DirectML from NuGet package
+            Invoke-WebRequest -Uri "https://www.nuget.org/api/v2/package/Microsoft.AI.DirectML/1.13.0" -OutFile "directml.zip"
+            Expand-Archive -Path "directml.zip" -DestinationPath "directml-pkg" -Force
+            Copy-Item "directml-pkg\bin\x64-win\DirectML.dll" "src-tauri\" -Force
+            Remove-Item "directml.zip", "directml-pkg" -Recurse -Force
+          }
+
+          Write-Host "DLLs copied successfully:"
+          Get-ChildItem "src-tauri\*.dll" | ForEach-Object { Write-Host "  - $($_.Name)" }
+        shell: pwsh
+
+      - name: Pre-copy DLLs to target directory
+        run: |
+          Write-Host "Pre-copying DLLs to target/release for bundling..."
+
+          # Create target/release if it doesn't exist
+          New-Item -ItemType Directory -Force -Path "src-tauri\target\release" | Out-Null
+
+          # Copy vcpkg DLLs
+          $vcpkgBin = "C:\vcpkg-opencv\installed\x64-windows\bin"
+          $targetDir = "src-tauri\target\release"
+
+          Write-Host "Copying all dependencies from vcpkg to target/release..."
+          Get-ChildItem -Path $vcpkgBin -Filter "*.dll" | ForEach-Object {
+            Copy-Item $_.FullName $targetDir -Force
+          }
+
+          # Copy additional DLLs from src-tauri root
+          Write-Host "Copying additional DLLs from src-tauri root..."
+          Copy-Item "src-tauri\*.dll" $targetDir -Force -ErrorAction SilentlyContinue
+
+          Write-Host "DLLs pre-copied to target directory:"
+          Get-ChildItem "$targetDir\*.dll" -ErrorAction SilentlyContinue | Select-Object Name
+        shell: pwsh
+
+      - name: Build the app
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VCPKG_ROOT: C:\vcpkg-opencv
+          CMAKE_TOOLCHAIN_FILE: C:\vcpkg-opencv\scripts\buildsystems\vcpkg.cmake
+          CMAKE_PREFIX_PATH: C:\vcpkg-opencv\installed\x64-windows
+          LIBCLANG_PATH: C:\Program Files\LLVM\bin
+        with:
+          tagName: ${{ github.event.inputs.version }}
+          releaseName: Release ${{ github.event.inputs.version }}
+          releaseBody: Release ${{ github.event.inputs.version }}
+          releaseDraft: true
+          prerelease: false
+          args: "--config src-tauri/tauri.windows.conf.json"
+
+  build-macos-arm:
+    needs: create-release
+    if: ${{ github.event.inputs.build_macos_arm == 'true' }}
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create or update Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Check if release already exists
+          if gh release view "${{ github.event.inputs.version }}" --json isDraft 2>/dev/null; then
+            echo "Release ${{ github.event.inputs.version }} already exists, reusing it"
+          else
+            echo "Creating new draft release ${{ github.event.inputs.version }}"
+            gh release create "${{ github.event.inputs.version }}" \
+              --draft \
+              --title "Release ${{ github.event.inputs.version }}" \
+              --notes "Release ${{ github.event.inputs.version }}"
+          fi
+
+      - name: Install dependencies
+        run: |
+          # Only install packages that aren't already cached
+          for package in opencv llvm pkg-config ninja z3; do
+            if ! brew list $package &>/dev/null; then
+              echo "Installing $package..."
+              brew install $package
+            else
+              echo "$package already installed, skipping"
+            fi
+          done
+
+      - name: Set ONNX Runtime environment
+        run: |
+          # ARM64 has prebuilt binaries, use download strategy
+          echo "ORT_STRATEGY=download" >> $GITHUB_ENV
         shell: bash
 
-      - name: Set OpenCV environment variables (macOS Intel)
-        if: matrix.platform == 'macos-15-intel'
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-darwin
+
+      - name: Install frontend dependencies
+        run: npm install
+
+      - name: Set OpenCV environment variables
         run: |
           echo "PKG_CONFIG_PATH=$(brew --prefix opencv)/lib/pkgconfig:$PKG_CONFIG_PATH" >> $GITHUB_ENV
           echo "DYLD_LIBRARY_PATH=$(brew --prefix opencv)/lib:$(brew --prefix llvm)/lib:$(brew --prefix z3)/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
@@ -319,13 +373,140 @@ jobs:
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ORT_STRATEGY: ${{ env.ORT_STRATEGY }}
-          ORT_COMPILE_TARGET: ${{ env.ORT_COMPILE_TARGET }}
-          ORT_COMPILE_VERSION: ${{ env.ORT_COMPILE_VERSION }}
         with:
           tagName: ${{ github.event.inputs.version }}
           releaseName: Release ${{ github.event.inputs.version }}
           releaseBody: Release ${{ github.event.inputs.version }}
           releaseDraft: true
           prerelease: false
-          args: ${{ matrix.args }}
+          args: "--target aarch64-apple-darwin"
+
+  build-macos-intel:
+    needs: create-release
+    if: ${{ github.event.inputs.build_macos_intel == 'true' }}
+    runs-on: macos-15-intel
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create or update Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Check if release already exists
+          if gh release view "${{ github.event.inputs.version }}" --json isDraft 2>/dev/null; then
+            echo "Release ${{ github.event.inputs.version }} already exists, reusing it"
+          else
+            echo "Creating new draft release ${{ github.event.inputs.version }}"
+            gh release create "${{ github.event.inputs.version }}" \
+              --draft \
+              --title "Release ${{ github.event.inputs.version }}" \
+              --notes "Release ${{ github.event.inputs.version }}"
+          fi
+
+      - name: Install dependencies
+        run: |
+          # Only install packages that aren't already cached
+          for package in opencv llvm pkg-config ninja z3 cmake; do
+            if ! brew list $package &>/dev/null; then
+              echo "Installing $package..."
+              brew install $package
+            else
+              echo "$package already installed, skipping"
+            fi
+          done
+
+      - name: Setup Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-apple-darwin
+
+      - name: Download and setup ONNX Runtime
+        run: |
+          echo "=== Downloading ONNX Runtime v1.19.2 for macOS x86_64 ==="
+          mkdir -p $HOME/onnxruntime
+          cd $HOME/onnxruntime
+
+          # Download ONNX Runtime binaries
+          curl -L -o onnxruntime.tgz https://github.com/microsoft/onnxruntime/releases/download/v1.19.2/onnxruntime-osx-x86_64-1.19.2.tgz
+          tar -xzf onnxruntime.tgz
+          mv onnxruntime-osx-x86_64-1.19.2 onnxruntime-1.19.2
+
+          echo "ONNX Runtime downloaded to: $HOME/onnxruntime/onnxruntime-1.19.2"
+          echo "Directory structure:"
+          ls -la $HOME/onnxruntime/onnxruntime-1.19.2/
+          echo ""
+          echo "lib/ contents:"
+          ls -la $HOME/onnxruntime/onnxruntime-1.19.2/lib/
+          echo ""
+          echo "include/ contents:"
+          ls -la $HOME/onnxruntime/onnxruntime-1.19.2/include/ || echo "No include directory found"
+
+      - name: Install frontend dependencies
+        run: npm install
+
+      - name: Create Cargo config with ORT library location
+        shell: bash
+        run: |
+          mkdir -p .cargo
+          cat > .cargo/config.toml << 'EOF'
+          [env]
+          ORT_DYLIB_PATH = { value = "/Users/runner/onnxruntime/onnxruntime-1.19.2/lib/libonnxruntime.1.19.2.dylib", force = true }
+          EOF
+
+          echo "Created .cargo/config.toml"
+          cat .cargo/config.toml
+
+      - name: Verify ONNX Runtime configuration
+        run: |
+          echo "=== ONNX Runtime Configuration ==="
+          echo "Using pre-downloaded binaries from: $HOME/onnxruntime/onnxruntime-1.19.2"
+          echo "Strategy: load-dynamic"
+          echo "DYLIB location: $HOME/onnxruntime/onnxruntime-1.19.2/lib/libonnxruntime.1.19.2.dylib"
+          echo ""
+          ls -la $HOME/onnxruntime/onnxruntime-1.19.2/lib/
+        shell: bash
+
+      - name: Set OpenCV environment variables
+        run: |
+          echo "PKG_CONFIG_PATH=$(brew --prefix opencv)/lib/pkgconfig:$PKG_CONFIG_PATH" >> $GITHUB_ENV
+          echo "DYLD_LIBRARY_PATH=$(brew --prefix opencv)/lib:$(brew --prefix llvm)/lib:$(brew --prefix z3)/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "LIBCLANG_PATH=$(brew --prefix llvm)/lib" >> $GITHUB_ENV
+          echo "$(brew --prefix llvm)/bin" >> $GITHUB_PATH
+
+          # Let opencv-rust use pkg-config to find OpenCV libraries
+          # Don't set OPENCV_LINK_LIBS manually as it causes linker issues
+          # pkg-config will provide the correct library names and paths
+        shell: bash
+
+      - name: Build Tauri app with ONNX Runtime library
+        run: |
+          echo "=== Building with load-dynamic strategy ==="
+          echo "ORT_DYLIB_PATH=/Users/runner/onnxruntime/onnxruntime-1.19.2/lib/libonnxruntime.1.19.2.dylib"
+          echo ""
+          echo "Running Tauri build..."
+          ORT_DYLIB_PATH="/Users/runner/onnxruntime/onnxruntime-1.19.2/lib/libonnxruntime.1.19.2.dylib" \
+          DYLD_LIBRARY_PATH="/Users/runner/onnxruntime/onnxruntime-1.19.2/lib:$DYLD_LIBRARY_PATH" \
+          npm run tauri build -- --target x86_64-apple-darwin
+
+          # Copy ONNX Runtime dylib to the bundle
+          echo "Copying ONNX Runtime library to bundle..."
+          cp /Users/runner/onnxruntime/onnxruntime-1.19.2/lib/libonnxruntime.1.19.2.dylib \
+             src-tauri/target/x86_64-apple-darwin/release/bundle/macos/*.app/Contents/MacOS/ || true
+
+      - name: Upload artifacts to release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Find and upload the generated artifacts
+          for file in src-tauri/target/x86_64-apple-darwin/release/bundle/dmg/*.dmg; do
+            if [ -f "$file" ]; then
+              gh release upload "${{ github.event.inputs.version }}" "$file" --clobber
+            fi
+          done
+
+          for file in src-tauri/target/x86_64-apple-darwin/release/bundle/macos/*.app.tar.gz; do
+            if [ -f "$file" ]; then
+              gh release upload "${{ github.event.inputs.version }}" "$file" --clobber
+            fi
+          done
