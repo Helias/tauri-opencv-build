@@ -107,9 +107,7 @@ jobs:
           mkdir -p .cargo
           cat > .cargo/config.toml << 'EOF'
           [env]
-          ORT_STRATEGY = { value = "system", force = true }
-          ORT_LIB_LOCATION = { value = "/Users/runner/onnxruntime/onnxruntime-1.19.2", force = true }
-          ORT_USE_SYSTEM_LIBSTDCXX = { value = "0", force = true }
+          ORT_DYLIB_PATH = { value = "/Users/runner/onnxruntime/onnxruntime-1.19.2/lib/libonnxruntime.1.19.2.dylib", force = true }
           EOF
 
           echo "Created .cargo/config.toml"
@@ -119,7 +117,8 @@ jobs:
         run: |
           echo "=== ONNX Runtime Configuration ==="
           echo "Using pre-downloaded binaries from: $HOME/onnxruntime/onnxruntime-1.19.2"
-          echo "Library path will be set via ORT_LIB_LOCATION"
+          echo "Strategy: load-dynamic"
+          echo "DYLIB location: $HOME/onnxruntime/onnxruntime-1.19.2/lib/libonnxruntime.1.19.2.dylib"
           echo ""
           ls -la $HOME/onnxruntime/onnxruntime-1.19.2/lib/
         shell: bash
@@ -138,16 +137,18 @@ jobs:
 
       - name: Build Tauri app with ONNX Runtime library
         run: |
-          echo "=== Building with ORT library location ==="
-          echo "ORT_STRATEGY=system"
-          echo "ORT_LIB_LOCATION=/Users/runner/onnxruntime/onnxruntime-1.19.2"
+          echo "=== Building with load-dynamic strategy ==="
+          echo "ORT_DYLIB_PATH=/Users/runner/onnxruntime/onnxruntime-1.19.2/lib/libonnxruntime.1.19.2.dylib"
           echo ""
           echo "Running Tauri build..."
-          ORT_STRATEGY=system \
-          ORT_LIB_LOCATION="/Users/runner/onnxruntime/onnxruntime-1.19.2" \
-          ORT_USE_SYSTEM_LIBSTDCXX=0 \
+          ORT_DYLIB_PATH="/Users/runner/onnxruntime/onnxruntime-1.19.2/lib/libonnxruntime.1.19.2.dylib" \
           DYLD_LIBRARY_PATH="/Users/runner/onnxruntime/onnxruntime-1.19.2/lib:$DYLD_LIBRARY_PATH" \
           npm run tauri build -- --target x86_64-apple-darwin
+
+          # Copy ONNX Runtime dylib to the bundle
+          echo "Copying ONNX Runtime library to bundle..."
+          cp /Users/runner/onnxruntime/onnxruntime-1.19.2/lib/libonnxruntime.1.19.2.dylib \
+             src-tauri/target/x86_64-apple-darwin/release/bundle/macos/*.app/Contents/MacOS/ || true
 
       - name: Upload artifacts to release
         env:
