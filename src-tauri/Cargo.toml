@@ -23,7 +23,7 @@ serde = { version = "1.0.215", features = ["derive"] }
 serde_json = "1.0.132"
 opencv = { version = "0.95", default-features = false, features = ["imgproc", "videoio", "highgui"] }
 ndarray = "0.16"
-ort = { version = "2.0.0-rc.11", features = ["load-dynamic"] }
+ort = { version = "2.0.0-rc.11" }
 anyhow = "1.0"
 chrono = "0.4"
 lazy_static = "1.4"
@@ -43,3 +43,6 @@ opt-level = 2  # Enable optimizations in debug mode for better performance
 opt-level = 3
 lto = true
 codegen-units = 1
+
+[target.x86_64-apple-darwin.dependencies]
+ort = { version = "2.0.0-rc.11", features = ["load-dynamic"] }
