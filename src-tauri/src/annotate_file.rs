@@ -181,10 +181,11 @@ fn load_model(model_path: &str) -> Result<Session> {
         anyhow::bail!("❌ Model not found at {}", model_path);
     }
 
+    let model_bytes = std::fs::read(model_path)?;
     let session = Session::builder()?
         .with_optimization_level(GraphOptimizationLevel::Level3)?
         .with_intra_threads(4)?
-        .commit_from_file(model_path)?;
+        .commit_from_memory(&model_bytes)?;
 
     println!("✅ ONNX Model loaded successfully!");
     println!("   Input name: {}", session.inputs()[0].name());
@@ -743,9 +744,8 @@ fn process_video(app: tauri::AppHandle, input_path: &str, output_path: &str) -> 
         let input_vec: Vec<f32> = input_tensor.iter().cloned().collect();
         let input_shape = input_tensor.shape();
         let input_tensor_ort = Tensor::from_array((input_shape, input_vec))?;
-        let mut input_map = std::collections::HashMap::new();
-        input_map.insert(input_name.as_str(), input_tensor_ort);
-        let outputs = session.run(input_map)?;
+        let input_vec_tuple = vec![(input_name.as_str(), input_tensor_ort)];
+        let outputs = session.run(input_vec_tuple)?;
         let (output_shape, output_data) = outputs[0].try_extract_tensor::<f32>()?;
 
         // Robust output shape handling (align with Python/Node.js)
