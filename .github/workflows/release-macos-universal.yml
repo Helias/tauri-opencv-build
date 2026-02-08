@@ -1,4 +1,4 @@
-name: Release macOS Intel
+name: Release macOS Universal (intel, arm)
 
 on:
   workflow_dispatch:
@@ -13,8 +13,8 @@ permissions:
   contents: write
 
 jobs:
-  build-macos-intel:
-    runs-on: macos-15-intel
+  build-macos-universal:
+    runs-on: macos-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
