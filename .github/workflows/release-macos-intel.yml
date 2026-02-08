@@ -95,14 +95,14 @@ jobs:
           ORT_COMPILE_TARGET = "x86_64-apple-darwin"
           ORT_COMPILE_VERSION = "1.19.2"
           EOF
-          
+
           # Also create in src-tauri directory (where Cargo.toml lives)
           mkdir -p src-tauri/.cargo
           cp .cargo/config.toml src-tauri/.cargo/config.toml
-          
+
           echo "Created .cargo/config.toml in workspace root and src-tauri/"
           cat .cargo/config.toml
-          
+
           # Also export as shell environment variables for good measure
           export ORT_STRATEGY=compile
           export ORT_COMPILE_TARGET=x86_64-apple-darwin
@@ -140,10 +140,10 @@ jobs:
         run: |
           # Make the build script executable
           chmod +x build-macos-intel.sh
-          
+
           # Run the build script which sets ORT variables and builds
           ./build-macos-intel.sh
-        
+
       - name: Upload artifacts to release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -154,10 +154,9 @@ jobs:
               gh release upload "${{ github.event.inputs.version }}" "$file" --clobber
             fi
           done
-          
+
           for file in src-tauri/target/x86_64-apple-darwin/release/bundle/macos/*.app.tar.gz; do
             if [ -f "$file" ]; then
               gh release upload "${{ github.event.inputs.version }}" "$file" --clobber
             fi
           done
-
