@@ -84,42 +84,28 @@ jobs:
       - name: Install frontend dependencies
         run: npm install
 
-      - name: Create Cargo config with ORT environment variables (in workspace and src-tauri)
+      - name: Create Cargo config with ORT environment variables
         shell: bash
         run: |
-          # Create in workspace root
           mkdir -p .cargo
           cat > .cargo/config.toml << 'EOF'
           [env]
           ORT_STRATEGY = "compile"
           ORT_COMPILE_TARGET = "x86_64-apple-darwin"
           ORT_COMPILE_VERSION = "1.19.2"
+          ORT_USE_SYSTEM_LIBSTDCXX = "0"
           EOF
 
-          # Also create in src-tauri directory (where Cargo.toml lives)
-          mkdir -p src-tauri/.cargo
-          cp .cargo/config.toml src-tauri/.cargo/config.toml
-
-          echo "Created .cargo/config.toml in workspace root and src-tauri/"
+          echo "Created .cargo/config.toml"
           cat .cargo/config.toml
-
-          # Also export as shell environment variables for good measure
-          export ORT_STRATEGY=compile
-          export ORT_COMPILE_TARGET=x86_64-apple-darwin
-          export ORT_COMPILE_VERSION=1.19.2
 
       - name: Verify ONNX Runtime environment variables
         run: |
-          echo "=== ONNX Runtime Environment Variables (from job-level env) ==="
+          echo "=== ONNX Runtime Environment Variables ==="
           echo "ORT_STRATEGY: $ORT_STRATEGY"
           echo "ORT_COMPILE_TARGET: $ORT_COMPILE_TARGET"
           echo "ORT_COMPILE_VERSION: $ORT_COMPILE_VERSION"
           echo ""
-          echo ".cargo/config.toml locations:"
-          echo "  - Workspace root: .cargo/config.toml"
-          echo "  - Tauri project: src-tauri/.cargo/config.toml"
-          echo ""
-          echo "These will be passed directly to cargo build via environment"
           echo "ONNX Runtime will be compiled from source during cargo build"
           echo "This may take 15-20 minutes - please be patient"
         shell: bash
@@ -137,12 +123,18 @@ jobs:
         shell: bash
 
       - name: Build Tauri app with explicit environment variables
+        env:
+          ORT_STRATEGY: compile
+          ORT_COMPILE_TARGET: x86_64-apple-darwin
+          ORT_COMPILE_VERSION: 1.19.2
         run: |
-          # Make the build script executable
-          chmod +x build-macos-intel.sh
-
-          # Run the build script which sets ORT variables and builds
-          ./build-macos-intel.sh
+          echo "=== Building with ORT environment variables ==="
+          echo "ORT_STRATEGY=$ORT_STRATEGY"
+          echo "ORT_COMPILE_TARGET=$ORT_COMPILE_TARGET"
+          echo "ORT_COMPILE_VERSION=$ORT_COMPILE_VERSION"
+          echo ""
+          echo "Running Tauri build..."
+          npm run tauri build -- --target x86_64-apple-darwin
 
       - name: Upload artifacts to release
         env:
