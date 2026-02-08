@@ -89,7 +89,14 @@ jobs:
           mv onnxruntime-osx-x86_64-1.19.2 onnxruntime-1.19.2
 
           echo "ONNX Runtime downloaded to: $HOME/onnxruntime/onnxruntime-1.19.2"
+          echo "Directory structure:"
+          ls -la $HOME/onnxruntime/onnxruntime-1.19.2/
+          echo ""
+          echo "lib/ contents:"
           ls -la $HOME/onnxruntime/onnxruntime-1.19.2/lib/
+          echo ""
+          echo "include/ contents:"
+          ls -la $HOME/onnxruntime/onnxruntime-1.19.2/include/ || echo "No include directory found"
 
       - name: Install frontend dependencies
         run: npm install
@@ -98,9 +105,11 @@ jobs:
         shell: bash
         run: |
           mkdir -p .cargo
-          cat > .cargo/config.toml << EOF
+          cat > .cargo/config.toml << 'EOF'
           [env]
-          ORT_LIB_LOCATION = "$HOME/onnxruntime/onnxruntime-1.19.2"
+          ORT_STRATEGY = { value = "system", force = true }
+          ORT_LIB_LOCATION = { value = "/Users/runner/onnxruntime/onnxruntime-1.19.2", force = true }
+          ORT_USE_SYSTEM_LIBSTDCXX = { value = "0", force = true }
           EOF
 
           echo "Created .cargo/config.toml"
@@ -130,11 +139,14 @@ jobs:
       - name: Build Tauri app with ONNX Runtime library
         run: |
           echo "=== Building with ORT library location ==="
-          echo "ORT_LIB_LOCATION=$HOME/onnxruntime/onnxruntime-1.19.2"
+          echo "ORT_STRATEGY=system"
+          echo "ORT_LIB_LOCATION=/Users/runner/onnxruntime/onnxruntime-1.19.2"
           echo ""
           echo "Running Tauri build..."
-          ORT_LIB_LOCATION="$HOME/onnxruntime/onnxruntime-1.19.2" \
-          DYLD_LIBRARY_PATH="$HOME/onnxruntime/onnxruntime-1.19.2/lib:$DYLD_LIBRARY_PATH" \
+          ORT_STRATEGY=system \
+          ORT_LIB_LOCATION="/Users/runner/onnxruntime/onnxruntime-1.19.2" \
+          ORT_USE_SYSTEM_LIBSTDCXX=0 \
+          DYLD_LIBRARY_PATH="/Users/runner/onnxruntime/onnxruntime-1.19.2/lib:$DYLD_LIBRARY_PATH" \
           npm run tauri build -- --target x86_64-apple-darwin
 
       - name: Upload artifacts to release
