@@ -1,0 +1,96 @@
+name: Reusable macOS ARM Build
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: "Release version (e.g., v1.0.0)"
+        required: false
+        type: string
+        default: ""
+      release:
+        description: "Whether to create a release"
+        required: false
+        type: boolean
+        default: false
+    secrets:
+      token:
+        description: "GITHUB_TOKEN"
+        required: true
+
+jobs:
+  build-macos-arm:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create or update Release
+        if: ${{ inputs.release }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.token }}
+        run: |
+          if gh release view "${{ inputs.version }}" --json isDraft 2>/dev/null; then
+            echo "Release ${{ inputs.version }} already exists, reusing it"
+          else
+            echo "Creating new draft release ${{ inputs.version }}"
+            gh release create "${{ inputs.version }}" \
+              --draft \
+              --title "Release ${{ inputs.version }}" \
+              --notes "Release ${{ inputs.version }}"
+          fi
+
+      - name: Install dependencies
+        run: |
+          # Only install packages that aren't already cached
+          for package in opencv llvm pkg-config ninja z3; do
+            if ! brew list $package &>/dev/null; then
+              echo "Installing $package..."
+              brew install $package
+            else
+              echo "$package already installed, skipping"
+            fi
+          done
+
+      - name: Set ONNX Runtime environment
+        run: |
+          # ARM64 has prebuilt binaries, use download strategy
+          echo "ORT_STRATEGY=download" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-darwin
+
+      - name: Install frontend dependencies
+        run: npm install
+
+      - name: Set OpenCV environment variables
+        run: |
+          echo "PKG_CONFIG_PATH=$(brew --prefix opencv)/lib/pkgconfig:$PKG_CONFIG_PATH" >> $GITHUB_ENV
+          echo "DYLD_LIBRARY_PATH=$(brew --prefix opencv)/lib:$(brew --prefix llvm)/lib:$(brew --prefix z3)/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "LIBCLANG_PATH=$(brew --prefix llvm)/lib" >> $GITHUB_ENV
+          echo "$(brew --prefix llvm)/bin" >> $GITHUB_PATH
+
+          # Let opencv-rust use pkg-config to find OpenCV libraries
+          # Don't set OPENCV_LINK_LIBS manually as it causes linker issues
+          # pkg-config will provide the correct library names and paths
+        shell: bash
+
+      - name: Build the app
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.token }}
+        with:
+          tagName: ${{ inputs.release && inputs.version || '' }}
+          releaseName: ${{ inputs.release && format('Release {0}', inputs.version) || '' }}
+          releaseBody: ${{ inputs.release && format('Release {0}', inputs.version) || '' }}
+          releaseDraft: true
+          prerelease: false
+          args: "--target aarch64-apple-darwin"

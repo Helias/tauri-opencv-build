@@ -18,3 +18,24 @@ jobs:
       release: false
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
+
+  build-windows:
+    uses: ./.github/workflows/windows.yml
+    with:
+      release: false
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
+
+  build-macos-arm:
+    uses: ./.github/workflows/macos-arm.yml
+    with:
+      release: false
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
+
+  build-macos-intel:
+    uses: ./.github/workflows/macos-intel.yml
+    with:
+      release: false
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}

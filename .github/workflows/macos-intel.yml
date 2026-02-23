@@ -1,37 +1,43 @@
-name: Release macOS Universal (intel, arm)
+name: Reusable macOS Intel Build
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       version:
         description: "Release version (e.g., v1.0.0)"
-        required: true
+        required: false
         type: string
-        default: "1.0.0"
-
-permissions:
-  contents: write
+        default: ""
+      release:
+        description: "Whether to create a release"
+        required: false
+        type: boolean
+        default: false
+    secrets:
+      token:
+        description: "GITHUB_TOKEN"
+        required: true
 
 jobs:
-  build-macos-universal:
-    runs-on: macos-latest
+  build-macos-intel:
+    runs-on: macos-15-intel
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Create or update Release
+        if: ${{ inputs.release }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.token }}
         run: |
-          # Check if release already exists
-          if gh release view "${{ github.event.inputs.version }}" --json isDraft 2>/dev/null; then
-            echo "Release ${{ github.event.inputs.version }} already exists, reusing it"
+          if gh release view "${{ inputs.version }}" --json isDraft 2>/dev/null; then
+            echo "Release ${{ inputs.version }} already exists, reusing it"
           else
-            echo "Creating new draft release ${{ github.event.inputs.version }}"
-            gh release create "${{ github.event.inputs.version }}" \
+            echo "Creating new draft release ${{ inputs.version }}"
+            gh release create "${{ inputs.version }}" \
               --draft \
-              --title "Release ${{ github.event.inputs.version }}" \
-              --notes "Release ${{ github.event.inputs.version }}"
+              --title "Release ${{ inputs.version }}" \
+              --notes "Release ${{ inputs.version }}"
           fi
 
       - name: Install dependencies
@@ -49,7 +55,7 @@ jobs:
       - name: Setup Rust stable
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: aarch64-apple-darwin, x86_64-apple-darwin
+          targets: x86_64-apple-darwin
 
       - name: Download and setup ONNX Runtime
         run: |
@@ -117,7 +123,7 @@ jobs:
           echo "Running Tauri build..."
           ORT_DYLIB_PATH="/Users/runner/onnxruntime/onnxruntime-1.19.2/lib/libonnxruntime.1.19.2.dylib" \
           DYLD_LIBRARY_PATH="/Users/runner/onnxruntime/onnxruntime-1.19.2/lib:$DYLD_LIBRARY_PATH" \
-          npm run tauri build -- --target universal-apple-darwin
+          npm run tauri build -- --target x86_64-apple-darwin
 
           # Copy ONNX Runtime dylib to the bundle
           echo "Copying ONNX Runtime library to bundle..."
@@ -125,18 +131,18 @@ jobs:
              src-tauri/target/x86_64-apple-darwin/release/bundle/macos/*.app/Contents/MacOS/ || true
 
       - name: Upload artifacts to release
+        if: ${{ inputs.release }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.token }}
         run: |
-          # Find and upload the generated artifacts
           for file in src-tauri/target/x86_64-apple-darwin/release/bundle/dmg/*.dmg; do
             if [ -f "$file" ]; then
-              gh release upload "${{ github.event.inputs.version }}" "$file" --clobber
+              gh release upload "${{ inputs.version }}" "$file" --clobber
             fi
           done
 
           for file in src-tauri/target/x86_64-apple-darwin/release/bundle/macos/*.app.tar.gz; do
             if [ -f "$file" ]; then
-              gh release upload "${{ github.event.inputs.version }}" "$file" --clobber
+              gh release upload "${{ inputs.version }}" "$file" --clobber
             fi
           done
